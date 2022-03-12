@@ -1,13 +1,19 @@
 export function Form({ children, onSubmit }) {
   return (
-    <Form
+    <form
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
       }}
     >
       {children}
-    </Form>
+      <style jsx>{`
+        form {
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
+    </form>
   );
 }
 

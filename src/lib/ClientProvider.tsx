@@ -1,5 +1,13 @@
-import LettuceClient from "./LettuceClient";
-import React, { ReactChildren, ReactChild, useState } from "react";
+import LettuceClient from "./client";
+import React, {
+  ReactChildren,
+  ReactChild,
+  useState,
+  useContext,
+  createContext,
+} from "react";
+
+const ClientContext = createContext(undefined);
 
 export default function ClientProvider({
   children,
@@ -12,5 +20,21 @@ export default function ClientProvider({
 
   const [client] = useState(() => new LettuceClient(url));
 
-  return <p>Hello world {children}</p>;
+  return (
+    <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
+  );
 }
+
+export const useClient = (): LettuceClient => {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
+  const client = useContext(ClientContext);
+
+  if (typeof client === "undefined") {
+    throw new Error("Must not call useClient outside of client context");
+  }
+
+  return client;
+};
