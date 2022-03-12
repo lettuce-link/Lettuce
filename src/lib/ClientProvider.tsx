@@ -6,7 +6,11 @@ export default function ClientProvider({
 }: {
   children: ReactChildren | ReactChild;
 }) {
-  const [client] = useState(() => new LettuceClient(""));
+  const host = process.env.NEXT_PUBLIC_LEMMY_EXTERNAL_HOST;
+  const url = `ws://${host}/api/v3/ws`;
+  console.log(url);
+
+  const [client] = useState(() => new LettuceClient(url));
 
   return <p>Hello world {children}</p>;
 }
