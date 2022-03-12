@@ -8,6 +8,7 @@
   "dependencies": {
     "date-fns": "^2.11.1",
     "gray-matter": "^4.0.2",
+    "lemmy-js-client": "https://github.com/rMazeiks/lemmy-js-client.git",
     "next": "latest",
     "react": "17.0.2",
     "react-dom": "17.0.2",
