@@ -10,22 +10,34 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
       <style jsx global type="text/css">{`
         :root {
-          --max-content: 800px;
+          --small-content: 500px;
 
           --background-strong: #fff;
           --background-weak: #eee;
+
+          --foreground-strong: #000;
+          --foreground-weak: #777;
+          // Light in dark mode, vice versa
+          --foreground-inverted: #fff;
 
           --font-heading: 800 32px "Inter", sans-serif;
           --font-heading-light: 300 32px "Inter", sans-serif;
 
           --font-body: 400 16px "Open Sans", sans-serif;
           --font-body-bold: 700 16px "Open Sans", sans-serif;
+
+          --size-large: 32px;
+          --size-medium: 16px;
+          --size-small: 12px;
+
+          --color-primary-strong: #000;
         }
 
         body {
           margin: 0;
           background: var(--background-weak);
           font: var(--font-body);
+          color: var(--foreground-strong);
         }
 
         @font-face {

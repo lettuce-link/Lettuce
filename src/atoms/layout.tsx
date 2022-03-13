@@ -1,4 +1,4 @@
-export function Column({ children, gap = "4px" }) {
+export function Column({ children, gap = "16px" }) {
   return (
     <div className="Column">
       {children}
@@ -6,6 +6,23 @@ export function Column({ children, gap = "4px" }) {
         .Column {
           display: flex;
           flex-direction: column;
+
+          gap: ${gap};
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export function Row({ children, gap = "16px", justify = "start" }) {
+  return (
+    <div className="Row">
+      {children}
+      <style jsx>{`
+        .Row {
+          display: flex;
+          flex-direction: row;
+          justify-content: ${justify};
 
           gap: ${gap};
         }
@@ -33,7 +50,7 @@ export function WidthLimit({ children, centered = true }) {
       {children}
       <style jsx>{`
         .WidthLimit {
-          max-width: var(--max-content);
+          max-width: var(--small-content);
 
           ${centered && "margin: 0 auto"}
         }

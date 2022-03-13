@@ -5,7 +5,7 @@ export function H1({ children }) {
       <style jsx>{`
         h1 {
           font: var(--font-heading);
-          margin: 8px 0;
+          margin: 16px 0;
         }
       `}</style>
     </h1>
