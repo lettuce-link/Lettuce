@@ -15,7 +15,7 @@ export default function Login() {
       setUsername={setUsername}
       password={password}
       setPassword={setPassword}
-      onSubmit={() => client.login({ username_or_email: username, password })}
+      onSubmit={() => client.login({ username, password }).then(console.log)}
     />
   );
 }

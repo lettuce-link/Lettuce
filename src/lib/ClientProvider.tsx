@@ -1,4 +1,4 @@
-import LettuceClient from "./client";
+import Client from "./client";
 import React, {
   ReactChildren,
   ReactChild,
@@ -14,18 +14,13 @@ export default function ClientProvider({
 }: {
   children: ReactChildren | ReactChild;
 }) {
-  const host = process.env.NEXT_PUBLIC_LEMMY_EXTERNAL_HOST;
-  const url = `ws://${host}/api/v3/ws`;
-  console.log(url);
-
-  const [client] = useState(() => new LettuceClient(url));
-
+  const [client] = useState(() => new Client());
   return (
     <ClientContext.Provider value={client}>{children}</ClientContext.Provider>
   );
 }
 
-export const useClient = (): LettuceClient => {
+export const useClient = (): Client => {
   if (typeof window === "undefined") {
     return undefined;
   }
