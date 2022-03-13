@@ -9,8 +9,30 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Component {...pageProps} />
       <style jsx global type="text/css">{`
+        :root {
+          --max-content: 800px;
+
+          --background-strong: #fff;
+          --background-weak: #eee;
+
+          --font-heading: "Inter";
+        }
+
         body {
           margin: 0;
+          background: var(--background-weak);
+        }
+
+        @font-face {
+          font-family: "Inter";
+          font-weight: 300;
+          src: url(/fonts/Inter-Light.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Inter";
+          font-weight: 800;
+          src: url(/fonts/Inter-ExtraBold.woff2) format("woff2");
         }
       `}</style>
     </WithClient>

@@ -7,24 +7,29 @@ export function Form({ children, onSubmit }) {
       }}
     >
       {children}
-      <style jsx>{`
-        form {
-          display: flex;
-          flex-direction: column;
-        }
-      `}</style>
     </form>
   );
 }
 
 export function TextInput({ type = "text", name, value, setValue }) {
   return (
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-    />
+    <>
+      <input
+        className="TextInput"
+        type={type}
+        name={name}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <style jsx>{`
+        .TextInput {
+          border: none;
+          background: var(--background-weak);
+          padding: 8px;
+          border-radius: 4px;
+        }
+      `}</style>
+    </>
   );
 }
 
