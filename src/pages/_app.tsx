@@ -15,12 +15,17 @@ export default function App({ Component, pageProps }) {
           --background-strong: #fff;
           --background-weak: #eee;
 
-          --font-heading: "Inter";
+          --font-heading: 800 32px "Inter", sans-serif;
+          --font-heading-light: 300 32px "Inter", sans-serif;
+
+          --font-body: 400 16px "Open Sans", sans-serif;
+          --font-body-bold: 700 16px "Open Sans", sans-serif;
         }
 
         body {
           margin: 0;
           background: var(--background-weak);
+          font: var(--font-body);
         }
 
         @font-face {
@@ -33,6 +38,18 @@ export default function App({ Component, pageProps }) {
           font-family: "Inter";
           font-weight: 800;
           src: url(/fonts/Inter-ExtraBold.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Open Sans";
+          font-weight: 400;
+          src: url(/fonts/OpenSans-Regular.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Open Sans";
+          font-weight: 700;
+          src: url(/fonts/OpenSans-Bold.woff2) format("woff2");
         }
       `}</style>
     </WithClient>
