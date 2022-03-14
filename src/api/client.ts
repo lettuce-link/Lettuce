@@ -41,6 +41,15 @@ export default class Client {
       });
   }
 
+  register({ username, password }) {
+    return this.http.register({
+      username,
+      password,
+      password_verify: password,
+      show_nsfw: false,
+    });
+  }
+
   getSite() {
     return this.http.getSite(this.getAuth());
   }

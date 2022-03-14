@@ -59,18 +59,30 @@ export function TextInput({ type = "text", value, setValue }) {
   );
 }
 
-export function Submit({ value }) {
+export function Submit({ value, disabled = false }) {
   return (
     <>
-      <input className="Submit" type="submit" value={value} />
+      <input
+        className="Submit"
+        type="submit"
+        value={value}
+        disabled={disabled}
+      />
       <style jsx>{`
         .Submit {
           border: none;
           padding: 8px 16px;
           border-radius: var(--small-corner-round);
 
-          color: var(--foreground-inverted);
-          background: var(--color-primary-strong);
+          ${disabled
+            ? `
+            color: var(--foreground-weak);
+            background: var(--background-weak);
+            `
+            : `
+            color: var(--foreground-inverted);
+            background: var(--color-primary-strong);
+          `};
 
           font: var(--font-body);
           cursor: pointer;
