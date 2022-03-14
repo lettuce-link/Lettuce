@@ -42,6 +42,10 @@ export default class Client {
       });
   }
 
+  logout() {
+    return this.http.log;
+  }
+
   getSite() {
     return this.http.getSite(this.getAuth());
   }

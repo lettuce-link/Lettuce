@@ -1,3 +1,4 @@
+import InnerLink from "next/link";
 import { useIsInverted } from "./theme";
 
 export function Form({ children, onSubmit }) {
@@ -79,6 +80,29 @@ export function Submit({ value }) {
   );
 }
 
+export function Button({ children, onClick }) {
+  return (
+    <>
+      <button className="Button" onClick={onClick}>
+        {children}
+      </button>
+      <style jsx>{`
+        .Button {
+          border: none;
+          padding: 8px 16px;
+          border-radius: var(--small-corner-round);
+
+          color: var(--foreground-inverted);
+          background: var(--color-primary-strong);
+
+          font: var(--font-body);
+          cursor: pointer;
+        }
+      `}</style>
+    </>
+  );
+}
+
 export function LinkButton({ children, onClick }) {
   const isInverted = useIsInverted();
 
@@ -101,19 +125,56 @@ export function LinkButton({ children, onClick }) {
           font-size: inherit;
           color: var(--color-primary-strong);
 
-          ${isInverted &&
-          `
+          cursor: pointer;
+
+          ${isInverted
+            ? `
           color: var(--color-primary-inverted);
 
           background-image: linear-gradient(to bottom, rgba(255,255,255,0.5) 33%, transparent 33%);
           background-position: 0 1.2em;
           background-repeat: repeat-x;
           background-size: 2px 6px;
-          `}
-
-          cursor: pointer;
+          `
+            : ""}
         }
       `}</style>
     </a>
+  );
+}
+
+export function Link({ children, href }) {
+  const isInverted = useIsInverted();
+
+  return (
+    <InnerLink href={href}>
+      <span className="LinkButton">
+        {children}
+        <style jsx>{`
+          .LinkButton {
+            border: none;
+            background: none;
+            padding: 0;
+
+            font: var(--font-body);
+            font-size: inherit;
+            color: var(--color-primary-strong);
+
+            cursor: pointer;
+
+            ${isInverted
+              ? `
+            color: var(--color-primary-inverted);
+
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.5) 33%, transparent 33%);
+            background-position: 0 1.2em;
+            background-repeat: repeat-x;
+            background-size: 2px 6px;
+            `
+              : ""}
+          }
+        `}</style>
+      </span>
+    </InnerLink>
   );
 }

@@ -23,6 +23,7 @@ interface Toast {
   type: ToastType;
   message: ReactChildren;
   expires: Date;
+  id;
 }
 
 export function ToastProvider({ children }) {
@@ -62,6 +63,7 @@ function toast(message, type, duration) {
     message,
     type,
     expires: secondsFromNow(duration),
+    id: Symbol("id"),
   };
 }
 
@@ -99,8 +101,8 @@ function ToastMessages({ toasts }) {
     <div className="ToastMessages">
       <WidthLimit>
         <Column gap="16px">
-          {toasts.map(({ type, message }) => (
-            <Toast type={type} message={message} />
+          {toasts.map(({ type, message, id }) => (
+            <Toast key={id} type={type} message={message} />
           ))}
         </Column>
       </WidthLimit>

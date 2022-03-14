@@ -1,4 +1,4 @@
-export function Column({ children, gap = "32px" }) {
+export function Column({ children, gap = "32px", align = "start" }) {
   return (
     <div className="Column">
       {children}
@@ -6,6 +6,8 @@ export function Column({ children, gap = "32px" }) {
         .Column {
           display: flex;
           flex-direction: column;
+
+          align-items: ${align};
 
           gap: ${gap};
         }
