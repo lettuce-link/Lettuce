@@ -72,6 +72,6 @@ export default class Client {
       throw new Error("Cannot create community while logged out");
     }
 
-    this.http.createCommunity({ auth: this.auth, ...community });
+    return this.http.createCommunity({ auth: this.auth, ...community });
   }
 }

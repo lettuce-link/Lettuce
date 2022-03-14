@@ -1,10 +1,12 @@
-import { useIsLoggedIn } from "api/auth";
-import { Card } from "atoms/card";
-import { Field, Form, Submit, TextInput } from "atoms/input";
+import { useClient, useIsLoggedIn } from "api/auth";
+import { communityLink } from "api/link";
+import { Card, ErrorMessage } from "atoms/card";
+import { Field, Form, Link, Submit, TextInput } from "atoms/input";
 import { WidthLimit, LargePadding, Row, Column } from "atoms/layout";
 import { Advice, H1 } from "atoms/typography";
+import { useShowToast } from "components/toast";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function CreateCommunity() {
   const isLoggedIn = useIsLoggedIn();
@@ -31,6 +33,23 @@ export default function CreateCommunity() {
       `}</style>
     </main>
   );
+}
+
+enum CreateCommunityError {
+  AlreadyExists = "community_already_exists",
+}
+
+function NameError({ error, name }) {
+  if (error === CreateCommunityError.AlreadyExists) {
+    return (
+      <ErrorMessage>
+        That community already exists. You can{" "}
+        <Link href={communityLink(name)}>view it here</Link>!
+      </ErrorMessage>
+    );
+  }
+
+  return null;
 }
 
 const NAME_REGEX = /^[a-zA-Z0-9_]*$/;
@@ -68,6 +87,37 @@ function CreateCommunityWidget() {
   const nameValidation = validateName(name);
   const isValid = !nameValidation;
 
+  const [error, setError] = useState(null);
+  const [previousSubmission, setPreviousSubmission] = useState(null);
+  const { showError, showSuccess } = useShowToast();
+
+  const client = useClient();
+  const onSubmit = useCallback(() => {
+    setPreviousSubmission(name);
+
+    client.createCommunity({ name, title: name }).then((response) => {
+      // @ts-ignore
+      const error = response.error;
+
+      if (error) {
+        if (Object.values(CreateCommunityError).includes(error)) {
+          setError(error);
+        } else {
+          showError(
+            "Sorry! Something went wrong while creating the community. Please report this error – check details in the console."
+          );
+          console.error(error);
+        }
+      } else {
+        setError(null);
+
+        showSuccess("Community created!");
+
+        Router.push(communityLink(previousSubmission));
+      }
+    });
+  }, [name, client]);
+
   return (
     <>
       <H1>New Community</H1>
@@ -75,11 +125,12 @@ function CreateCommunityWidget() {
         A place where people with similar interests come togeter to share posts
         and chat.
       </Advice>
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={onSubmit}>
         <Column>
           <Field prompt="Name">
             <TextInput value={name} setValue={setName} />
             {nameValidation && <Advice>{nameValidation}</Advice>}
+            <NameError error={error} name={previousSubmission} />
           </Field>
           <Row justify="end">
             <Submit value="Create" disabled={!isValid} />
