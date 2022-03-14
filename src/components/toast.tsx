@@ -1,18 +1,45 @@
-import { createContext, useCallback, useContext, useState } from "react";
-import { ErrorMessage } from "../atoms/card";
+import {
+  createContext,
+  ReactChildren,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
+import { useTimeoutFn } from "react-use";
 import { Column, WidthLimit } from "../atoms/layout";
 import { InvertedMarker } from "../atoms/theme";
 import { Info } from "../atoms/typography";
 
-const ToastContext = createContext([]);
+const ToastContext = createContext<
+  [Toast[], (toasts: (t: Toast[]) => Toast[]) => void]
+>([[], () => {}]);
 
 enum ToastType {
   Success,
   Error,
 }
 
+interface Toast {
+  type: ToastType;
+  message: ReactChildren;
+  expires: Date;
+}
+
 export function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([]);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+
+  function clearExpired() {
+    const now = new Date();
+    setToasts((toasts) => toasts.filter((t) => t.expires > now));
+  }
+
+  const now = new Date();
+  const nextExpiry = toasts
+    // @ts-ignore bc he complains that i can't subtract dates??
+    .map((t) => t.expires - now)
+    .reduce((a, b) => Math.min(a, b), Infinity);
+
+  useTimeoutFn(clearExpired, Math.max(nextExpiry, 0));
 
   return (
     <ToastContext.Provider value={[toasts, setToasts]}>
@@ -22,19 +49,41 @@ export function ToastProvider({ children }) {
   );
 }
 
+function secondsFromNow(seconds: number) {
+  const t = new Date();
+  t.setSeconds(t.getSeconds() + 10);
+  return t;
+}
+
+const DEFAULT_DURATION = 10;
+
+function toast(message, type, duration) {
+  return {
+    message,
+    type,
+    expires: secondsFromNow(duration),
+  };
+}
+
 export function useShowToast() {
   const [toasts, setToasts] = useContext(ToastContext);
 
   const showError = useCallback(
-    (message) => {
-      setToasts((toasts) => [...toasts, { type: ToastType.Error, message }]);
+    (message, duration = DEFAULT_DURATION) => {
+      setToasts((toasts) => [
+        ...toasts,
+        toast(message, ToastType.Error, duration),
+      ]);
     },
     [setToasts]
   );
 
   const showSuccess = useCallback(
-    (message) => {
-      setToasts((toasts) => [...toasts, { type: ToastType.Success, message }]);
+    (message, duration = DEFAULT_DURATION) => {
+      setToasts((toasts) => [
+        ...toasts,
+        toast(message, ToastType.Success, duration),
+      ]);
     },
     [setToasts]
   );
