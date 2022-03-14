@@ -4,7 +4,7 @@ import { H1, Advice } from "../atoms/typography";
 import { Column, Row, LargePadding, WidthLimit } from "../atoms/layout";
 import { Form, TextInput, Submit, Field, LinkButton } from "../atoms/input";
 import { useShowToast } from "../components/toast";
-import { useClient } from "../atoms/client";
+import { useAuth, useClient } from "../api/auth";
 
 export default function Enter() {
   return (
@@ -122,11 +122,11 @@ function PasswordError({ error, setView }) {
 function LoginForm({ username, setUsername, password, setPassword, setView }) {
   const client = useClient();
   const { showError, showSuccess } = useShowToast();
+  const [_auth, setAuth] = useAuth();
 
   const [error, setError] = useState(null);
   const onSubmit = useCallback(() => {
     client.login({ username, password }).then((response) => {
-      // @ts-ignore bc the types are wrong :/
       const error = response.error;
       if (error) {
         setError(error);
@@ -144,6 +144,7 @@ function LoginForm({ username, setUsername, password, setPassword, setView }) {
         }
       } else {
         setError(null);
+        setAuth(response.auth);
         showSuccess("You're in.");
       }
     });

@@ -1,16 +1,24 @@
 import { LemmyHttp, LemmyWebsocket } from "lemmy-js-client";
 
 function baseUrl() {
-  return window.location.origin;
+  return process.env.NEXT_PUBLIC_LEMMY_HOST;
 }
 
 export default class Client {
   http: LemmyHttp;
-  token?: string;
+  auth?: string;
 
   constructor(token?) {
     this.http = new LemmyHttp(baseUrl());
-    this.token = token;
+    this.auth = token;
+  }
+
+  private getAuth() {
+    if (this.auth) {
+      return { auth: this.auth };
+    }
+
+    return {};
   }
 
   login({ username, password }) {
@@ -19,10 +27,9 @@ export default class Client {
       .then((response) => {
         // @ts-ignore bc the types are wrong
         if (!response.error && response.jwt) {
-          this.token = response.jwt;
-
           return {
             success: true,
+            auth: response.jwt,
           };
         } else {
           console.log(response);
@@ -33,5 +40,9 @@ export default class Client {
           };
         }
       });
+  }
+
+  getSite() {
+    return this.http.getSite(this.getAuth());
   }
 }

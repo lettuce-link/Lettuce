@@ -1,7 +1,17 @@
+import { useSite } from "../api/site";
+
 export function Header() {
+  const site = useSite()?.site;
+
+  if (!site) {
+    return null;
+  }
+
+  const siteDetails = site.site_view?.site;
+
   return (
     <header className="Header">
-      <Logo />
+      <Name siteDetails={siteDetails} />
 
       <style jsx>{`
         .Header {
@@ -15,12 +25,16 @@ export function Header() {
   );
 }
 
-function Logo() {
+function Name({ siteDetails }) {
+  if (!siteDetails) {
+    return null;
+  }
+
   return (
-    <div className="Logo">
-      Lettuce
+    <div className="Name">
+      {siteDetails.name}
       <style jsx>{`
-        .Logo {
+        .Name {
           font: var(--font-heading);
         }
       `}</style>

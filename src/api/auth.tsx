@@ -1,26 +1,22 @@
-/**
- * useAuth
- *
- * useRequest // memoizes request
- * useAuthRequest // with auth
- *
- * useRequestCallback
- */
-
-import { useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useLocalStorage } from "react-use";
-import Client from "../lib/client";
+import Client from "./client";
 
-export function useAuth() {
-  const [auth, setAuth] = useLocalStorage("lemmy-auth-token");
+export function useAuth(): [
+  string | undefined,
+  Dispatch<SetStateAction<string | undefined>>
+] {
+  const [auth, setAuth] = useLocalStorage("lemmy-auth-token", undefined);
 
   return [auth, setAuth];
 }
 
 export function useAuthRequest(requester, dependencies = []) {
   const [auth] = useAuth();
+  console.log(auth);
 
   useEffect(() => {
+    console.log("effect");
     const client = new Client(auth);
     requester(client);
   }, [auth, ...dependencies]);
