@@ -11,3 +11,18 @@ export function H1({ children }) {
     </h1>
   );
 }
+
+export function Advice({ children }) {
+  return (
+    <p className="Advice">
+      {children}
+      <style jsx>{`
+        .Advice {
+          font: var(--font-body);
+          color: var(--foreground-weak);
+          margin: 8px 0;
+        }
+      `}</style>
+    </p>
+  );
+}

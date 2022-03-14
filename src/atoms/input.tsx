@@ -30,13 +30,12 @@ export function Field({ prompt, children }) {
   );
 }
 
-export function TextInput({ type = "text", name, value, setValue }) {
+export function TextInput({ type = "text", value, setValue }) {
   return (
     <>
       <input
         className="TextInput"
         type={type}
-        name={name}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
@@ -71,8 +70,30 @@ export function Submit({ value }) {
           background: var(--color-primary-strong);
 
           font: var(--font-body);
+          cursor: pointer;
         }
       `}</style>
     </>
+  );
+}
+
+export function LinkButton({ children, onClick }) {
+  return (
+    <button className="LinkButton" onClick={onClick}>
+      {children}
+      <style jsx>{`
+        .LinkButton {
+          border: none;
+          background: none;
+          padding: 0;
+
+          font: var(--font-body);
+          font-size: inherit;
+          color: var(--color-primary-strong);
+
+          cursor: pointer;
+        }
+      `}</style>
+    </button>
   );
 }

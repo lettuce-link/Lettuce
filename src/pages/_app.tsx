@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
           --size-medium: 16px;
           --size-small: 12px;
 
-          --color-primary-strong: #000;
+          --color-primary-strong: #247ba0;
         }
 
         body {

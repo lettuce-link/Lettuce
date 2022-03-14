@@ -1,4 +1,4 @@
-export function Column({ children, gap = "16px" }) {
+export function Column({ children, gap = "32px" }) {
   return (
     <div className="Column">
       {children}
@@ -23,6 +23,7 @@ export function Row({ children, gap = "16px", justify = "start" }) {
           display: flex;
           flex-direction: row;
           justify-content: ${justify};
+          align-items: baseline;
 
           gap: ${gap};
         }
