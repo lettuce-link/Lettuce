@@ -1,4 +1,5 @@
 import { PersonSafe } from "lemmy-js-client";
+import Head from "next/head";
 import { useState } from "react";
 import { useLogout } from "../api/auth";
 import { useSite } from "../api/site";
@@ -15,6 +16,9 @@ export function Header() {
 
   return (
     <header className="Header">
+      <Head>
+        <title>{site.site_view?.site.name}</title>
+      </Head>
       <Name siteDetails={site.site_view?.site} />
 
       <ToolBar person={site.my_user?.local_user_view.person} />
@@ -53,7 +57,6 @@ function Name({ siteDetails }) {
 }
 
 function ToolBar({ person }: { person?: PersonSafe }) {
-
   return (
     <div className="ToolBar">
       {person ? <PersonBadge person={person} /> : <AuthLink />}

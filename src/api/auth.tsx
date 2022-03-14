@@ -41,7 +41,6 @@ export function useAuth(): [
 export function useAuthRequest(requester, dependencies = []) {
   const [auth] = useAuth();
 
-  console.log("auth is", auth);
   useEffect(() => {
     const client = new Client(auth);
     requester(client);

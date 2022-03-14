@@ -5,6 +5,7 @@ import { Column, Row, LargePadding, WidthLimit } from "../atoms/layout";
 import { Form, TextInput, Submit, Field, LinkButton } from "../atoms/input";
 import { useShowToast } from "../components/toast";
 import { useAuth, useClient } from "../api/auth";
+import { useCaptcha } from "../components/captcha";
 
 export default function Enter() {
   return (
@@ -198,6 +199,8 @@ function RegisterForm({
   setPassword,
   setView,
 }) {
+  const { needsCaptcha, Captcha } = useCaptcha();
+
   return (
     <>
       <H1>New Account</H1>
@@ -213,6 +216,11 @@ function RegisterForm({
               setValue={setPassword}
             />
           </Field>
+          {needsCaptcha && (
+            <Field prompt="Captcha">
+              <Captcha />
+            </Field>
+          )}
           <Row justify="space-between">
             <Advice>
               Got an account?{" "}
