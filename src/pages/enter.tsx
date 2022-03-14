@@ -1,10 +1,10 @@
 import { Card, ErrorMessage } from "../atoms/card";
 import { useState, useCallback } from "react";
-import { useClient } from "../lib/ClientProvider";
 import { H1, Advice } from "../atoms/typography";
 import { Column, Row, LargePadding, WidthLimit } from "../atoms/layout";
 import { Form, TextInput, Submit, Field, LinkButton } from "../atoms/input";
 import { useShowToast } from "../components/toast";
+import { useClient } from "../atoms/client";
 
 export default function Enter() {
   return (
@@ -126,8 +126,6 @@ function LoginForm({ username, setUsername, password, setPassword, setView }) {
   const [error, setError] = useState(null);
   const onSubmit = useCallback(() => {
     client.login({ username, password }).then((response) => {
-      console.log(response);
-
       // @ts-ignore bc the types are wrong :/
       const error = response.error;
       if (error) {

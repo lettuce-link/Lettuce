@@ -5,13 +5,12 @@ function baseUrl() {
 }
 
 export default class Client {
-  websocket: LemmyWebsocket;
   http: LemmyHttp;
   token?: string;
 
-  constructor() {
+  constructor(token?) {
     this.http = new LemmyHttp(baseUrl());
-    this.websocket = new LemmyWebsocket();
+    this.token = token;
   }
 
   login({ username, password }) {
