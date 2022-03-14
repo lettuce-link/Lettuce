@@ -8,7 +8,6 @@ import { Popup, PopupTarget } from "../atoms/popup";
 
 export function Header() {
   const site = useSite()?.site;
-  console.log(site);
 
   if (!site) {
     return null;
@@ -54,7 +53,6 @@ function Name({ siteDetails }) {
 }
 
 function ToolBar({ person }: { person?: PersonSafe }) {
-  console.log(person);
 
   return (
     <div className="ToolBar">

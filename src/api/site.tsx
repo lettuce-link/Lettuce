@@ -10,8 +10,8 @@ export function SiteProvider({ children }) {
 
   useAuthRequest((client) => {
     setLoading(true);
+    console.log("auth changed, requesting site");
 
-    console.log("requesting");
     client.getSite().then((site) => {
       setLoading(false);
       setSite(site);

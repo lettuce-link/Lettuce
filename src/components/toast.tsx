@@ -58,12 +58,14 @@ function secondsFromNow(seconds: number) {
 
 const DEFAULT_DURATION = 10;
 
+let CURRENT_ID = 0;
+
 function toast(message, type, duration) {
   return {
     message,
     type,
     expires: secondsFromNow(duration),
-    id: Symbol("id"),
+    id: CURRENT_ID++,
   };
 }
 

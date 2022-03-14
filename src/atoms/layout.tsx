@@ -1,4 +1,4 @@
-export function Column({ children, gap = "32px", align = "start" }) {
+export function Column({ children, gap = "32px", align = "stretch" }) {
   return (
     <div className="Column">
       {children}

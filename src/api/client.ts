@@ -32,7 +32,6 @@ export default class Client {
             auth: response.jwt,
           };
         } else {
-          console.log(response);
           return {
             // @ts-ignore
             error: response.error || response,

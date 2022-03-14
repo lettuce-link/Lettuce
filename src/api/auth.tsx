@@ -1,7 +1,9 @@
 import {
+  createContext,
   Dispatch,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -9,21 +11,38 @@ import {
 import { useLocalStorage } from "react-use";
 import Client from "./client";
 
+const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [storage, setStorage] = useLocalStorage("lemmy-auth-token", null);
+  const [value, setValue] = useState(storage);
+
+  function setAuth(value) {
+    setStorage(value);
+    setValue(value);
+  }
+
+  return (
+    <AuthContext.Provider value={[value, setAuth]}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
 export function useAuth(): [
   string | undefined,
   Dispatch<SetStateAction<string | undefined>>
 ] {
-  const [auth, setAuth] = useLocalStorage("lemmy-auth-token", null);
+  const [auth, setAuth] = useContext(AuthContext);
 
   return [auth, setAuth];
 }
 
 export function useAuthRequest(requester, dependencies = []) {
   const [auth] = useAuth();
-  console.log(auth);
 
+  console.log("auth is", auth);
   useEffect(() => {
-    console.log("effect");
     const client = new Client(auth);
     requester(client);
   }, [auth, ...dependencies]);
