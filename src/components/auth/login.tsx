@@ -82,6 +82,7 @@ export function LoginForm({
           showError(
             "Sorry! Something went wrong while logging in. Please report this error – check details in the console."
           );
+          console.error(error);
         }
       } else {
         setError(null);
