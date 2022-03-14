@@ -1,5 +1,5 @@
-import { Card } from "../atoms/card";
-import { useState } from "react";
+import { Card, ErrorMessage } from "../atoms/card";
+import { useState, useCallback } from "react";
 import { useClient } from "../lib/ClientProvider";
 import { H1, Advice } from "../atoms/typography";
 import { Column, Row, LargePadding, WidthLimit } from "../atoms/layout";
@@ -71,18 +71,64 @@ function AuthWidget() {
   }
 }
 
+/**
+ * Possible login errors. Taken from the backend.
+ */
+enum LoginError {
+  WrongLogin = "couldnt_find_that_username_or_email",
+  WrongPassword = "password_incorrect",
+  NotVerified = "email_not_verified",
+}
+
+function UsernameError({ error, setView }) {
+  if (error === LoginError.WrongLogin) {
+    return (
+      <ErrorMessage>
+        We couldn't find this username or email.{" "}
+        <LinkButton onClick={() => setView(View.Join)}>
+          Create account?
+        </LinkButton>
+      </ErrorMessage>
+    );
+  }
+
+  if (error === LoginError.NotVerified) {
+    return (
+      <ErrorMessage>
+        You need to verify your account. Check your email!
+      </ErrorMessage>
+    );
+  }
+
+  return null;
+}
+
 function LoginForm({ username, setUsername, password, setPassword, setView }) {
   const client = useClient();
+
+  const [error, setError] = useState(null);
+  const onSubmit = useCallback(() => {
+    client.login({ username, password }).then((response) => {
+      console.log(response);
+
+      // @ts-ignore bc the types are wrong :/
+      if (response.error) {
+        // @ts-ignore
+        setError(response.error);
+      } else {
+        setError(null);
+      }
+    });
+  }, [username, password, client]);
 
   return (
     <>
       <H1>Welcome Back!</H1>
-      <Form
-        onSubmit={() => client.login({ username, password }).then(console.log)}
-      >
+      <Form onSubmit={onSubmit}>
         <Column>
           <Field prompt="Username / Email">
             <TextInput value={username} setValue={setUsername} />
+            <UsernameError error={error} setView={setView} />
           </Field>
           <Field
             prompt={

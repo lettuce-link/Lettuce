@@ -1,3 +1,5 @@
+import { useIsInverted } from "./theme";
+
 export function Form({ children, onSubmit }) {
   return (
     <form
@@ -44,7 +46,7 @@ export function TextInput({ type = "text", value, setValue }) {
           border: none;
           background: var(--background-weak);
           padding: 8px;
-          border-radius: 4px;
+          border-radius: var(--small-corner-round);
 
           font: var(--font-body);
 
@@ -64,7 +66,7 @@ export function Submit({ value }) {
         .Submit {
           border: none;
           padding: 8px 16px;
-          border-radius: 4px;
+          border-radius: var(--small-corner-round);
 
           color: var(--foreground-inverted);
           background: var(--color-primary-strong);
@@ -78,8 +80,16 @@ export function Submit({ value }) {
 }
 
 export function LinkButton({ children, onClick }) {
+  const isInverted = useIsInverted();
+
   return (
-    <button className="LinkButton" onClick={onClick}>
+    <a
+      className="LinkButton"
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
       {children}
       <style jsx>{`
         .LinkButton {
@@ -91,9 +101,19 @@ export function LinkButton({ children, onClick }) {
           font-size: inherit;
           color: var(--color-primary-strong);
 
+          ${isInverted &&
+          `
+          color: var(--color-primary-inverted);
+
+          background-image: linear-gradient(to bottom, rgba(255,255,255,0.5) 33%, transparent 33%);
+          background-position: 0 1.2em;
+          background-repeat: repeat-x;
+          background-size: 2px 6px;
+          `}
+
           cursor: pointer;
         }
       `}</style>
-    </button>
+    </a>
   );
 }
