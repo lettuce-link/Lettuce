@@ -1,3 +1,5 @@
+import { useIsInverted } from "./theme";
+
 export function H1({ children }) {
   return (
     <h1>
@@ -21,6 +23,25 @@ export function Advice({ children }) {
           font: var(--font-body);
           color: var(--foreground-weak);
           margin: 8px 0;
+        }
+      `}</style>
+    </p>
+  );
+}
+
+export function Info({ children }) {
+  const isInverted = useIsInverted();
+
+  return (
+    <p className="Info">
+      {children}
+      <style jsx>{`
+        .Info {
+          font: var(--font-body);
+          color: ${isInverted
+            ? "var(--foreground-inverted)"
+            : "var(--foreground-strong)"};
+          margin: 0;
         }
       `}</style>
     </p>

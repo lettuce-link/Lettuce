@@ -4,6 +4,7 @@ import { useClient } from "../lib/ClientProvider";
 import { H1, Advice } from "../atoms/typography";
 import { Column, Row, LargePadding, WidthLimit } from "../atoms/layout";
 import { Form, TextInput, Submit, Field, LinkButton } from "../atoms/input";
+import { useShowToast } from "../components/toast";
 
 export default function Enter() {
   return (
@@ -84,7 +85,7 @@ function UsernameError({ error, setView }) {
   if (error === LoginError.WrongLogin) {
     return (
       <ErrorMessage>
-        We couldn't find this username or email.{" "}
+        We couldn't find this username.{" "}
         <LinkButton onClick={() => setView(View.Join)}>
           Create account?
         </LinkButton>
@@ -103,8 +104,24 @@ function UsernameError({ error, setView }) {
   return null;
 }
 
+function PasswordError({ error, setView }) {
+  if (error === LoginError.WrongPassword) {
+    return (
+      <ErrorMessage>
+        This isn't right.{" "}
+        <LinkButton onClick={() => setView(View.ResetPassword)}>
+          Forgot your password?
+        </LinkButton>
+      </ErrorMessage>
+    );
+  }
+
+  return null;
+}
+
 function LoginForm({ username, setUsername, password, setPassword, setView }) {
   const client = useClient();
+  const { showError, showSuccess } = useShowToast();
 
   const [error, setError] = useState(null);
   const onSubmit = useCallback(() => {
@@ -112,11 +129,24 @@ function LoginForm({ username, setUsername, password, setPassword, setView }) {
       console.log(response);
 
       // @ts-ignore bc the types are wrong :/
-      if (response.error) {
-        // @ts-ignore
-        setError(response.error);
+      const error = response.error;
+      if (error) {
+        setError(error);
+
+        if (
+          ![
+            LoginError.NotVerified,
+            LoginError.WrongLogin,
+            LoginError.WrongPassword,
+          ].includes(error)
+        ) {
+          showError(
+            "Sorry! Something went wrong while logging in. Please report this error – check details in the console."
+          );
+        }
       } else {
         setError(null);
+        showSuccess("You're in.");
       }
     });
   }, [username, password, client]);
@@ -145,6 +175,7 @@ function LoginForm({ username, setUsername, password, setPassword, setView }) {
               value={password}
               setValue={setPassword}
             />
+            <PasswordError error={error} setView={setView} />
           </Field>
           <Row justify="space-between">
             <Advice>

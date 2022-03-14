@@ -7,9 +7,9 @@ export function Card({ children }) {
       <style jsx>{`
         div {
           background: var(--background-strong);
-          border-radius: 8px;
+          border-radius: var(--large-corner-round);
 
-          box-shadow: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-large);
         }
       `}</style>
     </div>
