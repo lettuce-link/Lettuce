@@ -16,7 +16,12 @@ export function Column({ children, gap = "32px", align = "stretch" }) {
   );
 }
 
-export function Row({ children, gap = "16px", justify = "start" }) {
+export function Row({
+  children,
+  gap = "16px",
+  justify = "start",
+  align = "baseline",
+}) {
   return (
     <div className="Row">
       {children}
@@ -25,7 +30,8 @@ export function Row({ children, gap = "16px", justify = "start" }) {
           display: flex;
           flex-direction: row;
           justify-content: ${justify};
-          align-items: baseline;
+
+          align-items: ${align};
 
           gap: ${gap};
         }

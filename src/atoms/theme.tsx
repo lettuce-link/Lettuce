@@ -43,6 +43,13 @@ export function Theme() {
         color: var(--foreground-strong);
       }
 
+      svg {
+        // we are rendering Remix icons with react-icons
+        // for some reason, their dimensions are set to 1em
+        // so, if we want them to be 24px (their intended size), we need to set the font size:
+        font-size: 24px;
+      }
+
       @font-face {
         font-family: "Inter";
         font-weight: 300;

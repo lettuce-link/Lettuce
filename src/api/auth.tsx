@@ -38,6 +38,11 @@ export function useAuth(): [
   return [auth, setAuth];
 }
 
+export function useIsLoggedIn() {
+  const [auth] = useAuth();
+  return !!auth;
+}
+
 export function useAuthRequest(requester, dependencies = []) {
   const [auth] = useAuth();
 

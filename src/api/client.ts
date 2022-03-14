@@ -4,6 +4,15 @@ function baseUrl() {
   return process.env.NEXT_PUBLIC_LEMMY_HOST;
 }
 
+export interface Community {
+  name: string;
+  title: string;
+  description?: string;
+  icon?: string;
+  banner?: string;
+  nsfw?: boolean;
+}
+
 export default class Client {
   http: LemmyHttp;
   auth?: string;
@@ -56,5 +65,13 @@ export default class Client {
 
   getCaptcha() {
     return this.http.getCaptcha();
+  }
+
+  createCommunity(community: Community) {
+    if (!this.auth) {
+      throw new Error("Cannot create community while logged out");
+    }
+
+    this.http.createCommunity({ auth: this.auth, ...community });
   }
 }

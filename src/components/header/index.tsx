@@ -1,11 +1,13 @@
+import { useLogout } from "api/auth";
+import { useSite } from "api/site";
+import { Button, Link } from "atoms/input";
+import { Row, Column } from "atoms/layout";
+import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
 import { PersonSafe } from "lemmy-js-client";
 import Head from "next/head";
 import { useState } from "react";
-import { useLogout } from "../api/auth";
-import { useSite } from "../api/site";
-import { Button, Link } from "../atoms/input";
-import { Column } from "../atoms/layout";
-import { Popup, PopupTarget } from "../atoms/popup";
+
+import { MenuButton } from "./menu";
 
 export function Header() {
   const site = useSite()?.site;
@@ -19,7 +21,10 @@ export function Header() {
       <Head>
         <title>{site.site_view?.site.name}</title>
       </Head>
-      <Name siteDetails={site.site_view?.site} />
+      <Row align="center">
+        <MenuButton />
+        <Name siteDetails={site.site_view?.site} />
+      </Row>
 
       <ToolBar person={site.my_user?.local_user_view.person} />
 
@@ -73,7 +78,7 @@ function PersonBadge({ person }: { person: PersonSafe }) {
     <div className="Person">
       <PopupTarget setOpen={setOpen}>
         {person.name}
-        <Popup isOpen={isOpen}>
+        <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>
           <Column gap="8px" align="end">
             <Link href="#">Profile</Link>
             <Link href="#">Settings</Link>

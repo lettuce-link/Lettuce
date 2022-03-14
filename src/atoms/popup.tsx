@@ -21,7 +21,12 @@ export function PopupTarget({ children, setOpen }) {
   );
 }
 
-export function Popup({ children, isOpen }) {
+export enum HorizontalAlign {
+  Right,
+  Left,
+}
+
+export function Popup({ children, isOpen, horizontalAlign }) {
   return (
     <div className="Popup">
       {children}
@@ -30,7 +35,12 @@ export function Popup({ children, isOpen }) {
           display: ${isOpen ? "block" : "none"};
 
           position: absolute;
-          right: 0;
+
+          ${horizontalAlign === HorizontalAlign.Right
+            ? `right: 0;`
+            : `left: 0;`}
+
+          top: calc(100% + 8px);
 
           background: var(--background-strong);
           border-radius: var(--large-corner-round);
