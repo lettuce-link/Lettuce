@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useClient } from "../api/auth";
+import { useClient } from "../../api/auth";
 
 export function useCaptcha() {
   const client = useClient();
