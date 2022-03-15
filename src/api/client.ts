@@ -4,13 +4,21 @@ function baseUrl() {
   return process.env.NEXT_PUBLIC_LEMMY_HOST;
 }
 
-export interface Community {
+export interface CreateCommunitySimple {
   name: string;
   title: string;
   description?: string;
   icon?: string;
   banner?: string;
   nsfw?: boolean;
+}
+
+export interface CreatePostSimple {
+  name: string;
+  url?: string;
+  body?: string;
+  nsfw?: boolean;
+  community_id: number;
 }
 
 export default class Client {
@@ -84,5 +92,9 @@ export default class Client {
       ...this.getAuth(),
       ...getPosts,
     });
+  }
+
+  createPost(post: CreatePostSimple) {
+    return this.http.createPost({ auth: this.auth, ...post });
   }
 }

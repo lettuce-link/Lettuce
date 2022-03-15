@@ -20,14 +20,12 @@ export function ChannelView({ community, isLoading, infinitePosts }) {
 }
 
 function Channels({ community, isLoading, infinitePosts }) {
-  console.log(community);
   if (!community) {
     return null;
   }
 
   return (
     <>
-      {JSON.stringify(community)}
       <AboutCard community={community?.community_view.community} />
     </>
   );

@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useLocalStorage } from "react-use";
 import Client from "./client";
+import Router from "next/router";
 
 const AuthContext = createContext(null);
 
@@ -43,6 +44,12 @@ export function useIsLoggedIn() {
   return !!auth;
 }
 
+/**
+ * Calls the provided function with a `client` object whenever authentication status changes, or when one of the dependencies changes.
+ * The provided function may return a "cleanup" callback similarly to how useEffect works.
+ * @param requester
+ * @param dependencies
+ */
 export function useAuthRequest(requester, dependencies = []) {
   const [auth] = useAuth();
 
@@ -50,6 +57,21 @@ export function useAuthRequest(requester, dependencies = []) {
     const client = new Client(auth);
     return requester(client);
   }, [auth, ...dependencies]);
+}
+
+export function useAuthGuard(shouldBeLoggedIn = true) {
+  const isLoggedIn = useIsLoggedIn();
+
+  useEffect(() => {
+    if (shouldBeLoggedIn && !isLoggedIn) {
+      // todo: would be nice to set the return url
+      Router.replace("/enter");
+    }
+
+    if (!shouldBeLoggedIn && isLoggedIn) {
+      Router.replace("/");
+    }
+  }, []);
 }
 
 export function useClient() {

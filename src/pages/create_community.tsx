@@ -1,21 +1,16 @@
-import { useClient, useIsLoggedIn } from "api/auth";
+import { useAuthGuard, useClient } from "api/auth";
 import { communityLink } from "api/link";
 import { Card, ErrorMessage } from "atoms/card";
+import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, Link, Submit, TextInput } from "atoms/input";
-import { WidthLimit, LargePadding, Row, Column } from "atoms/layout";
+import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
 import { Advice, H1 } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import Router from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function CreateCommunity() {
-  const isLoggedIn = useIsLoggedIn();
-
-  useEffect(() => {
-    if (Router.isReady && !isLoggedIn) {
-      Router.replace("/enter");
-    }
-  }, []);
+  useAuthGuard();
 
   return (
     <main>
@@ -129,7 +124,7 @@ function CreateCommunityWidget() {
         <Column>
           <Field prompt="Name">
             <TextInput value={name} setValue={setName} />
-            {nameValidation && <Advice>{nameValidation}</Advice>}
+            <ValidationMessage message={nameValidation} />
             <NameError error={error} name={previousSubmission} />
           </Field>
           <Row justify="end">

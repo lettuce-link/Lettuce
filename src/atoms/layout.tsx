@@ -53,13 +53,13 @@ export function LargePadding({ children }) {
   );
 }
 
-export function Padding({ children }) {
+export function Padding({ children, padding = "16px" }) {
   return (
     <div className="Padding">
       {children}
       <style jsx>{`
         .Padding {
-          padding: 8px 16px;
+          padding: ${padding};
         }
       `}</style>
     </div>

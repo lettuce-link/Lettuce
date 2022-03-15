@@ -1,5 +1,6 @@
 import { useAuth, useClient } from "api/auth";
 import { ErrorMessage } from "atoms/card";
+import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, LinkButton, Submit, TextInput } from "atoms/input";
 import { Column, Row } from "atoms/layout";
 import { Advice, H1 } from "atoms/typography";
@@ -144,7 +145,7 @@ export function Register({
         <Column>
           <Field prompt="Username">
             <TextInput value={username} setValue={setUsername} />
-            {usernameValidation && <Advice>{usernameValidation}</Advice>}
+            <ValidationMessage message={usernameValidation} />
             <UsernameError error={error} setView={setView} />
           </Field>
           <Field prompt="Password">
@@ -153,7 +154,7 @@ export function Register({
               value={password}
               setValue={setPassword}
             />
-            {passwordValidation && <Advice>{passwordValidation}</Advice>}
+            <ValidationMessage message={passwordValidation} />
           </Field>
           {needsCaptcha && (
             <Field prompt="Captcha">
