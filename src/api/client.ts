@@ -101,4 +101,8 @@ export default class Client {
   getPost(id: number) {
     return this.http.getPost({ ...this.getAuth(), id });
   }
+
+  likePost(id, vote) {
+    return this.http.likePost({ auth: this.auth, post_id: id, score: vote });
+  }
 }

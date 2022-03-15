@@ -1,3 +1,4 @@
+import { useSetPostVote } from "api/post";
 import { Card } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
@@ -5,6 +6,7 @@ import { H1 } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { ReadonlyEditor } from "components/editor";
 import { VerticalVote } from "components/vote";
+import { CommunityView, PostView } from "lemmy-js-client";
 
 export function FullPost({ postView, communityView, isLoading }) {
   if (isLoading || !postView) {
@@ -26,12 +28,25 @@ export function FullPost({ postView, communityView, isLoading }) {
   );
 }
 
-function PostHead({ postView, communityView }) {
+function PostHead({
+  postView,
+  communityView,
+}: {
+  postView: PostView;
+  communityView: CommunityView;
+}) {
+  const setVote = useSetPostVote(postView.post.id);
+
   return (
     <Row gap="16px" align="start">
-      <Column gap="16px">
+      <Column gap="8px">
         <MoreButton onClick={() => {}} />
-        <VerticalVote />
+        <VerticalVote
+          upvotes={postView.counts.upvotes}
+          downvotes={postView.counts.downvotes}
+          myVote={postView.my_vote || 0}
+          setMyVote={setVote}
+        />
       </Column>
       <Column gap="8px">
         <h1 className="title">{postView.post.name}</h1>

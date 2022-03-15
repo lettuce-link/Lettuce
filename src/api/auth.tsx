@@ -59,13 +59,17 @@ export function useAuthRequest(requester, dependencies = []) {
   }, [auth, ...dependencies]);
 }
 
+export function redirectToAuthentication() {
+  // todo: would be nice to set the return url
+  Router.push("/enter");
+}
+
 export function useAuthGuard(shouldBeLoggedIn = true) {
   const isLoggedIn = useIsLoggedIn();
 
   useEffect(() => {
     if (shouldBeLoggedIn && !isLoggedIn) {
-      // todo: would be nice to set the return url
-      Router.replace("/enter");
+      redirectToAuthentication();
     }
 
     if (!shouldBeLoggedIn && isLoggedIn) {

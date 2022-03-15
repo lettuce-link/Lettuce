@@ -36,6 +36,8 @@ export function Theme() {
         --color-success-strong: #70c1b3;
 
         --shadow-large: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
+
+        --transition-quick: 0.2s ease-out;
       }
 
       body {

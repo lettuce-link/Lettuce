@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { useAuthRequest } from "./auth";
+import { useShowToast } from "components/toast";
+import { useCallback, useState } from "react";
+import {
+  redirectToAuthentication,
+  useAuthRequest,
+  useClient,
+  useIsLoggedIn,
+} from "./auth";
 
 export function usePost(id) {
   const [post, setPost] = useState(null);
@@ -23,4 +29,25 @@ export function usePost(id) {
   );
 
   return { post, isLoading };
+}
+
+export function useSetPostVote(id) {
+  const client = useClient();
+  const isLoggedIn = useIsLoggedIn();
+
+  return useCallback(
+    (vote) => {
+      if (!isLoggedIn) {
+        redirectToAuthentication();
+
+        return Promise.resolve(false);
+      }
+
+      return client.likePost(id, vote).then((response) => {
+        // todo error handling
+        return true;
+      });
+    },
+    [id, useIsLoggedIn, client]
+  );
 }

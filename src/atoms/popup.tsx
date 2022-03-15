@@ -66,7 +66,7 @@ export function MoreButton({ onClick }) {
       <style jsx global>{`
         .MoreButton {
           // compensate for how vertically thin the icon is
-          margin: -6px 0;
+          // margin: -6px 0;
         }
 
         .MoreButton-icon {

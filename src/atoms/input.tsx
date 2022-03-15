@@ -203,7 +203,7 @@ export function RevealButton({ children, onClick = noop }) {
           background: transparent;
 
           border-radius: var(--small-corner-round);
-          transition: background 0.2s ease-out;
+          transition: background var(--transition-quick);
         }
 
         .RevealButton:hover {
