@@ -30,7 +30,7 @@ export function ReadonlyEditor({ markdown }) {
     return EditorState.createWithContent(content);
   }, [markdown]);
 
-  return <Editor editorState={editorState} />;
+  return <Editor editorState={editorState} readOnly />;
 }
 
 function DraftEditor({ editorState, setEditorState }) {

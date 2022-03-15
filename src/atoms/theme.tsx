@@ -5,9 +5,11 @@ export function Theme() {
     <style jsx global type="text/css">{`
       :root {
         --small-content: 500px;
+        --large-content: 1000px;
 
         --background-strong: #fff;
         --background-weak: #eee;
+        --background-transparent-dark: rgba(0, 0, 0, 0.063);
 
         --foreground-strong: #000;
         --foreground-weak: #777;

@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { useClickAway } from "react-use";
+import { RiMoreFill } from "react-icons/ri";
+import { RevealButton } from "./input";
 
 export function PopupTarget({ children, setOpen }) {
   const ref = useRef(null);
@@ -49,6 +51,26 @@ export function Popup({ children, isOpen, horizontalAlign }) {
 
           padding: 16px;
           width: max-content;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export function MoreButton({ onClick }) {
+  return (
+    <div className="MoreButton">
+      <RevealButton onClick={onClick}>
+        <RiMoreFill className="MoreButton-icon" />
+      </RevealButton>
+      <style jsx global>{`
+        .MoreButton {
+          // compensate for how vertically thin the icon is
+          margin: -6px 0;
+        }
+
+        .MoreButton-icon {
+          // display: flex;
         }
       `}</style>
     </div>

@@ -190,3 +190,26 @@ export function Link({ children, href }) {
     </InnerLink>
   );
 }
+
+function noop() {}
+
+export function RevealButton({ children, onClick = noop }) {
+  return (
+    <span className="RevealButton" onClick={onClick}>
+      {children}
+      <style jsx>{`
+        .RevealButton {
+          display: flex;
+          background: transparent;
+
+          border-radius: var(--small-corner-round);
+          transition: background 0.2s ease-out;
+        }
+
+        .RevealButton:hover {
+          background: var(--background-transparent-dark);
+        }
+      `}</style>
+    </span>
+  );
+}

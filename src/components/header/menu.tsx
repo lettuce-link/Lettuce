@@ -1,4 +1,4 @@
-import { Link } from "atoms/input";
+import { Link, RevealButton } from "atoms/input";
 import { Column } from "atoms/layout";
 import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
 import { useState } from "react";
@@ -9,9 +9,12 @@ export function MenuButton() {
 
   return (
     <PopupTarget setOpen={setOpen}>
-      <div className="MenuButton">
-        <RiMenuFill />
-      </div>
+      <RevealButton>
+        <div className="MenuButton">
+          <RiMenuFill />
+        </div>
+      </RevealButton>
+
       <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Left}>
         <Menu />
       </Popup>

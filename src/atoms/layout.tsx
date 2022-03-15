@@ -66,13 +66,17 @@ export function Padding({ children, padding = "16px" }) {
   );
 }
 
-export function WidthLimit({ children, centered = true }) {
+export function WidthLimit({
+  children,
+  centered = true,
+  limit = "var(--small-content)",
+}) {
   return (
     <div className="WidthLimit">
       {children}
       <style jsx>{`
         .WidthLimit {
-          max-width: var(--small-content);
+          max-width: ${limit};
 
           ${centered && "margin: 0 auto"}
         }
