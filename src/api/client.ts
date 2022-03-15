@@ -1,4 +1,4 @@
-import { LemmyHttp, LemmyWebsocket } from "lemmy-js-client";
+import { GetPosts, LemmyHttp, LemmyWebsocket } from "lemmy-js-client";
 
 function baseUrl() {
   return process.env.NEXT_PUBLIC_LEMMY_HOST;
@@ -22,7 +22,7 @@ export default class Client {
     this.auth = token;
   }
 
-  private getAuth() {
+  private getAuth(): { auth?: string } {
     if (this.auth) {
       return { auth: this.auth };
     }
@@ -73,5 +73,16 @@ export default class Client {
     }
 
     return this.http.createCommunity({ auth: this.auth, ...community });
+  }
+
+  getCommunity(name: string) {
+    return this.http.getCommunity({ ...this.getAuth(), name });
+  }
+
+  getPosts(getPosts: GetPosts) {
+    return this.http.getPosts({
+      ...this.getAuth(),
+      ...getPosts,
+    });
   }
 }

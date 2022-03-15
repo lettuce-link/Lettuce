@@ -1,12 +1,12 @@
 import { InvertedMarker } from "./theme";
 
-export function Card({ children }) {
+export function Card({ children, background = "var(--background-strong)" }) {
   return (
     <div>
       {children}
       <style jsx>{`
         div {
-          background: var(--background-strong);
+          background: ${background};
           border-radius: var(--large-corner-round);
 
           box-shadow: var(--shadow-large);

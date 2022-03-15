@@ -38,6 +38,9 @@ export function Header() {
           display: flex;
           justify-content: space-between;
           align-items: baseline;
+
+          z-index: 100;
+          position: sticky;
         }
       `}</style>
     </header>

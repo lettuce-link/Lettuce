@@ -53,6 +53,19 @@ export function LargePadding({ children }) {
   );
 }
 
+export function Padding({ children }) {
+  return (
+    <div className="Padding">
+      {children}
+      <style jsx>{`
+        .Padding {
+          padding: 8px 16px;
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export function WidthLimit({ children, centered = true }) {
   return (
     <div className="WidthLimit">

@@ -48,7 +48,7 @@ export function useAuthRequest(requester, dependencies = []) {
 
   useEffect(() => {
     const client = new Client(auth);
-    requester(client);
+    return requester(client);
   }, [auth, ...dependencies]);
 }
 
