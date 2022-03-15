@@ -97,4 +97,8 @@ export default class Client {
   createPost(post: CreatePostSimple) {
     return this.http.createPost({ auth: this.auth, ...post });
   }
+
+  getPost(id: number) {
+    return this.http.getPost({ ...this.getAuth(), id });
+  }
 }

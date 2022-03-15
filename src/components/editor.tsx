@@ -1,11 +1,17 @@
 import { Editor, EditorState, RichUtils } from "draft-js";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { stateToMarkdown } from "draft-js-export-markdown";
+import { stateFromMarkdown } from "draft-js-import-markdown";
 
-export function useEditor() {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
+export function useEditor(initialMarkdown = null) {
+  const [editorState, setEditorState] = useState(() => {
+    if (initialMarkdown) {
+      const content = stateFromMarkdown(initialMarkdown);
+      return EditorState.createWithContent(content);
+    } else {
+      return EditorState.createEmpty();
+    }
+  });
 
   const Editor = () => (
     <DraftEditor editorState={editorState} setEditorState={setEditorState} />
@@ -16,6 +22,15 @@ export function useEditor() {
   }
 
   return { Editor, getMarkdown };
+}
+
+export function ReadonlyEditor({ markdown }) {
+  const editorState = useMemo(() => {
+    const content = stateFromMarkdown(markdown);
+    return EditorState.createWithContent(content);
+  }, [markdown]);
+
+  return <Editor editorState={editorState} />;
 }
 
 function DraftEditor({ editorState, setEditorState }) {

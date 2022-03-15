@@ -13,7 +13,7 @@ export default function CommunityPage() {
     return null;
   }
 
-  const { name } = router.query;
+  const { community_name: name } = router.query;
 
   // @ts-ignore
   const { community, isLoading } = useCommunity(name);

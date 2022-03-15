@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function NewPost() {
   const router = useRouter();
 
-  const { name } = router.query;
+  const { community_name: name } = router.query;
   // @ts-ignore
   const { community, isLoading } = useCommunity(name);
 
