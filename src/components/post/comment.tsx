@@ -1,12 +1,14 @@
+import { useIsLoggedIn } from "api/auth";
 import { useSetCommentVote } from "api/comment";
-import { Column, Row } from "atoms/layout";
+import { RevealButton, ShyButton } from "atoms/input";
+import { Column, Padding, Row } from "atoms/layout";
 import { H2, H3 } from "atoms/typography";
 import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
 import { HorizontalVote } from "components/vote";
 import { Comment, CommentView, PostView } from "lemmy-js-client";
-import { useMemo } from "react";
-import { PostAddComment } from "./comment_editor";
+import { useCallback, useMemo, useState } from "react";
+import { CommentReply, PostAddComment } from "./comment_editor";
 
 export function CommentSection({ postView, comments }) {
   return (
@@ -71,18 +73,23 @@ function CommentTree({
     <section>
       <H3>Comments</H3>
       <div>
-        <CommentList ids={topLevel} commentMap={commentMap} />
+        <CommentList
+          ids={topLevel}
+          commentMap={commentMap}
+          postView={postView}
+        />
       </div>
     </section>
   );
 }
 
-function CommentList({ ids, commentMap }) {
+function CommentList({ ids, commentMap, postView }) {
   return ids.map((id) => (
     <CommentThread
       key={id}
       commentMap={commentMap}
       commentNode={commentMap[id]}
+      postView={postView}
     />
   ));
 }
@@ -90,9 +97,11 @@ function CommentList({ ids, commentMap }) {
 function CommentThread({
   commentMap,
   commentNode,
+  postView,
 }: {
   commentMap;
   commentNode: CommentNode;
+  postView: PostView;
 }) {
   const commentView = commentNode.comment;
 
@@ -102,16 +111,23 @@ function CommentThread({
       <div className="Comment-contents">
         <div className="Comment-self">
           <ReadonlyEditor markdown={commentView.comment.content} />
-          <CommentActions comment={commentView} />
+          <CommentActions comment={commentView} postView={postView} />
         </div>
         <div className="Comment-replies">
-          <CommentList ids={commentNode.children} commentMap={commentMap} />
+          <CommentList
+            ids={commentNode.children}
+            commentMap={commentMap}
+            postView={postView}
+          />
         </div>
       </div>
 
       <style jsx>{`
         .Comment-contents {
-          margin-left: 16px;
+          // these should add up to a power of 2 to be consistent with everything else
+          margin-left: 5px;
+          border-left: 2px solid var(--background-transparent-dark);
+          padding-left: 9px;
         }
       `}</style>
     </div>
@@ -126,19 +142,35 @@ function CommentHead({ comment }: { comment: CommentView }) {
   );
 }
 
-function CommentActions({ comment }: { comment: CommentView }) {
+function CommentActions({
+  comment,
+  postView,
+}: {
+  comment: CommentView;
+  postView: PostView;
+}) {
+  const isLoggedIn = useIsLoggedIn();
+
   const setMyVote = useSetCommentVote(comment.comment.id);
+
+  const [isReplyOpen, setReplyOpen] = useState(false);
+  const toggleReplyOpen = useCallback(() => setReplyOpen((x) => !x), []);
 
   const { upvotes, downvotes } = comment.counts;
   const myVote = comment.my_vote || 0;
+
   return (
-    <Row>
-      <HorizontalVote
-        upvotes={upvotes}
-        downvotes={downvotes}
-        myVote={myVote}
-        setMyVote={setMyVote}
-      />
-    </Row>
+    <Column gap="4px">
+      <Row gap="4px" align="center">
+        <HorizontalVote
+          upvotes={upvotes}
+          downvotes={downvotes}
+          myVote={myVote}
+          setMyVote={setMyVote}
+        />
+        {isLoggedIn && <ShyButton onClick={toggleReplyOpen}>Reply</ShyButton>}
+      </Row>
+      {isReplyOpen && <CommentReply comment={comment} postView={postView} />}
+    </Column>
   );
 }

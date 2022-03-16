@@ -23,15 +23,16 @@ export function Theme() {
         --font-body-bold: 700 16px/1.6 "Open Sans", sans-serif;
 
         --size-xlarge: 32px;
-        --size-large: 20px;
+        --size-large: 24px;
         --size-medium: 16px;
         --size-small: 12px;
+
+        --size-icon: 24px;
 
         --small-corner-round: 4px;
         --large-corner-round: 8px;
 
         --color-primary-strong: #247ba0;
-        --color-primary-background: #70c3e7;
 
         --color-error-strong: #f25f5c;
         --color-success-strong: #70c1b3;
@@ -60,7 +61,7 @@ export function Theme() {
         // we are rendering Remix icons with react-icons
         // for some reason, their dimensions are set to 1em
         // so, if we want them to be 24px (their intended size), we need to set the font size:
-        font-size: 24px;
+        font-size: var(--size-icon);
       }
 
       @font-face {

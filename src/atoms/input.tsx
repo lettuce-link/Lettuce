@@ -1,4 +1,5 @@
 import InnerLink from "next/link";
+import { Padding } from "./layout";
 import { useIsInverted } from "./theme";
 
 export function Form({ children, onSubmit }) {
@@ -127,6 +128,38 @@ export function Button({ children, onClick }) {
         }
       `}</style>
     </>
+  );
+}
+
+/**
+ * A quiet button that does its best not to attract too much attention
+ */
+export function ShyButton({ children, onClick }) {
+  return (
+    <RevealButton onClick={onClick}>
+      <span className="ShyButton-contents">{children}</span>
+
+      <style jsx>{`
+        .ShyButton-contents {
+          padding: 2px 4px;
+
+          font: var(--font-body);
+          color: var(--foreground-strong);
+          font-size: var(--size-small);
+
+          cursor: pointer;
+
+          // actual height ends up pretty close anyway
+          // align with icons to keep things consistent
+          min-height: var(--size-icon);
+          box-sizing: border-box;
+        }
+
+        .ShyButton-contents:hover {
+          color: var(--foreground-strong);
+        }
+      `}</style>
+    </RevealButton>
   );
 }
 
