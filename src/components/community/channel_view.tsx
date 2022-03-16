@@ -2,9 +2,14 @@ import { useState } from "react";
 import { AboutCard } from "./about";
 import { Card } from "atoms/card";
 import { PostThumbnail } from "components/post/thumbnail";
+import { usePost } from "api/post";
+import { FullPost } from "components/post/post";
 
 export function ChannelView({ communityView, isLoading, infinitePosts }) {
   const [selectedPost, setSelectedPost] = useState(null);
+  const { post, isLoading: isPostLoading } = usePost(selectedPost);
+
+  console.log(selectedPost, post);
 
   return (
     <Split
@@ -13,14 +18,29 @@ export function ChannelView({ communityView, isLoading, infinitePosts }) {
           communityView={communityView}
           isLoading={isLoading}
           infinitePosts={infinitePosts}
+          selectedPost={selectedPost}
+          setSelectedPost={setSelectedPost}
         />
       }
-      second={<Post />}
+      second={
+        <FullPost
+          postView={post?.post_view}
+          communityView={communityView}
+          comments={post?.comments}
+          isLoading={isPostLoading}
+        />
+      }
     />
   );
 }
 
-function Channels({ communityView, isLoading, infinitePosts }) {
+function Channels({
+  communityView,
+  isLoading,
+  infinitePosts,
+  selectedPost,
+  setSelectedPost,
+}) {
   if (!communityView) {
     return null;
   }
@@ -33,18 +53,33 @@ function Channels({ communityView, isLoading, infinitePosts }) {
   } = infinitePosts;
 
   return (
-    <>
+    <div className="Channels">
       <ol>
-        <AboutCard community={communityView?.community} />
+        <AboutCard
+          community={communityView?.community}
+          isSelected={selectedPost === null}
+          onSelect={() => setSelectedPost(null)}
+        />
 
         {posts.map((post) => (
           <li key={post.post.id}>
-            <PostThumbnail postView={post} communityView={communityView} />
+            <PostThumbnail
+              postView={post}
+              communityView={communityView}
+              isSelected={selectedPost === post.post.id}
+              onSelect={() => setSelectedPost(post.post.id)}
+            />
           </li>
         ))}
       </ol>
 
       <style jsx>{`
+        .Channels {
+          background: var(--background-shade);
+          padding: 16px;
+          height: 100%;
+        }
+
         ol {
           display: flex;
           flex-direction: column;
@@ -61,7 +96,7 @@ function Channels({ communityView, isLoading, infinitePosts }) {
           display: contents;
         }
       `}</style>
-    </>
+    </div>
   );
 }
 
@@ -79,6 +114,7 @@ export function Split({ first, second }) {
         .Split {
           display: flex;
           flex-direction: row;
+          height: 100%;
         }
 
         .First {

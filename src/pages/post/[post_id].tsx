@@ -8,7 +8,6 @@ export default function PostPage() {
 
   const { community_name: name, post_id: postId } = router.query;
 
-  // @ts-ignore
   const { post, isLoading } = usePost(postId);
 
   return (

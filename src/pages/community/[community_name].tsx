@@ -15,12 +15,10 @@ export default function CommunityPage() {
   const infinitePosts = useCommunityPosts(name);
 
   return (
-    <Padding padding="16px">
-      <ChannelView
-        communityView={community?.community_view}
-        isLoading={isLoading}
-        infinitePosts={infinitePosts}
-      />
-    </Padding>
+    <ChannelView
+      communityView={community?.community_view}
+      isLoading={isLoading}
+      infinitePosts={infinitePosts}
+    />
   );
 }

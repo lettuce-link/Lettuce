@@ -16,6 +16,33 @@ export function Card({ children, background = "var(--background-strong)" }) {
   );
 }
 
+export function SelectableCard({ children, isSelected, onSelect }) {
+  const background = isSelected
+    ? "var(--background-strong)"
+    : "var(--background-weak)";
+
+  return (
+    <div onClick={onSelect}>
+      {children}
+      <style jsx>{`
+        div {
+          background: ${background};
+          border-radius: var(--large-corner-round);
+
+          box-shadow: var(--shadow-large);
+
+          cursor: pointer;
+          transition: background var(--transition-quick);
+        }
+
+        div:hover {
+          background: var(--background-strong);
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export function ErrorMessage({ children }) {
   return (
     <div className="ErrorMessage">

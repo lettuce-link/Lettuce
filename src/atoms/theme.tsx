@@ -9,6 +9,7 @@ export function Theme() {
 
         --background-strong: #fff;
         --background-weak: #eee;
+        --background-shade: #bbb;
         --background-transparent-dark: rgba(0, 0, 0, 0.063);
 
         --foreground-strong: #000;
@@ -47,6 +48,16 @@ export function Theme() {
         background: var(--background-weak);
         font: var(--font-body);
         color: var(--foreground-strong);
+        min-height: 100vh;
+      }
+
+      #__next {
+        // some weird container created by next.js messing with my layout
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
       }
 
       h1 {
