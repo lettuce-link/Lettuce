@@ -22,7 +22,6 @@ export function PostAddComment({ postView }: { postView: PostView }) {
         post_id: postView.post.id,
       })
       .then((response) => {
-        console.log(response);
         clearContents();
         showSuccess("Your comment has been posted");
       });

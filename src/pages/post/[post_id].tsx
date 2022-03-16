@@ -17,6 +17,7 @@ export default function PostPage() {
         <FullPost
           postView={post?.post_view}
           communityView={post?.community_view}
+          comments={post?.comments}
           isLoading={isLoading}
         />
       </WidthLimit>

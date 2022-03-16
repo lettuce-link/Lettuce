@@ -132,7 +132,6 @@ export function Register({
           showSuccess("Success! Check your email for the verification link.");
         }
       }
-      console.log(response);
     });
   }, [username, password, client]);
 

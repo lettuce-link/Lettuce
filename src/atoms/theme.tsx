@@ -22,7 +22,8 @@ export function Theme() {
         --font-body: 400 16px/1.6 "Open Sans", sans-serif;
         --font-body-bold: 700 16px/1.6 "Open Sans", sans-serif;
 
-        --size-large: 32px;
+        --size-xlarge: 32px;
+        --size-large: 20px;
         --size-medium: 16px;
         --size-small: 12px;
 

@@ -10,13 +10,11 @@ import { VerticalVote } from "components/vote";
 import { CommunityView, PostView } from "lemmy-js-client";
 import { CommentSection } from "./comment";
 
-export function FullPost({ postView, communityView, isLoading }) {
+export function FullPost({ postView, communityView, comments, isLoading }) {
   if (isLoading || !postView) {
     // todo better loading state
     return null;
   }
-
-  console.log({ isLoading, post: postView });
 
   return (
     <Card>
@@ -24,7 +22,7 @@ export function FullPost({ postView, communityView, isLoading }) {
         <Column gap="8px">
           <PostHead postView={postView} communityView={communityView} />
           <ReadonlyEditor markdown={postView.post.body} />
-          <CommentSection postView={postView} />
+          <CommentSection postView={postView} comments={comments} />
         </Column>
       </Padding>
     </Card>
@@ -52,7 +50,7 @@ function PostHead({
         />
       </Column>
       <Column gap="8px">
-        <h1 className="title">{postView.post.name}</h1>
+        <h2 className="title">{postView.post.name}</h2>
         <Row>
           <SecondaryInfo>
             Posted by <PersonBadge person={postView.creator} /> in{" "}
@@ -63,7 +61,7 @@ function PostHead({
 
       <style jsx>{`
         .title {
-          // font: var(--font-heading);
+          font: var(--font-heading-light);
 
           margin: 0;
           line-height: 1;

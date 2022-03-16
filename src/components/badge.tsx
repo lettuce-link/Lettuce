@@ -26,7 +26,7 @@ export function Badge({ children }) {
 // todo: actual icons
 export function SmallIcon() {
   return (
-    <div className="SmallIcon">
+    <span className="SmallIcon">
       <style jsx>{`
         .SmallIcon {
           width: 0.8em;
@@ -40,6 +40,6 @@ export function SmallIcon() {
           bottom: -1px;
         }
       `}</style>
-    </div>
+    </span>
   );
 }

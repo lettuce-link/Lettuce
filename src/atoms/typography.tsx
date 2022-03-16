@@ -16,16 +16,30 @@ export function H1({ children }) {
 
 export function H2({ children }) {
   return (
-    <h1>
+    <h2>
       {children}
       <style jsx>{`
-        h1 {
-          font: var(--font-heading);
-          font-size: var(--size-medium);
+        h2 {
+          font: var(--font-heading-light);
           margin: 8px 0;
         }
       `}</style>
-    </h1>
+    </h2>
+  );
+}
+
+export function H3({ children }) {
+  return (
+    <h3>
+      {children}
+      <style jsx>{`
+        h3 {
+          font: var(--font-heading);
+          font-size: var(--size-large);
+          margin: 8px 0;
+        }
+      `}</style>
+    </h3>
   );
 }
 

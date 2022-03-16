@@ -81,7 +81,7 @@ export default class Client {
     return this.http.getCaptcha();
   }
 
-  createCommunity(community: Community) {
+  createCommunity(community: CreateCommunitySimple) {
     if (!this.auth) {
       throw new Error("Cannot create community while logged out");
     }
