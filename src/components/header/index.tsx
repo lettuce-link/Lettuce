@@ -1,7 +1,7 @@
 import { useLogout } from "api/auth";
 import { useSite } from "api/site";
-import { Button, Link } from "atoms/input";
-import { Row, Column } from "atoms/layout";
+import { Button, Link, RevealButton } from "atoms/input";
+import { Row, Column, Padding } from "atoms/layout";
 import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
 import { PersonBadge } from "components/person/badge";
 import { PersonSafe } from "lemmy-js-client";
@@ -89,7 +89,11 @@ function UserMenu({ person }: { person: PersonSafe }) {
   return (
     <div className="Person">
       <PopupTarget setOpen={setOpen}>
-        <PersonBadge person={person} />
+        <RevealButton>
+          <Padding padding="8px 16px">
+            <PersonBadge person={person} />
+          </Padding>
+        </RevealButton>
         <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>
           <Column gap="8px" align="end">
             <Link href="#">Profile</Link>
