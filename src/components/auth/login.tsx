@@ -1,10 +1,10 @@
-import { useClient, useAuth } from "api/auth";
+import { useClient, useSetAuth } from "api/auth";
 import { ErrorMessage } from "atoms/card";
-import { LinkButton, Form, Field, TextInput, Submit } from "atoms/input";
+import { Field, Form, LinkButton, Submit, TextInput } from "atoms/input";
 import { Column, Row } from "atoms/layout";
 import { H1, SecondaryInfo } from "atoms/typography";
 import { useShowToast } from "components/toast";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { View } from "./view";
 
 /**
@@ -63,7 +63,7 @@ export function LoginForm({
 }) {
   const client = useClient();
   const { showError, showSuccess } = useShowToast();
-  const [_auth, setAuth] = useAuth();
+  const setAuth = useSetAuth();
 
   const [error, setError] = useState(null);
   const onSubmit = useCallback(() => {

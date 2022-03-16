@@ -1,47 +1,48 @@
+import Router from "next/router";
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useLocalStorage } from "react-use";
 import Client from "./client";
-import Router from "next/router";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
-  const [storage, setStorage] = useLocalStorage("lemmy-auth-token", null);
-  const [value, setValue] = useState(storage);
+export function ClientProvider({ children }) {
+  const [storageAuth, setStorageAuth] = useLocalStorage(
+    "lemmy-auth-token",
+    null
+  );
+
+  function makeClient(auth?) {
+    return new Client(auth);
+  }
+
+  const [client, setClient] = useState(() => makeClient(storageAuth));
 
   function setAuth(value) {
-    setStorage(value);
-    setValue(value);
+    setStorageAuth(value);
+    setClient(makeClient(value));
   }
 
   return (
-    <AuthContext.Provider value={[value, setAuth]}>
+    <AuthContext.Provider value={[client, setAuth]}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth(): [
-  string | undefined,
-  Dispatch<SetStateAction<string | undefined>>
-] {
-  const [auth, setAuth] = useContext(AuthContext);
-
-  return [auth, setAuth];
+export function useSetAuth() {
+  const [_client, setAuth] = useContext(AuthContext);
+  return setAuth;
 }
 
 export function useIsLoggedIn() {
-  const [auth] = useAuth();
-  return !!auth;
+  const client = useClient();
+  return client.isLoggedIn();
 }
 
 /**
@@ -51,12 +52,11 @@ export function useIsLoggedIn() {
  * @param dependencies
  */
 export function useAuthRequest(requester, dependencies = []) {
-  const [auth] = useAuth();
+  const client = useClient();
 
   useEffect(() => {
-    const client = new Client(auth);
     return requester(client);
-  }, [auth, ...dependencies]);
+  }, [client, ...dependencies]);
 }
 
 export function redirectToAuthentication() {
@@ -79,15 +79,13 @@ export function useAuthGuard(shouldBeLoggedIn = true) {
 }
 
 export function useClient() {
-  const [auth] = useAuth();
+  const [client, _setAuth] = useContext(AuthContext);
 
-  return useMemo(() => {
-    return new Client(auth);
-  }, [auth]);
+  return client;
 }
 
 export function useLogout() {
-  const [_auth, setAuth] = useAuth();
+  const [_client, setAuth] = useContext(AuthContext);
 
   return useCallback(() => {
     setAuth(null);

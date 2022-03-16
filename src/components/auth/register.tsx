@@ -1,9 +1,9 @@
-import { useAuth, useClient } from "api/auth";
+import { useClient, useSetAuth } from "api/auth";
 import { ErrorMessage } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, LinkButton, Submit, TextInput } from "atoms/input";
 import { Column, Row } from "atoms/layout";
-import { SecondaryInfo, H1 } from "atoms/typography";
+import { H1, SecondaryInfo } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import { useCallback, useState } from "react";
 import { useCaptcha } from "./captcha";
@@ -102,7 +102,7 @@ export function Register({
   setView,
 }) {
   const client = useClient();
-  const [_auth, setAuth] = useAuth();
+  const setAuth = useSetAuth();
 
   const usernameValidation = validateUsername(username);
   const passwordValidation = validatePassword(password);

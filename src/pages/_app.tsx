@@ -2,12 +2,12 @@ import { ToastProvider } from "../components/toast";
 import { Theme } from "../atoms/theme";
 import { Header } from "../components/header";
 import { SiteProvider } from "../api/site";
-import { AuthProvider } from "../api/auth";
+import { ClientProvider } from "../api/auth";
 import { ScrollLimitProvider } from "components/scroll_limit";
 
 export default function App({ Component, pageProps }) {
   return (
-    <AuthProvider>
+    <ClientProvider>
       <SiteProvider>
         <Theme />
         <ToastProvider>
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }) {
           </AppFrame>
         </ToastProvider>
       </SiteProvider>
-    </AuthProvider>
+    </ClientProvider>
   );
 }
 

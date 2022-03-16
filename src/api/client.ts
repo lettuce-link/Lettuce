@@ -36,6 +36,10 @@ export default class Client {
     this.auth = token;
   }
 
+  isLoggedIn() {
+    return !!this.auth;
+  }
+
   private getAuth(): { auth?: string } {
     if (this.auth) {
       return { auth: this.auth };

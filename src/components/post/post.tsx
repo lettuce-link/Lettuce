@@ -1,5 +1,6 @@
-import { useSetPostVote } from "api/post";
-import { Column, Padding, Row } from "atoms/layout";
+import { usePost, useSetPostVote } from "api/post";
+import { Card } from "atoms/card";
+import { Column, Padding, Row, WidthLimit } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
 import { SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
@@ -8,6 +9,29 @@ import { PersonBadge } from "components/person/badge";
 import { VerticalVote } from "components/vote";
 import { PostView } from "lemmy-js-client";
 import { CommentSection } from "./comment";
+
+export function PostPage({ id }) {
+  const { post, isLoading } = usePost(id);
+
+  return (
+    <main>
+      <WidthLimit limit="var(--large-content)">
+        <Card>
+          <FullPost
+            postView={post?.post_view}
+            comments={post?.comments}
+            isLoading={isLoading}
+          />
+        </Card>
+      </WidthLimit>
+      <style jsx>{`
+        main {
+          padding: 32px 16px;
+        }
+      `}</style>
+    </main>
+  );
+}
 
 export function FullPost({ postView, comments, isLoading }) {
   if (isLoading || !postView) {

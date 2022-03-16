@@ -1,32 +1,10 @@
-import { usePost } from "api/post";
-import { Card } from "atoms/card";
-import { WidthLimit } from "atoms/layout";
-import { FullPost } from "components/post/post";
+import { PostPage } from "components/post/post";
 import { useRouter } from "next/router";
 
-export default function PostPage() {
+export default function PostPageWrapper() {
   const router = useRouter();
 
-  const { community_name: name, post_id: postId } = router.query;
+  const { post_id: postId } = router.query;
 
-  const { post, isLoading } = usePost(postId);
-
-  return (
-    <main>
-      <WidthLimit limit="var(--large-content)">
-        <Card>
-          <FullPost
-            postView={post?.post_view}
-            comments={post?.comments}
-            isLoading={isLoading}
-          />
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
-  );
+  return <PostPage id={postId} />;
 }
