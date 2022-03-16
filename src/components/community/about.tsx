@@ -16,7 +16,7 @@ export function AboutCard({ community, isSelected, onSelect }) {
   return (
     <SelectableCard isSelected={isSelected} onSelect={onSelect}>
       <Padding padding="16px">
-        <Row justify="space-between">
+        <Row wrap justify="space-between">
           <H1 margin="0">{community.title}</H1>
           <Button onClick={openNewPostPage}>New Post</Button>
         </Row>

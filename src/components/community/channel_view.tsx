@@ -3,8 +3,10 @@ import { AboutCard } from "./about";
 import { PostThumbnail } from "components/post/thumbnail";
 import { usePost } from "api/post";
 import { FullPost } from "components/post/post";
+import { useScrollLimit } from "components/scroll_limit";
 
 export function ChannelView({ communityView, isLoading, infinitePosts }) {
+  useScrollLimit();
   const [selectedPost, setSelectedPost] = useState(null);
 
   return (

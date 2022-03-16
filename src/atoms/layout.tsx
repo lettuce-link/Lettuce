@@ -21,6 +21,7 @@ export function Row({
   gap = "16px",
   justify = "start",
   align = "baseline",
+  wrap = false,
 }) {
   return (
     <div className="Row">
@@ -34,6 +35,8 @@ export function Row({
           align-items: ${align};
 
           gap: ${gap};
+
+          ${wrap ? "flex-wrap: wrap;" : ""}
         }
       `}</style>
     </div>
