@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AboutCard } from "./about";
-import { Card } from "atoms/card";
 import { PostThumbnail } from "components/post/thumbnail";
 import { usePost } from "api/post";
 import { FullPost } from "components/post/post";
@@ -19,9 +18,7 @@ export function ChannelView({ communityView, isLoading, infinitePosts }) {
           setSelectedPost={setSelectedPost}
         />
       }
-      second={
-        <Contents selectedPost={selectedPost} communityView={communityView} />
-      }
+      second={<Contents selectedPost={selectedPost} />}
     />
   );
 }

@@ -6,9 +6,11 @@ import { Field, Form, Submit, TextInput } from "atoms/input";
 import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { useEditor } from "components/editor";
+import { useShowToast } from "components/toast";
 import { CommunitySafe } from "lemmy-js-client";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import { useState } from "react";
+import { postLink } from "util/link";
 
 export default function NewPost() {
   const router = useRouter();
@@ -64,7 +66,9 @@ function validateTitle(title) {
 
 function NewPostForm({ community }: { community: CommunitySafe }) {
   const [title, setTitle] = useState("");
+  const router = useRouter();
   const titleValidation = validateTitle(title);
+  const { showSuccess } = useShowToast();
 
   const isValid = !titleValidation;
 
@@ -80,7 +84,10 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
         body: markdown,
         community_id: community.id,
       })
-      .then(console.log);
+      .then((response) => {
+        showSuccess("Post created");
+        router.push(postLink(response.post_view.post.id));
+      });
   }
 
   return (

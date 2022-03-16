@@ -9,3 +9,7 @@ export function communityLink(name) {
 export function newPostLink(community) {
   return `${communityLink(community)}/new_post`;
 }
+
+export function postLink(postId) {
+  return `/post/${postId}`;
+}

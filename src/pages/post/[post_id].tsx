@@ -1,4 +1,5 @@
 import { usePost } from "api/post";
+import { Card } from "atoms/card";
 import { WidthLimit } from "atoms/layout";
 import { FullPost } from "components/post/post";
 import { useRouter } from "next/router";
@@ -13,12 +14,13 @@ export default function PostPage() {
   return (
     <main>
       <WidthLimit limit="var(--large-content)">
-        <FullPost
-          postView={post?.post_view}
-          communityView={post?.community_view}
-          comments={post?.comments}
-          isLoading={isLoading}
-        />
+        <Card>
+          <FullPost
+            postView={post?.post_view}
+            comments={post?.comments}
+            isLoading={isLoading}
+          />
+        </Card>
       </WidthLimit>
       <style jsx>{`
         main {
