@@ -1,3 +1,4 @@
+import React from "react";
 import { Row } from "./layout";
 import { useIsInverted } from "./theme";
 
@@ -79,27 +80,20 @@ export function Info({ children }) {
 }
 
 export function InfoList({ children }) {
-  const dot = (
-    <span>
-      {" "}
-      &bull;
-      <style jsx>{`
-        span {
-          color: var(--foreground-weak);
-        }
-      `}</style>
-    </span>
-  );
-
   return (
     <span className="InfoList">
       <Row gap="4px">
-        {children.map((child, index) => {
+        {React.Children.map(children, (child, index) => {
           const needsSeparator = index !== 0;
 
           return (
             <>
-              {needsSeparator && dot}
+              {needsSeparator && (
+                <span key={`dot-${index}`} className="InfoList-dot">
+                  {" "}
+                  &bull;{" "}
+                </span>
+              )}
               {child}
             </>
           );
@@ -109,6 +103,10 @@ export function InfoList({ children }) {
       <style jsx>{`
         .InfoList {
           font-size: var(--size-small);
+        }
+
+        .InfoList-dot {
+          color: var(--foreground-weak);
         }
       `}</style>
     </span>

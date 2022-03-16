@@ -17,7 +17,6 @@ export function PostThumbnail({
   isSelected;
   onSelect;
 }) {
-  console.log(postView);
   return (
     <SelectableCard isSelected={isSelected} onSelect={onSelect}>
       <Padding padding="8px">
