@@ -57,7 +57,6 @@ function Channels({
           <li key={post.post.id}>
             <PostThumbnail
               postView={post}
-              communityView={communityView}
               isSelected={selectedPost === post.post.id}
               onSelect={() => setSelectedPost(post.post.id)}
             />
@@ -94,7 +93,7 @@ function Channels({
   );
 }
 
-export function Contents({ selectedPost, communityView }) {
+export function Contents({ selectedPost }) {
   const { post, isLoading: isPostLoading } = usePost(selectedPost);
 
   if (selectedPost) {
@@ -102,7 +101,6 @@ export function Contents({ selectedPost, communityView }) {
       <div className="Contents-post">
         <FullPost
           postView={post?.post_view}
-          communityView={communityView}
           comments={post?.comments}
           isLoading={isPostLoading}
         />
