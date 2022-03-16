@@ -1,19 +1,19 @@
 import { useIsLoggedIn } from "api/auth";
 import { useSetCommentVote } from "api/comment";
-import { RevealButton, ShyButton } from "atoms/input";
-import { Column, Padding, Row } from "atoms/layout";
-import { H2, H3 } from "atoms/typography";
+import { ShyButton } from "atoms/input";
+import { Column, Row } from "atoms/layout";
+import { H3 } from "atoms/typography";
 import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
 import { HorizontalVote } from "components/vote";
-import { Comment, CommentView, PostView } from "lemmy-js-client";
-import { useCallback, useMemo, useState } from "react";
+import { CommentView, PostView } from "lemmy-js-client";
+import { useMemo } from "react";
 import { useToggle } from "react-use";
 import { CommentReply, PostAddComment } from "./comment_editor";
 
 export function CommentSection({ postView, comments }) {
   return (
-    <Column>
+    <Column gap="8px">
       <PostAddComment postView={postView} />
       <CommentTree postView={postView} comments={comments} />
     </Column>

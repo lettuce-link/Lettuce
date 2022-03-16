@@ -16,6 +16,7 @@ export function Badge({ children }) {
           gap: 2px;
 
           font: var(--font-body);
+          font-size: inherit;
           color: var(--foreground-weak);
         }
       `}</style>

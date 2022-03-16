@@ -1,17 +1,12 @@
 import { useCommunity } from "api/community";
 import { useCommunityPosts } from "api/posts";
+import { Padding } from "atoms/layout";
 import { AboutCard } from "components/community/about";
 import { ChannelView } from "components/community/channel_view";
 import { useRouter } from "next/router";
 
 export default function CommunityPage() {
   const router = useRouter();
-
-  // don't render anything on SSR
-  // todo: improve
-  if (!router.isReady) {
-    return null;
-  }
 
   const { community_name: name } = router.query;
 
@@ -20,10 +15,12 @@ export default function CommunityPage() {
   const infinitePosts = useCommunityPosts(name);
 
   return (
-    <ChannelView
-      community={community}
-      isLoading={isLoading}
-      infinitePosts={infinitePosts}
-    />
+    <Padding padding="16px">
+      <ChannelView
+        communityView={community?.community_view}
+        isLoading={isLoading}
+        infinitePosts={infinitePosts}
+      />
+    </Padding>
   );
 }

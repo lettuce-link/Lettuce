@@ -2,7 +2,7 @@ import { newPostLink } from "api/link";
 import { Card } from "atoms/card";
 import { Button } from "atoms/input";
 import { Padding, Row } from "atoms/layout";
-import { H2 } from "atoms/typography";
+import { H1 } from "atoms/typography";
 import { useRouter } from "next/router";
 
 export function AboutCard({ community }) {
@@ -17,7 +17,7 @@ export function AboutCard({ community }) {
     <Card>
       <Padding padding="16px">
         <Row justify="space-between">
-          <H2>{community.title}</H2>
+          <H1 margin="0">{community.title}</H1>
           <Button onClick={openNewPostPage}>New Post</Button>
         </Row>
       </Padding>

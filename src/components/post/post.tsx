@@ -50,7 +50,7 @@ function PostHead({
         />
       </Column>
       <Column gap="8px">
-        <h2 className="title">{postView.post.name}</h2>
+        <PostTitle postView={postView} />
         <Row>
           <SecondaryInfo>
             Posted by <PersonBadge person={postView.creator} /> in{" "}
@@ -58,15 +58,28 @@ function PostHead({
           </SecondaryInfo>
         </Row>
       </Column>
+    </Row>
+  );
+}
 
+export function PostTitle({ postView, isCompact = false }) {
+  return (
+    <h2 className="PostTitle">
+      {postView.post.name}
       <style jsx>{`
-        .title {
+        .PostTitle {
           font: var(--font-heading-light);
+
+          ${isCompact
+            ? `
+          font-size: var(--size-large);
+          `
+            : ``}
 
           margin: 0;
           line-height: 1;
         }
       `}</style>
-    </Row>
+    </h2>
   );
 }

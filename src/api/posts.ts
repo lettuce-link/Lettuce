@@ -56,7 +56,7 @@ export function usePosts({
 
           setPosts((posts) => [...posts, ...response.posts]);
           setLoading(false);
-          setHasMore(response.posts.length < PAGE_SIZE);
+          setHasMore(response.posts.length >= PAGE_SIZE);
         });
 
       return () => {

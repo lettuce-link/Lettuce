@@ -1,13 +1,14 @@
+import { Row } from "./layout";
 import { useIsInverted } from "./theme";
 
-export function H1({ children }) {
+export function H1({ children, margin = "16px 0" }) {
   return (
     <h1>
       {children}
       <style jsx>{`
         h1 {
           font: var(--font-heading);
-          margin: 16px 0;
+          margin: ${margin};
         }
       `}</style>
     </h1>
@@ -74,5 +75,42 @@ export function Info({ children }) {
         }
       `}</style>
     </p>
+  );
+}
+
+export function InfoList({ children }) {
+  const dot = (
+    <span>
+      {" "}
+      &bull;
+      <style jsx>{`
+        span {
+          color: var(--foreground-weak);
+        }
+      `}</style>
+    </span>
+  );
+
+  return (
+    <span className="InfoList">
+      <Row gap="4px">
+        {children.map((child, index) => {
+          const needsSeparator = index !== 0;
+
+          return (
+            <>
+              {needsSeparator && dot}
+              {child}
+            </>
+          );
+        })}
+      </Row>
+
+      <style jsx>{`
+        .InfoList {
+          font-size: var(--size-small);
+        }
+      `}</style>
+    </span>
   );
 }

@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { AboutCard } from "./about";
 import { Card } from "atoms/card";
+import { PostThumbnail } from "components/post/thumbnail";
 
-export function ChannelView({ community, isLoading, infinitePosts }) {
+export function ChannelView({ communityView, isLoading, infinitePosts }) {
   const [selectedPost, setSelectedPost] = useState(null);
 
   return (
     <Split
       first={
         <Channels
-          community={community}
+          communityView={communityView}
           isLoading={isLoading}
           infinitePosts={infinitePosts}
         />
@@ -19,14 +20,47 @@ export function ChannelView({ community, isLoading, infinitePosts }) {
   );
 }
 
-function Channels({ community, isLoading, infinitePosts }) {
-  if (!community) {
+function Channels({ communityView, isLoading, infinitePosts }) {
+  if (!communityView) {
     return null;
   }
 
+  const {
+    hasMore,
+    isLoading: isMoreLoading,
+    posts,
+    requestMore,
+  } = infinitePosts;
+
   return (
     <>
-      <AboutCard community={community?.community_view.community} />
+      <ol>
+        <AboutCard community={communityView?.community} />
+
+        {posts.map((post) => (
+          <li key={post.post.id}>
+            <PostThumbnail postView={post} communityView={communityView} />
+          </li>
+        ))}
+      </ol>
+
+      <style jsx>{`
+        ol {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        ol,
+        li {
+          margin: 0;
+          padding: 0;
+        }
+
+        li {
+          display: contents;
+        }
+      `}</style>
     </>
   );
 }
