@@ -81,6 +81,9 @@ export function Submit({ value, disabled = false }) {
           padding: 8px 16px;
           border-radius: var(--small-corner-round);
 
+          font: var(--font-body);
+          cursor: pointer;
+
           ${disabled
             ? `
             color: var(--foreground-weak);
@@ -90,9 +93,14 @@ export function Submit({ value, disabled = false }) {
             color: var(--foreground-inverted);
             background: var(--color-primary-strong);
           `};
-
-          font: var(--font-body);
-          cursor: pointer;
+        }
+      `}</style>
+      <style jsx global>{`
+        // if it's not global, the transition only works one way for some reason
+        // i blame styled-jsx
+        .Submit {
+          transition: background var(--transition-quick),
+            color var(--transition-quick);
         }
       `}</style>
     </>

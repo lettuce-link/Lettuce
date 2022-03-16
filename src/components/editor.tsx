@@ -13,15 +13,25 @@ export function useEditor(initialMarkdown = null) {
     }
   });
 
-  const Editor = () => (
-    <DraftEditor editorState={editorState} setEditorState={setEditorState} />
+  const isEmpty = !editorState.getCurrentContent().hasText();
+
+  const Editor = ({ minHeight = "0" }) => (
+    <DraftEditor
+      editorState={editorState}
+      setEditorState={setEditorState}
+      minHeight={minHeight}
+    />
   );
 
   function getMarkdown() {
     return stateToMarkdown(editorState.getCurrentContent());
   }
 
-  return { Editor, getMarkdown };
+  function clearContents() {
+    setEditorState(EditorState.createEmpty());
+  }
+
+  return { Editor, getMarkdown, isEmpty, clearContents };
 }
 
 export function ReadonlyEditor({ markdown }) {
@@ -33,7 +43,7 @@ export function ReadonlyEditor({ markdown }) {
   return <Editor editorState={editorState} readOnly />;
 }
 
-function DraftEditor({ editorState, setEditorState }) {
+function DraftEditor({ editorState, setEditorState, minHeight = "0" }) {
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
 
@@ -61,7 +71,7 @@ function DraftEditor({ editorState, setEditorState }) {
       `}</style>
       <style jsx global>{`
         .public-DraftEditor-content {
-          min-height: 8em;
+          min-height: ${minHeight};
         }
       `}</style>
     </div>

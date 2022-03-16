@@ -1,3 +1,7 @@
+export function authLink() {
+  return "/enter";
+}
+
 export function communityLink(name) {
   return `/community/${name}`;
 }

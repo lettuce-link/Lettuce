@@ -91,7 +91,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
           <ValidationMessage message={titleValidation} />
         </Field>
         <Field prompt="Content">
-          <Editor />
+          <Editor minHeight="8em" />
         </Field>
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />

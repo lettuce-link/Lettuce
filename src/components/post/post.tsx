@@ -8,6 +8,7 @@ import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
 import { VerticalVote } from "components/vote";
 import { CommunityView, PostView } from "lemmy-js-client";
+import { CommentSection } from "./comment";
 
 export function FullPost({ postView, communityView, isLoading }) {
   if (isLoading || !postView) {
@@ -23,6 +24,7 @@ export function FullPost({ postView, communityView, isLoading }) {
         <Column gap="8px">
           <PostHead postView={postView} communityView={communityView} />
           <ReadonlyEditor markdown={postView.post.body} />
+          <CommentSection postView={postView} />
         </Column>
       </Padding>
     </Card>

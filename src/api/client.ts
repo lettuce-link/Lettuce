@@ -21,6 +21,12 @@ export interface CreatePostSimple {
   community_id: number;
 }
 
+export interface CreateCommentSimple {
+  content: string;
+  parent_id?: number;
+  post_id: number;
+}
+
 export default class Client {
   http: LemmyHttp;
   auth?: string;
@@ -104,5 +110,9 @@ export default class Client {
 
   likePost(id, vote) {
     return this.http.likePost({ auth: this.auth, post_id: id, score: vote });
+  }
+
+  createComment(comment: CreateCommentSimple) {
+    return this.http.createComment({ auth: this.auth, ...comment });
   }
 }
