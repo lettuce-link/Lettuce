@@ -1,3 +1,4 @@
+import { Badge, SmallIcon } from "components/badge";
 import { CommunityView } from "lemmy-js-client";
 
 export function CommunityBadge({
@@ -5,5 +6,10 @@ export function CommunityBadge({
 }: {
   communityView: CommunityView;
 }) {
-  return <span>{communityView.community.name}</span>;
+  return (
+    <Badge>
+      <SmallIcon />
+      {communityView.community.name}
+    </Badge>
+  );
 }

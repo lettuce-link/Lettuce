@@ -1,4 +1,4 @@
-import { Advice } from "./typography";
+import { SecondaryInfo } from "./typography";
 
 export function ValidationMessage({ message }) {
   if (!message) {
@@ -7,7 +7,7 @@ export function ValidationMessage({ message }) {
 
   return (
     <div className="ValidationMessage">
-      <Advice>{message}</Advice>
+      <SecondaryInfo>{message}</SecondaryInfo>
       <style jsx>{`
         .ValidationMessage {
         }

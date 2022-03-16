@@ -3,6 +3,7 @@ import { useSite } from "api/site";
 import { Button, Link } from "atoms/input";
 import { Row, Column } from "atoms/layout";
 import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
+import { PersonBadge } from "components/person/badge";
 import { PersonSafe } from "lemmy-js-client";
 import Head from "next/head";
 import { useState } from "react";
@@ -67,28 +68,8 @@ function Name({ siteDetails }) {
 function ToolBar({ person }: { person?: PersonSafe }) {
   return (
     <div className="ToolBar">
-      {person ? <PersonBadge person={person} /> : <AuthLink />}
+      {person ? <UserMenu person={person} /> : <AuthLink />}
       <style jsx>{``}</style>
-    </div>
-  );
-}
-
-function PersonBadge({ person }: { person: PersonSafe }) {
-  const [isOpen, setOpen] = useState(false);
-  const logout = useLogout();
-
-  return (
-    <div className="Person">
-      <PopupTarget setOpen={setOpen}>
-        {person.name}
-        <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>
-          <Column gap="8px" align="end">
-            <Link href="#">Profile</Link>
-            <Link href="#">Settings</Link>
-            <Button onClick={logout}>Log Out</Button>
-          </Column>
-        </Popup>
-      </PopupTarget>
     </div>
   );
 }
@@ -97,6 +78,26 @@ function AuthLink() {
   return (
     <div className="AuthLink">
       <Link href="/enter">Login</Link>
+    </div>
+  );
+}
+
+function UserMenu({ person }: { person: PersonSafe }) {
+  const [isOpen, setOpen] = useState(false);
+  const logout = useLogout();
+
+  return (
+    <div className="Person">
+      <PopupTarget setOpen={setOpen}>
+        <PersonBadge person={person} />
+        <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>
+          <Column gap="8px" align="end">
+            <Link href="#">Profile</Link>
+            <Link href="#">Settings</Link>
+            <Button onClick={logout}>Log Out</Button>
+          </Column>
+        </Popup>
+      </PopupTarget>
     </div>
   );
 }

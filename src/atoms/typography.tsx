@@ -29,15 +29,15 @@ export function H2({ children }) {
   );
 }
 
-export function Advice({ children }) {
+export function SecondaryInfo({ children }) {
   return (
-    <p className="Advice">
+    <p className="SecondaryInfo">
       {children}
       <style jsx>{`
-        .Advice {
+        .SecondaryInfo {
           font: var(--font-body);
           color: var(--foreground-weak);
-          margin: 8px 0;
+          margin: 0;
         }
       `}</style>
     </p>

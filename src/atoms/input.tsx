@@ -10,6 +10,11 @@ export function Form({ children, onSubmit }) {
       }}
     >
       {children}
+      <style jsx>{`
+        form {
+          margin: 8px 0;
+        }
+      `}</style>
     </form>
   );
 }
@@ -53,6 +58,8 @@ export function TextInput({ type = "text", value, setValue }) {
 
           width: 100%;
           box-sizing: border-box;
+
+          margin: 0 0 8px;
         }
       `}</style>
     </>

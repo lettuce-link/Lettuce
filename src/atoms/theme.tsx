@@ -19,8 +19,8 @@ export function Theme() {
         --font-heading: 800 32px "Inter", sans-serif;
         --font-heading-light: 300 32px "Inter", sans-serif;
 
-        --font-body: 400 16px "Open Sans", sans-serif;
-        --font-body-bold: 700 16px "Open Sans", sans-serif;
+        --font-body: 400 16px/1.6 "Open Sans", sans-serif;
+        --font-body-bold: 700 16px/1.6 "Open Sans", sans-serif;
 
         --size-large: 32px;
         --size-medium: 16px;
@@ -45,6 +45,14 @@ export function Theme() {
         background: var(--background-weak);
         font: var(--font-body);
         color: var(--foreground-strong);
+      }
+
+      h1 {
+        font: var(--font-heading);
+      }
+
+      h2 {
+        font: var(--font-heading-light);
       }
 
       svg {

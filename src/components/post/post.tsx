@@ -2,7 +2,7 @@ import { useSetPostVote } from "api/post";
 import { Card } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
-import { H1 } from "atoms/typography";
+import { H1, SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { ReadonlyEditor } from "components/editor";
 import { VerticalVote } from "components/vote";
@@ -19,7 +19,7 @@ export function FullPost({ postView, communityView, isLoading }) {
   return (
     <Card>
       <Padding>
-        <Column>
+        <Column gap="8px">
           <PostHead postView={postView} communityView={communityView} />
           <ReadonlyEditor markdown={postView.post.body} />
         </Column>
@@ -51,12 +51,16 @@ function PostHead({
       <Column gap="8px">
         <h1 className="title">{postView.post.name}</h1>
         <Row>
-          <CommunityBadge communityView={communityView} />
+          <SecondaryInfo>
+            Posted in <CommunityBadge communityView={communityView} />
+          </SecondaryInfo>
         </Row>
       </Column>
 
       <style jsx>{`
         .title {
+          // font: var(--font-heading);
+
           margin: 0;
           line-height: 1;
         }

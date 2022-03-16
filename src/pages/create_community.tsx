@@ -4,7 +4,7 @@ import { Card, ErrorMessage } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, Link, Submit, TextInput } from "atoms/input";
 import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
-import { Advice, H1 } from "atoms/typography";
+import { SecondaryInfo, H1 } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import Router from "next/router";
 import { useCallback, useState } from "react";
@@ -108,7 +108,7 @@ function CreateCommunityWidget() {
 
         showSuccess("Community created!");
 
-        Router.push(communityLink(previousSubmission));
+        Router.push(communityLink(name));
       }
     });
   }, [name, client]);
@@ -116,10 +116,10 @@ function CreateCommunityWidget() {
   return (
     <>
       <H1>New Community</H1>
-      <Advice>
+      <SecondaryInfo>
         A place where people with similar interests come togeter to share posts
         and chat.
-      </Advice>
+      </SecondaryInfo>
       <Form onSubmit={onSubmit}>
         <Column>
           <Field prompt="Name">

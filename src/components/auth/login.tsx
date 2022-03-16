@@ -2,7 +2,7 @@ import { useClient, useAuth } from "api/auth";
 import { ErrorMessage } from "atoms/card";
 import { LinkButton, Form, Field, TextInput, Submit } from "atoms/input";
 import { Column, Row } from "atoms/layout";
-import { H1, Advice } from "atoms/typography";
+import { H1, SecondaryInfo } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import { useState, useCallback } from "react";
 import { View } from "./view";
@@ -119,12 +119,12 @@ export function LoginForm({
             <PasswordError error={error} setView={setView} />
           </Field>
           <Row justify="space-between">
-            <Advice>
+            <SecondaryInfo>
               New here?{" "}
               <LinkButton onClick={() => setView(View.Join)}>
                 Join us
               </LinkButton>
-            </Advice>
+            </SecondaryInfo>
             <Submit value="Login" />
           </Row>
         </Column>

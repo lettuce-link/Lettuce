@@ -3,7 +3,7 @@ import { ErrorMessage } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, LinkButton, Submit, TextInput } from "atoms/input";
 import { Column, Row } from "atoms/layout";
-import { Advice, H1 } from "atoms/typography";
+import { SecondaryInfo, H1 } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import { useCallback, useState } from "react";
 import { useCaptcha } from "./captcha";
@@ -163,10 +163,10 @@ export function Register({
             </Field>
           )}
           <Row justify="space-between">
-            <Advice>
+            <SecondaryInfo>
               Got an account?{" "}
               <LinkButton onClick={() => setView(View.Login)}>Login</LinkButton>
-            </Advice>
+            </SecondaryInfo>
             <Submit value="Join" disabled={!isValid} />
           </Row>
         </Column>

@@ -32,7 +32,7 @@ export function MenuButton() {
 function Menu() {
   return (
     <Column gap="8px" align="end">
-      <Link href="create_community">Create Community</Link>
+      <Link href="/create_community">Create Community</Link>
     </Column>
   );
 }
