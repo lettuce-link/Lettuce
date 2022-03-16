@@ -7,9 +7,6 @@ import { FullPost } from "components/post/post";
 
 export function ChannelView({ communityView, isLoading, infinitePosts }) {
   const [selectedPost, setSelectedPost] = useState(null);
-  const { post, isLoading: isPostLoading } = usePost(selectedPost);
-
-  console.log(selectedPost, post);
 
   return (
     <Split
@@ -23,12 +20,7 @@ export function ChannelView({ communityView, isLoading, infinitePosts }) {
         />
       }
       second={
-        <FullPost
-          postView={post?.post_view}
-          communityView={communityView}
-          comments={post?.comments}
-          isLoading={isPostLoading}
-        />
+        <Contents selectedPost={selectedPost} communityView={communityView} />
       }
     />
   );
@@ -77,7 +69,9 @@ function Channels({
         .Channels {
           background: var(--background-shade);
           padding: 16px;
+
           height: 100%;
+          overflow-y: scroll;
         }
 
         ol {
@@ -100,6 +94,35 @@ function Channels({
   );
 }
 
+export function Contents({ selectedPost, communityView }) {
+  const { post, isLoading: isPostLoading } = usePost(selectedPost);
+
+  if (selectedPost) {
+    return (
+      <div className="Contents-post">
+        <FullPost
+          postView={post?.post_view}
+          communityView={communityView}
+          comments={post?.comments}
+          isLoading={isPostLoading}
+        />
+
+        <style jsx>{`
+          .Contents-post {
+            background: var(--background-strong);
+
+            height: 100%;
+
+            overflow-y: scroll;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 function Post() {
   return <>Post</>;
 }
@@ -118,15 +141,13 @@ export function Split({ first, second }) {
         }
 
         .First {
+          flex-basis: 0;
           flex-grow: 1;
         }
 
         .Second {
+          flex-basis: 0;
           flex-grow: 2;
-        }
-
-        .First {
-          max-width: 400px;
         }
       `}</style>
     </div>

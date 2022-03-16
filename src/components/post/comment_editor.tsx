@@ -1,5 +1,5 @@
 import { useClient, useIsLoggedIn } from "api/auth";
-import { authLink } from "api/link";
+import { authLink } from "util/link";
 import { Field, Form, Link, Submit } from "atoms/input";
 import { Column, Row } from "atoms/layout";
 import { SecondaryInfo } from "atoms/typography";

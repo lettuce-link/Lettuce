@@ -17,15 +17,13 @@ export function FullPost({ postView, communityView, comments, isLoading }) {
   }
 
   return (
-    <Card>
-      <Padding>
-        <Column gap="8px">
-          <PostHead postView={postView} communityView={communityView} />
-          <ReadonlyEditor markdown={postView.post.body} />
-          <CommentSection postView={postView} comments={comments} />
-        </Column>
-      </Padding>
-    </Card>
+    <Padding>
+      <Column gap="8px">
+        <PostHead postView={postView} communityView={communityView} />
+        <ReadonlyEditor markdown={postView.post.body} />
+        <CommentSection postView={postView} comments={comments} />
+      </Column>
+    </Padding>
   );
 }
 

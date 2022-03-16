@@ -13,10 +13,13 @@ import { CommentReply, PostAddComment } from "./comment_editor";
 
 export function CommentSection({ postView, comments }) {
   return (
-    <Column gap="8px">
-      <PostAddComment postView={postView} />
-      <CommentTree postView={postView} comments={comments} />
-    </Column>
+    <section>
+      <Column gap="8px">
+        <H3>Comments</H3>
+        <PostAddComment postView={postView} />
+        <CommentTree postView={postView} comments={comments} />
+      </Column>
+    </section>
   );
 }
 
@@ -71,16 +74,9 @@ function CommentTree({
 }) {
   const { commentMap, topLevel } = useTree(comments);
   return (
-    <section>
-      <H3>Comments</H3>
-      <div>
-        <CommentList
-          ids={topLevel}
-          commentMap={commentMap}
-          postView={postView}
-        />
-      </div>
-    </section>
+    <div>
+      <CommentList ids={topLevel} commentMap={commentMap} postView={postView} />
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useAuthGuard, useClient } from "api/auth";
-import { communityLink } from "api/link";
+import { communityLink } from "util/link";
 import { Card, ErrorMessage } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, Link, Submit, TextInput } from "atoms/input";

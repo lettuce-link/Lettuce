@@ -1,4 +1,4 @@
-import { newPostLink } from "api/link";
+import { newPostLink } from "util/link";
 import { Card, SelectableCard } from "atoms/card";
 import { Button } from "atoms/input";
 import { Padding, Row } from "atoms/layout";

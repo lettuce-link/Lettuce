@@ -1,11 +1,12 @@
 import { useCommunity } from "api/community";
 import { useCommunityPosts } from "api/posts";
-import { Padding } from "atoms/layout";
-import { AboutCard } from "components/community/about";
 import { ChannelView } from "components/community/channel_view";
+import { useScrollLimit } from "components/scroll_limit";
 import { useRouter } from "next/router";
 
 export default function CommunityPage() {
+  useScrollLimit();
+
   const router = useRouter();
 
   const { community_name: name } = router.query;

@@ -1,7 +1,7 @@
 import { ListingType, Post, PostView, SortType } from "lemmy-js-client";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useAuthRequest } from "./auth";
+import { useAuth, useAuthRequest } from "./auth";
 
 const PAGE_SIZE = 20;
 
@@ -25,18 +25,20 @@ export function usePosts({
   saved_only = false,
   sort = SortType.Active,
 }: Filter): InfinitePosts {
+  const [auth] = useAuth();
+
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // reset everything when filters change
+  // reset everything when user logs in/out or filters change
   useEffect(() => {
     setPosts([]);
     setLoading(false);
     setHasMore(true);
-  }, [type_, community_name, saved_only, sort]);
+  }, [auth, type_, community_name, saved_only, sort]);
 
   useAuthRequest(
     (client) => {
