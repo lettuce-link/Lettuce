@@ -1,16 +1,15 @@
 import { useSetPostVote } from "api/post";
-import { Card } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
-import { H1, SecondaryInfo } from "atoms/typography";
+import { SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
 import { VerticalVote } from "components/vote";
-import { CommunityView, PostView } from "lemmy-js-client";
+import { PostView } from "lemmy-js-client";
 import { CommentSection } from "./comment";
 
-export function FullPost({ postView, communityView, comments, isLoading }) {
+export function FullPost({ postView, comments, isLoading }) {
   if (isLoading || !postView) {
     // todo better loading state
     return null;
@@ -19,7 +18,7 @@ export function FullPost({ postView, communityView, comments, isLoading }) {
   return (
     <Padding>
       <Column gap="8px">
-        <PostHead postView={postView} communityView={communityView} />
+        <PostHead postView={postView} />
         <ReadonlyEditor markdown={postView.post.body} />
         <CommentSection postView={postView} comments={comments} />
       </Column>
@@ -27,13 +26,7 @@ export function FullPost({ postView, communityView, comments, isLoading }) {
   );
 }
 
-function PostHead({
-  postView,
-  communityView,
-}: {
-  postView: PostView;
-  communityView: CommunityView;
-}) {
+function PostHead({ postView }: { postView: PostView }) {
   const setVote = useSetPostVote(postView.post.id);
 
   return (
@@ -52,7 +45,7 @@ function PostHead({
         <Row>
           <SecondaryInfo>
             Posted by <PersonBadge person={postView.creator} /> in{" "}
-            <CommunityBadge communityView={communityView} />
+            <CommunityBadge community={postView.community} />
           </SecondaryInfo>
         </Row>
       </Column>

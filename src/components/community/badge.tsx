@@ -1,15 +1,11 @@
 import { Badge, SmallIcon } from "components/badge";
-import { CommunityView } from "lemmy-js-client";
+import { CommunitySafe, CommunityView } from "lemmy-js-client";
 
-export function CommunityBadge({
-  communityView,
-}: {
-  communityView: CommunityView;
-}) {
+export function CommunityBadge({ community }: { community: CommunitySafe }) {
   return (
     <Badge>
       <SmallIcon />
-      {communityView.community.name}
+      {community.name}
     </Badge>
   );
 }

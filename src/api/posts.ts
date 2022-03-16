@@ -50,6 +50,10 @@ export function usePosts({
         .getPosts({
           page: currentPage,
           limit: PAGE_SIZE,
+          type_,
+          sort,
+          community_name,
+          saved_only,
         })
         .then((response) => {
           if (isCancelled) {

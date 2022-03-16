@@ -10,15 +10,14 @@ import { PostTitle } from "./post";
 
 export function PostThumbnail({
   postView,
-  communityView,
   isSelected,
   onSelect,
 }: {
   postView: PostView;
-  communityView: CommunityView;
   isSelected;
   onSelect;
 }) {
+  console.log(postView);
   return (
     <SelectableCard isSelected={isSelected} onSelect={onSelect}>
       <Padding padding="8px">
@@ -27,7 +26,7 @@ export function PostThumbnail({
             <PostTitle postView={postView} isCompact />
             <InfoList>
               <PersonBadge person={postView.creator} />
-              <CommunityBadge communityView={communityView} />
+              <CommunityBadge community={postView.community} />
             </InfoList>
           </Column>
         </Row>
