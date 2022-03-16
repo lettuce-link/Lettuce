@@ -44,9 +44,11 @@ export function PostAddComment({ postView }: { postView: PostView }) {
 export function CommentReply({
   comment,
   postView,
+  onSuccess,
 }: {
   comment: CommentView;
   postView: PostView;
+  onSuccess;
 }) {
   const isLoggedIn = useIsLoggedIn();
   const client = useClient();
@@ -65,6 +67,7 @@ export function CommentReply({
       .then((response) => {
         clearContents();
         showSuccess("Your reply has been posted");
+        onSuccess();
       });
   }
 

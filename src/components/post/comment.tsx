@@ -8,6 +8,7 @@ import { PersonBadge } from "components/person/badge";
 import { HorizontalVote } from "components/vote";
 import { Comment, CommentView, PostView } from "lemmy-js-client";
 import { useCallback, useMemo, useState } from "react";
+import { useToggle } from "react-use";
 import { CommentReply, PostAddComment } from "./comment_editor";
 
 export function CommentSection({ postView, comments }) {
@@ -153,8 +154,7 @@ function CommentActions({
 
   const setMyVote = useSetCommentVote(comment.comment.id);
 
-  const [isReplyOpen, setReplyOpen] = useState(false);
-  const toggleReplyOpen = useCallback(() => setReplyOpen((x) => !x), []);
+  const [isReplyOpen, toggleReplyOpen] = useToggle(false);
 
   const { upvotes, downvotes } = comment.counts;
   const myVote = comment.my_vote || 0;
@@ -170,7 +170,13 @@ function CommentActions({
         />
         {isLoggedIn && <ShyButton onClick={toggleReplyOpen}>Reply</ShyButton>}
       </Row>
-      {isReplyOpen && <CommentReply comment={comment} postView={postView} />}
+      {isReplyOpen && (
+        <CommentReply
+          comment={comment}
+          postView={postView}
+          onSuccess={() => toggleReplyOpen(false)}
+        />
+      )}
     </Column>
   );
 }
