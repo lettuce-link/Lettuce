@@ -48,6 +48,6 @@ export function useSetPostVote(id) {
         return true;
       });
     },
-    [id, useIsLoggedIn, client]
+    [id, isLoggedIn, client]
   );
 }

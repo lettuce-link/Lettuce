@@ -1,37 +1,55 @@
 import { RevealButton } from "atoms/input";
-import { Column } from "atoms/layout";
+import { Column, Row } from "atoms/layout";
 import { useCallback, useEffect, useState } from "react";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
-export function VerticalVote({ upvotes, downvotes, myVote, setMyVote }) {
-  const [optimisticMyVote, setOptimistic] = useState(myVote);
-
-  useEffect(() => {
-    setOptimistic(myVote);
-  }, [myVote]);
-
-  // Untill the server says otherwise, assume that all vote operations succeed
-  const optimisticScore = upvotes - downvotes + (optimisticMyVote - myVote);
-
-  const upvote = useCallback(() => {
-    const newVote = optimisticMyVote == 1 ? 0 : 1;
-    setMyVote(newVote);
-    setOptimistic(newVote);
-  }, [optimisticMyVote, setMyVote]);
-
-  const downvote = useCallback(() => {
-    const newVote = optimisticMyVote == -1 ? 0 : -1;
-    setMyVote(newVote);
-    setOptimistic(newVote);
-  }, [optimisticMyVote, setMyVote]);
-
+export const VerticalVote = makeVoteWidgetComponent(({ children }) => {
   return (
     <Column gap="2px" align="center">
-      <UpDoot onClick={upvote} selected={optimisticMyVote == 1} />
-      <Score>{optimisticScore}</Score>
-      <DownDoot onClick={downvote} selected={optimisticMyVote == -1} />
+      {children}
     </Column>
   );
+});
+
+export const HorizontalVote = makeVoteWidgetComponent(({ children }) => {
+  return (
+    <Row gap="4px" align="center">
+      {children}
+    </Row>
+  );
+});
+
+function makeVoteWidgetComponent(Layout) {
+  return ({ upvotes, downvotes, myVote, setMyVote }) => {
+    const [optimisticMyVote, setOptimistic] = useState(myVote);
+
+    useEffect(() => {
+      setOptimistic(myVote);
+    }, [myVote]);
+
+    // Untill the server says otherwise, assume that all vote operations succeed
+    const optimisticScore = upvotes - downvotes + (optimisticMyVote - myVote);
+
+    const upvote = useCallback(() => {
+      const newVote = optimisticMyVote == 1 ? 0 : 1;
+      setMyVote(newVote);
+      setOptimistic(newVote);
+    }, [optimisticMyVote, setMyVote]);
+
+    const downvote = useCallback(() => {
+      const newVote = optimisticMyVote == -1 ? 0 : -1;
+      setMyVote(newVote);
+      setOptimistic(newVote);
+    }, [optimisticMyVote, setMyVote]);
+
+    return (
+      <Layout>
+        <UpDoot onClick={upvote} selected={optimisticMyVote == 1} />
+        <Score>{optimisticScore}</Score>
+        <DownDoot onClick={downvote} selected={optimisticMyVote == -1} />
+      </Layout>
+    );
+  };
 }
 
 function Score({ children }) {
@@ -41,6 +59,9 @@ function Score({ children }) {
       <style jsx>{`
         .Score {
           line-height: 1;
+
+          min-width: 16px;
+          text-align: center;
         }
       `}</style>
     </span>

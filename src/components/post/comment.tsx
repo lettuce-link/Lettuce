@@ -1,7 +1,9 @@
-import { Column } from "atoms/layout";
+import { useSetCommentVote } from "api/comment";
+import { Column, Row } from "atoms/layout";
 import { H2, H3 } from "atoms/typography";
 import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
+import { HorizontalVote } from "components/vote";
 import { Comment, CommentView, PostView } from "lemmy-js-client";
 import { useMemo } from "react";
 import { PostAddComment } from "./comment_editor";
@@ -125,5 +127,18 @@ function CommentHead({ comment }: { comment: CommentView }) {
 }
 
 function CommentActions({ comment }: { comment: CommentView }) {
-  return null;
+  const setMyVote = useSetCommentVote(comment.comment.id);
+
+  const { upvotes, downvotes } = comment.counts;
+  const myVote = comment.my_vote || 0;
+  return (
+    <Row>
+      <HorizontalVote
+        upvotes={upvotes}
+        downvotes={downvotes}
+        myVote={myVote}
+        setMyVote={setMyVote}
+      />
+    </Row>
+  );
 }

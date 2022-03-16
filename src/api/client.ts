@@ -115,4 +115,12 @@ export default class Client {
   createComment(comment: CreateCommentSimple) {
     return this.http.createComment({ auth: this.auth, ...comment });
   }
+
+  likeComment(commentId, vote) {
+    return this.http.likeComment({
+      auth: this.auth,
+      comment_id: commentId,
+      score: vote,
+    });
+  }
 }
