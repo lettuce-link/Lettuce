@@ -12,14 +12,18 @@ import { useCallback, useState } from "react";
 import { useShowToast } from "components/toast";
 import { ReadonlyEditor } from "components/editor";
 import { PersonBadge } from "components/person/badge";
+import { RiShieldFill } from "react-icons/ri";
+import { useAmModeratorIn } from "api/site";
 
 export function CommunityThumbnail({ community, isSelected, onSelect }) {
-  if (!community) {
-    return null;
-  }
+  const amModerator = useAmModeratorIn(community.name);
 
   const router = useRouter();
   const openNewPostPage = () => router.push(newPostLink(community.name));
+
+  if (!community) {
+    return null;
+  }
 
   return (
     <SelectableCard isSelected={isSelected} onSelect={onSelect}>
@@ -28,6 +32,11 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
           <H1 margin="0">{community.title}</H1>
           <Row wrap justify="start">
             <Button onClick={openNewPostPage}>New Post</Button>
+            {amModerator && (
+              <Button onClick={openNewPostPage} icon={<RiShieldFill />}>
+                Settings
+              </Button>
+            )}
           </Row>
         </Column>
       </Padding>

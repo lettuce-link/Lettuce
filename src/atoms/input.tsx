@@ -1,5 +1,5 @@
 import InnerLink from "next/link";
-import { Padding } from "./layout";
+import { Padding, Row } from "./layout";
 import { useIsInverted } from "./theme";
 
 export function Form({ children, onSubmit }) {
@@ -108,10 +108,11 @@ export function Submit({ value, disabled = false }) {
   );
 }
 
-export function Button({ children, onClick }) {
+export function Button({ children, onClick, icon = null }) {
   return (
     <>
       <button className="Button" onClick={onClick}>
+        {icon}
         {children}
       </button>
       <style jsx>{`
@@ -125,6 +126,12 @@ export function Button({ children, onClick }) {
 
           font: var(--font-body);
           cursor: pointer;
+        }
+
+        // welcome to css
+        button :global(svg) {
+          margin-bottom: -6px;
+          margin-right: 4px;
         }
       `}</style>
     </>
@@ -252,6 +259,8 @@ export function RevealButton({ children, onClick = noop }) {
 
           border-radius: var(--small-corner-round);
           transition: background var(--transition-quick);
+
+          cursor: pointer;
         }
 
         .RevealButton:hover {

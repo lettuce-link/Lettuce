@@ -25,6 +25,22 @@ export function SiteProvider({ children }) {
 }
 
 type Site = { site?: GetSiteResponse; isLoading: boolean };
-export const useSite = (): Site => {
+export function useSite(): Site {
   return useContext(SiteContext);
-};
+}
+
+export function useMe() {
+  const site = useSite();
+
+  return site.site?.my_user || null;
+}
+
+export function useAmModeratorIn(communityName) {
+  const me = useMe();
+
+  if (!me) {
+    return false;
+  }
+
+  return me.moderates.some((mod) => mod.community.name === communityName);
+}

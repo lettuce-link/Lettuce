@@ -1,5 +1,5 @@
 import { useLogout } from "api/auth";
-import { useSite } from "api/site";
+import { useMe, useSite } from "api/site";
 import { Button, Link, RevealButton } from "atoms/input";
 import { Row, Column, Padding } from "atoms/layout";
 import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
@@ -27,7 +27,7 @@ export function Header() {
         <Name siteDetails={site.site_view?.site} />
       </Row>
 
-      <ToolBar person={site.my_user?.local_user_view.person} />
+      <ToolBar />
 
       <style jsx>{`
         .Header {
@@ -38,7 +38,7 @@ export function Header() {
 
           display: flex;
           justify-content: space-between;
-          align-items: baseline;
+          align-items: center;
 
           z-index: 100;
           position: sticky;
@@ -65,7 +65,10 @@ function Name({ siteDetails }) {
   );
 }
 
-function ToolBar({ person }: { person?: PersonSafe }) {
+function ToolBar() {
+  const me = useMe();
+  const person = me?.local_user_view.person;
+
   return (
     <div className="ToolBar">
       {person ? <UserMenu person={person} /> : <AuthLink />}
