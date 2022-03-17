@@ -77,19 +77,13 @@ function PostHead({ postView }: { postView: PostView }) {
   );
 }
 
-export function PostTitle({ postView, isCompact = false }) {
+export function PostTitle({ postView }) {
   return (
     <h2 className="PostTitle">
       {postView.post.name}
       <style jsx>{`
         .PostTitle {
           font: var(--font-heading-light);
-
-          ${isCompact
-            ? `
-          font-size: var(--size-large);
-          `
-            : ``}
 
           margin: 0;
           line-height: 1;

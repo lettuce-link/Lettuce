@@ -1,4 +1,4 @@
-import { Card, SelectableCard } from "atoms/card";
+import { Card, SelectableBox, SelectableCard } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
 import { InfoList, SecondaryInfo } from "atoms/typography";
@@ -18,11 +18,13 @@ export function PostThumbnail({
   onSelect;
 }) {
   return (
-    <SelectableCard isSelected={isSelected} onSelect={onSelect}>
-      <Padding padding="8px">
+    <SelectableBox isSelected={isSelected} onSelect={onSelect}>
+      <Padding padding="16px 8px">
         <Row gap="16px" align="start">
           <Column gap="8px">
-            <PostTitle postView={postView} isCompact />
+            <div className="PostThumbnail-title" isCompact>
+              {postView.post.name}
+            </div>
             <InfoList>
               <PersonBadge person={postView.creator} />
               <CommunityBadge community={postView.community} />
@@ -30,6 +32,14 @@ export function PostThumbnail({
           </Column>
         </Row>
       </Padding>
-    </SelectableCard>
+
+      <style jsx>{`
+        .PostThumbnail-title {
+          font: var(--font-body-bold);
+          margin: 0;
+          line-height: 1;
+        }
+      `}</style>
+    </SelectableBox>
   );
 }

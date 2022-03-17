@@ -1,5 +1,5 @@
 import { communitySettignsLink, newPostLink } from "util/link";
-import { Card, SelectableCard } from "atoms/card";
+import { Card, SelectableBox, SelectableCard } from "atoms/card";
 import { Button } from "atoms/input";
 import { Column, Padding, Row } from "atoms/layout";
 import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
@@ -33,7 +33,7 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
   }
 
   return (
-    <SelectableCard isSelected={isSelected} onSelect={onSelect}>
+    <SelectableBox isSelected={isSelected} onSelect={onSelect}>
       <Padding padding="16px">
         <Column gap="16px">
           <H1 margin="0">{community.title}</H1>
@@ -47,7 +47,7 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
           </Row>
         </Column>
       </Padding>
-    </SelectableCard>
+    </SelectableBox>
   );
 }
 

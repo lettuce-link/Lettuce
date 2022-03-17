@@ -59,11 +59,13 @@ function Channels({
   return (
     <div className="Channels">
       <ol>
-        <CommunityThumbnail
-          community={communityView?.community}
-          isSelected={selectedPost === null}
-          onSelect={() => setSelectedPost(null)}
-        />
+        <li>
+          <CommunityThumbnail
+            community={communityView?.community}
+            isSelected={selectedPost === null}
+            onSelect={() => setSelectedPost(null)}
+          />
+        </li>
 
         {posts.map((post) => (
           <li key={post.post.id}>
@@ -78,17 +80,15 @@ function Channels({
 
       <style jsx>{`
         .Channels {
-          background: var(--background-shade);
-          padding: 16px;
+          background: var(--background-weak);
 
           height: 100%;
-          overflow-y: scroll;
+          overflow-y: auto;
         }
 
         ol {
           display: flex;
           flex-direction: column;
-          gap: 8px;
         }
 
         ol,
