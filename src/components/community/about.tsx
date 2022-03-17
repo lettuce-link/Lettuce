@@ -1,4 +1,4 @@
-import { newPostLink } from "util/link";
+import { communitySettignsLink, newPostLink } from "util/link";
 import { Card, SelectableCard } from "atoms/card";
 import { Button } from "atoms/input";
 import { Column, Padding, Row } from "atoms/layout";
@@ -19,7 +19,14 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
   const amModerator = useAmModeratorIn(community.name);
 
   const router = useRouter();
-  const openNewPostPage = () => router.push(newPostLink(community.name));
+  const openNewPostPage = useCallback(
+    () => router.push(newPostLink(community.name)),
+    [router, community]
+  );
+  const openSettingsPage = useCallback(
+    () => router.push(communitySettignsLink(community.name)),
+    [router, community]
+  );
 
   if (!community) {
     return null;
@@ -33,7 +40,7 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
           <Row wrap justify="start">
             <Button onClick={openNewPostPage}>New Post</Button>
             {amModerator && (
-              <Button onClick={openNewPostPage} icon={<RiShieldFill />}>
+              <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
                 Settings
               </Button>
             )}

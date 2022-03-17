@@ -75,10 +75,10 @@ export function useAuthGuard(shouldBeLoggedIn = true) {
     if (!shouldBeLoggedIn && isLoggedIn) {
       Router.replace("/");
     }
-  }, []);
+  }, [shouldBeLoggedIn, isLoggedIn]);
 }
 
-export function useClient() {
+export function useClient(): Client {
   const [client, _setAuth] = useContext(AuthContext);
 
   return client;

@@ -27,6 +27,15 @@ export interface CreateCommentSimple {
   post_id: number;
 }
 
+export interface EditCommunitySimple {
+  community_id: number;
+  title?: string;
+  description?: string;
+  icon?: string;
+  banner?: string;
+  nsfw?: boolean;
+}
+
 export default class Client {
   http: LemmyHttp;
   auth?: string;
@@ -133,6 +142,13 @@ export default class Client {
       auth: this.auth,
       community_id: communityId,
       follow: doFollow,
+    });
+  }
+
+  editCommunity(settings: EditCommunitySimple) {
+    return this.http.editCommunity({
+      auth: this.auth,
+      ...settings,
     });
   }
 }

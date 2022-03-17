@@ -3,7 +3,8 @@ import { useCommunityPosts } from "api/posts";
 import { ChannelView } from "./channel_view";
 
 export function CommunityPage({ name }) {
-  const { community: communityResponse, isLoading } = useCommunity(name);
+  const { communityResponse: communityResponse, isLoading } =
+    useCommunity(name);
   const infinitePosts = useCommunityPosts(name);
 
   return (

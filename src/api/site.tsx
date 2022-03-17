@@ -1,5 +1,7 @@
 import { GetSiteResponse } from "lemmy-js-client";
-import { createContext, useContext, useState } from "react";
+import Router from "next/router";
+import { createContext, useContext, useEffect, useState } from "react";
+import { communityLink } from "util/link";
 import { useAuthRequest } from "./auth";
 
 const SiteContext = createContext(undefined);
@@ -43,4 +45,14 @@ export function useAmModeratorIn(communityName) {
   }
 
   return me.moderates.some((mod) => mod.community.name === communityName);
+}
+
+export function useModeratorGuard(communityName) {
+  const amModerator = useAmModeratorIn(communityName);
+
+  useEffect(() => {
+    if (!amModerator) {
+      Router.push(communityLink(communityName));
+    }
+  }, [amModerator]);
 }

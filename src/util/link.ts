@@ -10,6 +10,10 @@ export function newPostLink(community) {
   return `${communityLink(community)}/new_post`;
 }
 
+export function communitySettignsLink(community) {
+  return `${communityLink(community)}/settings`;
+}
+
 export function postLink(postId) {
   return `/post/${postId}`;
 }

@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useAuthRequest } from "./auth";
 
 export function useCommunity(name?: string): {
-  community: GetCommunityResponse;
+  communityResponse: GetCommunityResponse;
   isLoading: boolean;
 } {
-  const [community, setCommunity] = useState(null);
+  const [communityResponse, setCommunity] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useAuthRequest(
@@ -27,5 +27,5 @@ export function useCommunity(name?: string): {
     [name]
   );
 
-  return { community, isLoading };
+  return { communityResponse, isLoading };
 }
