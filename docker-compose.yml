@@ -45,8 +45,8 @@ services:
     volumes:
       - ../lettuce/:/app
     environment:
-      - NEXT_PUBLIC_LEMMY_HTTPS=false
-      - NEXT_PUBLIC_LEMMY_HOST=http://localhost
+      - NEXT_PUBLIC_LEMMY_SECURE=false
+      - NEXT_PUBLIC_LEMMY_HOST=localhost
 
       # for nginx-proxy configuration
       - VIRTUAL_HOST=localhost

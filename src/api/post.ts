@@ -1,11 +1,12 @@
 import { useShowToast } from "components/toast";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   redirectToAuthentication,
   useAuthRequest,
   useClient,
   useIsLoggedIn,
 } from "./auth";
+import { useNewSubscribtion, useNewWebsocketClient } from "./websocket";
 
 export function usePost(id) {
   const [post, setPost] = useState(null);
@@ -25,6 +26,17 @@ export function usePost(id) {
         setLoading(false);
       });
     },
+    [id]
+  );
+
+  useNewSubscribtion(
+    (client) => {
+      if (!id) {
+        return;
+      }
+      client.postJoin(id);
+    },
+    console.log,
     [id]
   );
 

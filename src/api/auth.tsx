@@ -28,8 +28,10 @@ export function ClientProvider({ children }) {
     setClient(makeClient(value));
   }
 
+  const setAuthCallback = useCallback(setAuth, []);
+
   return (
-    <AuthContext.Provider value={[client, setAuth]}>
+    <AuthContext.Provider value={[client, setAuthCallback]}>
       {children}
     </AuthContext.Provider>
   );

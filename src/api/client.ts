@@ -1,7 +1,11 @@
 import { GetPosts, LemmyHttp, LemmyWebsocket } from "lemmy-js-client";
 
-function baseUrl() {
-  return process.env.NEXT_PUBLIC_LEMMY_HOST;
+function baseHttpUrl() {
+  const isSecure = JSON.parse(process.env.NEXT_PUBLIC_LEMMY_SECURE);
+  const protocol = isSecure ? "https" : "http";
+  const domain = process.env.NEXT_PUBLIC_LEMMY_HOST;
+
+  return `${protocol}://${domain}`;
 }
 
 export interface CreateCommunitySimple {
@@ -41,7 +45,7 @@ export default class Client {
   auth?: string;
 
   constructor(token?) {
-    this.http = new LemmyHttp(baseUrl());
+    this.http = new LemmyHttp(baseHttpUrl());
     this.auth = token;
   }
 
@@ -49,12 +53,16 @@ export default class Client {
     return !!this.auth;
   }
 
-  private getAuth(): { auth?: string } {
+  private getOptionalAuthObject(): { auth?: string } {
     if (this.auth) {
       return { auth: this.auth };
     }
 
     return {};
+  }
+
+  getAuth() {
+    return this.auth;
   }
 
   login({ username, password }) {
@@ -87,7 +95,7 @@ export default class Client {
   }
 
   getSite() {
-    return this.http.getSite(this.getAuth());
+    return this.http.getSite(this.getOptionalAuthObject());
   }
 
   getCaptcha() {
@@ -103,12 +111,12 @@ export default class Client {
   }
 
   getCommunity(name: string) {
-    return this.http.getCommunity({ ...this.getAuth(), name });
+    return this.http.getCommunity({ ...this.getOptionalAuthObject(), name });
   }
 
   getPosts(getPosts: GetPosts) {
     return this.http.getPosts({
-      ...this.getAuth(),
+      ...this.getOptionalAuthObject(),
       ...getPosts,
     });
   }
@@ -118,7 +126,7 @@ export default class Client {
   }
 
   getPost(id: number) {
-    return this.http.getPost({ ...this.getAuth(), id });
+    return this.http.getPost({ ...this.getOptionalAuthObject(), id });
   }
 
   likePost(id, vote) {
