@@ -19,7 +19,7 @@ export function CommunityPage({ name }) {
     />
   );
 
-  const aboutContent = (
+  const AboutContent = () => (
     <AboutCommunity
       communityView={communityResponse?.community_view}
       moderators={communityResponse?.moderators}
@@ -30,8 +30,7 @@ export function CommunityPage({ name }) {
   return (
     <ChannelView
       aboutCard={aboutCard}
-      aboutContent={aboutContent}
-      isLoading={isLoading}
+      AboutContent={AboutContent}
       infinitePosts={infinitePosts}
     />
   );

@@ -108,3 +108,18 @@ export function InfoList({ children }) {
     </span>
   );
 }
+
+export function Strong({ children }) {
+  return (
+    <div className="Strong">
+      {children}
+      <style jsx>{`
+        .Strong {
+          font: var(--font-body-bold);
+          margin: 0;
+          line-height: 1;
+        }
+      `}</style>
+    </div>
+  );
+}

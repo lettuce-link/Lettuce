@@ -5,12 +5,7 @@ import { PostThumbnail } from "components/post/thumbnail";
 import { useScrollLimit } from "components/scroll_limit";
 import { useState } from "react";
 
-export function ChannelView({
-  aboutCard,
-  aboutContent,
-  isLoading,
-  infinitePosts,
-}) {
+export function ChannelView({ aboutCard, AboutContent, infinitePosts }) {
   useScrollLimit();
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -19,26 +14,19 @@ export function ChannelView({
       first={
         <Channels
           aboutCard={aboutCard}
-          isLoading={isLoading}
           infinitePosts={infinitePosts}
           selectedPost={selectedPost}
           setSelectedPost={setSelectedPost}
         />
       }
       second={
-        <Contents aboutContent={aboutContent} selectedPost={selectedPost} />
+        <Contents AboutContent={AboutContent} selectedPost={selectedPost} />
       }
     />
   );
 }
 
-function Channels({
-  aboutCard,
-  isLoading,
-  infinitePosts,
-  selectedPost,
-  setSelectedPost,
-}) {
+function Channels({ aboutCard, infinitePosts, selectedPost, setSelectedPost }) {
   const {
     hasMore,
     isLoading: isMoreLoading,
@@ -100,13 +88,13 @@ function Channels({
   );
 }
 
-export function Contents({ aboutContent, selectedPost }) {
+export function Contents({ AboutContent, selectedPost }) {
   const { post, isLoading: isPostLoading } = usePost(selectedPost);
 
   return (
     <div className="Contents-post">
       {selectedPost === null ? (
-        aboutContent
+        <AboutContent />
       ) : (
         <FullPost
           postView={post?.post_view}

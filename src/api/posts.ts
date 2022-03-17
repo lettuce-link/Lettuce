@@ -96,3 +96,10 @@ export function useCommunityPosts(
     saved_only: false,
   });
 }
+
+export function useHomePosts(sort: SortType = SortType.Active): InfinitePosts {
+  return usePosts({
+    sort,
+    type_: ListingType.All,
+  });
+}

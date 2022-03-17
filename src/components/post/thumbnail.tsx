@@ -1,7 +1,7 @@
 import { Card, SelectableBox, SelectableCard } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
-import { InfoList, SecondaryInfo } from "atoms/typography";
+import { InfoList, SecondaryInfo, Strong } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { PersonBadge } from "components/person/badge";
 import { VerticalVote } from "components/vote";
@@ -22,7 +22,7 @@ export function PostThumbnail({
       <Padding padding="16px 8px">
         <Row gap="16px" align="start">
           <Column gap="8px">
-            <div className="PostThumbnail-title">{postView.post.name}</div>
+            <Strong>{postView.post.name}</Strong>
             <InfoList>
               <PersonBadge person={postView.creator} />
               <CommunityBadge community={postView.community} />
@@ -30,14 +30,6 @@ export function PostThumbnail({
           </Column>
         </Row>
       </Padding>
-
-      <style jsx>{`
-        .PostThumbnail-title {
-          font: var(--font-body-bold);
-          margin: 0;
-          line-height: 1;
-        }
-      `}</style>
     </SelectableBox>
   );
 }

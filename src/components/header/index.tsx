@@ -58,7 +58,7 @@ function Name({ siteDetails }) {
       {siteDetails.name}
       <style jsx>{`
         .Name {
-          font: var(--font-heading);
+          font: var(--font-heading-light);
         }
       `}</style>
     </div>
