@@ -24,10 +24,12 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
   return (
     <SelectableCard isSelected={isSelected} onSelect={onSelect}>
       <Padding padding="16px">
-        <Row wrap justify="space-between">
+        <Column gap="16px">
           <H1 margin="0">{community.title}</H1>
-          <Button onClick={openNewPostPage}>New Post</Button>
-        </Row>
+          <Row wrap justify="start">
+            <Button onClick={openNewPostPage}>New Post</Button>
+          </Row>
+        </Column>
       </Padding>
     </SelectableCard>
   );
@@ -128,7 +130,10 @@ function CommunityModerators({
     <div>
       <H3>Moderators</H3>
       {moderators.map((moderator) => (
-        <PersonBadge person={moderator.moderator} />
+        <PersonBadge
+          key={moderator.moderator.id}
+          person={moderator.moderator}
+        />
       ))}
     </div>
   );

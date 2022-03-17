@@ -47,7 +47,7 @@ export function H3({ children }) {
 
 export function SecondaryInfo({ children }) {
   return (
-    <p className="SecondaryInfo">
+    <div className="SecondaryInfo">
       {children}
       <style jsx>{`
         .SecondaryInfo {
@@ -56,7 +56,7 @@ export function SecondaryInfo({ children }) {
           margin: 0;
         }
       `}</style>
-    </p>
+    </div>
   );
 }
 
