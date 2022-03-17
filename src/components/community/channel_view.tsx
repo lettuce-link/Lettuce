@@ -89,7 +89,11 @@ function Channels({ aboutCard, infinitePosts, selectedPost, setSelectedPost }) {
 }
 
 export function Contents({ AboutContent, selectedPost }) {
-  const { post, isLoading: isPostLoading } = usePost(selectedPost);
+  const {
+    post_view,
+    comments,
+    isLoading: isPostLoading,
+  } = usePost(selectedPost);
 
   return (
     <div className="Contents-post">
@@ -97,8 +101,8 @@ export function Contents({ AboutContent, selectedPost }) {
         <AboutContent />
       ) : (
         <FullPost
-          postView={post?.post_view}
-          comments={post?.comments}
+          postView={post_view}
+          comments={comments}
           isLoading={isPostLoading}
         />
       )}

@@ -53,7 +53,10 @@ export function useIsLoggedIn() {
  * @param requester
  * @param dependencies
  */
-export function useAuthRequest(requester, dependencies = []) {
+export function useAuthRequest(
+  requester: (c: Client) => any,
+  dependencies = []
+) {
   const client = useClient();
 
   useEffect(() => {

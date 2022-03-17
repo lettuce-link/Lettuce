@@ -11,15 +11,15 @@ import { PostView } from "lemmy-js-client";
 import { CommentSection } from "./comment";
 
 export function PostPage({ id }) {
-  const { post, isLoading } = usePost(id);
+  const { post_view, comments, isLoading } = usePost(id);
 
   return (
     <main>
       <WidthLimit limit="var(--large-content)">
         <Card>
           <FullPost
-            postView={post?.post_view}
-            comments={post?.comments}
+            postView={post_view}
+            comments={comments}
             isLoading={isLoading}
           />
         </Card>

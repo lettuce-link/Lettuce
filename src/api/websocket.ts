@@ -1,4 +1,4 @@
-import { LemmyWebsocket } from "lemmy-js-client";
+import { LemmyWebsocket, WebSocketResponse } from "lemmy-js-client";
 import { useEffect, useState } from "react";
 import { useClient } from "./auth";
 
@@ -12,24 +12,32 @@ function baseWsUrl() {
 
 class WebsocketClient {
   api: LemmyWebsocket;
-  websocket: WebSocket;
+  websocket: Promise<WebSocket>;
   auth?: string;
 
   constructor(onMessage, token?) {
     this.api = new LemmyWebsocket();
-    this.websocket = new WebSocket(`${baseWsUrl()}/api/v3/ws`);
-    this.websocket.onmessage = (message) => onMessage(JSON.parse(message.data));
-    this.auth = token;
 
-    this.websocket.onerror = (error) => console.error(error);
+    this.websocket = new Promise(function (resolve, reject) {
+      const ws = new WebSocket(`${baseWsUrl()}/api/v3/ws`);
+      ws.onopen = function () {
+        resolve(ws);
+      };
+      ws.onerror = function (err) {
+        reject(err);
+      };
+
+      ws.onmessage = (message) => onMessage(JSON.parse(message.data));
+    });
+    this.auth = token;
   }
 
   close() {
-    this.websocket.close();
+    this.websocket.then((ws) => ws.close());
   }
 
   private send(message: string) {
-    this.websocket.send(message);
+    this.websocket.then((ws) => ws.send(message));
   }
 
   postJoin(id) {
@@ -62,9 +70,14 @@ export function useNewWebsocketClient(onMessage): WebsocketClient {
   return websocketClient;
 }
 
+export interface Message {
+  op: string;
+  data: any;
+}
+
 export function useNewSubscribtion(
   setup: (c: WebsocketClient) => void,
-  onMessage: (message) => void,
+  onMessage: (message: Message) => void,
   dependencies
 ) {
   const client = useNewWebsocketClient(onMessage);

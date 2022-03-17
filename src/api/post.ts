@@ -6,10 +6,18 @@ import {
   useClient,
   useIsLoggedIn,
 } from "./auth";
-import { useNewSubscribtion, useNewWebsocketClient } from "./websocket";
+import {
+  useNewSubscribtion as useNewSubscription,
+  useNewWebsocketClient,
+} from "./websocket";
+
+enum PostUpdateType {
+  Join = "PostJoin",
+  CreateComment = "CreateComment",
+}
 
 export function usePost(id) {
-  const [post, setPost] = useState(null);
+  const [postResponse, setPostResponse] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   useAuthRequest(
@@ -17,30 +25,42 @@ export function usePost(id) {
       setLoading(true);
 
       if (!id) {
-        setPost(null);
+        setPostResponse(null);
         return;
       }
 
       client.getPost(id).then((response) => {
-        setPost(response);
+        setPostResponse(response);
         setLoading(false);
       });
     },
     [id]
   );
 
-  useNewSubscribtion(
+  function addComment(newCommentView) {
+    setPostResponse((currentResponse) => ({
+      ...currentResponse,
+      comments: [...currentResponse.comments, newCommentView],
+    }));
+  }
+
+  useNewSubscription(
     (client) => {
       if (!id) {
         return;
       }
       client.postJoin(id);
     },
-    console.log,
+    (message) => {
+      if (message.op === PostUpdateType.CreateComment) {
+        const newComment = message.data.comment_view;
+        addComment(newComment);
+      }
+    },
     [id]
   );
 
-  return { post, isLoading };
+  return { ...(postResponse || {}), isLoading };
 }
 
 export function useSetPostVote(id) {
