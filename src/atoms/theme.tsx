@@ -41,6 +41,7 @@ export function Theme() {
         --opacity-fade: 0.5;
 
         --shadow-large: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
+        --shadow-small: 0 2px 8px 0px rgba(0, 0, 0, 0.15);
 
         --transition-quick: 0.2s ease-out;
       }

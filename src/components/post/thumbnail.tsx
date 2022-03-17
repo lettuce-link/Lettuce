@@ -22,9 +22,7 @@ export function PostThumbnail({
       <Padding padding="16px 8px">
         <Row gap="16px" align="start">
           <Column gap="8px">
-            <div className="PostThumbnail-title" isCompact>
-              {postView.post.name}
-            </div>
+            <div className="PostThumbnail-title">{postView.post.name}</div>
             <InfoList>
               <PersonBadge person={postView.creator} />
               <CommunityBadge community={postView.community} />

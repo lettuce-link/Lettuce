@@ -59,7 +59,7 @@ function Channels({
   return (
     <div className="Channels">
       <ol>
-        <li>
+        <li className="Channels-sticky">
           <CommunityThumbnail
             community={communityView?.community}
             isSelected={selectedPost === null}
@@ -97,8 +97,12 @@ function Channels({
           padding: 0;
         }
 
-        li {
-          display: contents;
+        .Channels-sticky {
+          position: sticky;
+          top: 0;
+          z-index: 10;
+
+          box-shadow: var(--shadow-small);
         }
       `}</style>
     </div>
