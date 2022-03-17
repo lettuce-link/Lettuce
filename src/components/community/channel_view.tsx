@@ -5,7 +5,13 @@ import { usePost } from "api/post";
 import { FullPost } from "components/post/post";
 import { useScrollLimit } from "components/scroll_limit";
 
-export function ChannelView({ communityView, isLoading, infinitePosts }) {
+export function ChannelView({
+  communityView,
+  isLoading,
+  infinitePosts,
+  moderators,
+  online,
+}) {
   useScrollLimit();
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -21,7 +27,12 @@ export function ChannelView({ communityView, isLoading, infinitePosts }) {
         />
       }
       second={
-        <Contents selectedPost={selectedPost} communityView={communityView} />
+        <Contents
+          selectedPost={selectedPost}
+          communityView={communityView}
+          moderators={moderators}
+          online={online}
+        />
       }
     />
   );
@@ -94,13 +105,17 @@ function Channels({
   );
 }
 
-export function Contents({ selectedPost, communityView }) {
+export function Contents({ selectedPost, communityView, moderators, online }) {
   const { post, isLoading: isPostLoading } = usePost(selectedPost);
 
   return (
     <div className="Contents-post">
       {selectedPost === null ? (
-        <AboutCommunity communityView={communityView} />
+        <AboutCommunity
+          communityView={communityView}
+          moderators={moderators}
+          online={online}
+        />
       ) : (
         <FullPost
           postView={post?.post_view}

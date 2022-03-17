@@ -101,12 +101,8 @@ export function InfoList({ children }) {
       </Row>
 
       <style jsx>{`
-        .InfoList {
-          font-size: var(--size-small);
-        }
-
         .InfoList-dot {
-          color: var(--foreground-weak);
+          opacity: var(--opacity-fade);
         }
       `}</style>
     </span>
