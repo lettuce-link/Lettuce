@@ -40,6 +40,19 @@ export interface EditCommunitySimple {
   nsfw?: boolean;
 }
 
+export interface EditSiteSimple {
+  name?: string;
+  sidebar?: string;
+  description?: string;
+  icon?: string;
+  banner?: string;
+  enable_downvotes?: boolean;
+  enable_nsfw?: boolean;
+  community_creation_admin_only?: boolean;
+  private_instance?: boolean;
+  default_theme?: string;
+}
+
 export default class Client {
   http: LemmyHttp;
   auth?: string;
@@ -157,6 +170,13 @@ export default class Client {
     return this.http.editCommunity({
       auth: this.auth,
       ...settings,
+    });
+  }
+
+  editSite(site: EditSiteSimple) {
+    return this.http.editSite({
+      ...site,
+      auth: this.auth,
     });
   }
 }

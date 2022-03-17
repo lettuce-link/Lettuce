@@ -1,3 +1,7 @@
+export function homeLink() {
+  return "/";
+}
+
 export function authLink() {
   return "/enter";
 }
@@ -12,6 +16,10 @@ export function newPostLink(community) {
 
 export function communitySettignsLink(community) {
   return `${communityLink(community)}/settings`;
+}
+
+export function siteSettingsLink() {
+  return "/site_settings";
 }
 
 export function postLink(postId) {

@@ -24,7 +24,9 @@ export function Header() {
       </Head>
       <Row align="center">
         <MenuButton />
-        <Name siteDetails={site.site_view?.site} />
+        <Link href="/">
+          <Name siteDetails={site.site_view?.site} />
+        </Link>
       </Row>
 
       <ToolBar />
@@ -59,6 +61,7 @@ function Name({ siteDetails }) {
       <style jsx>{`
         .Name {
           font: var(--font-heading-light);
+          color: var(--foreground-strong);
         }
       `}</style>
     </div>

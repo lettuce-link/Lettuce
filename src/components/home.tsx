@@ -1,17 +1,24 @@
 import { useHomePosts } from "api/posts";
 import { useSite } from "api/site";
-import { Padding, Column, Row } from "atoms/layout";
-import { H2, SecondaryInfo, InfoList, H3, H1 } from "atoms/typography";
+import { Button } from "atoms/input";
+import { Column, Padding, Row } from "atoms/layout";
+import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
 import { SiteView } from "lemmy-js-client";
-import { CommunityThumbnail, AboutCommunity } from "./community/about";
-import { CommunityBadge } from "./community/badge";
+import router from "next/router";
+import { useCallback } from "react";
+import { RiShieldFill } from "react-icons/ri";
+import { siteSettingsLink } from "util/link";
 import { ChannelView } from "./community/channel_view";
-import { CommunityPage } from "./community/community";
 import { ReadonlyEditor } from "./editor";
 
 export function HomePage() {
   const infinitePosts = useHomePosts();
   const { site: siteResponse } = useSite();
+
+  const openSettingsPage = useCallback(
+    () => router.push(siteSettingsLink()),
+    [router]
+  );
 
   if (!siteResponse) {
     // todo loading styling
@@ -19,8 +26,16 @@ export function HomePage() {
   }
 
   const aboutCard = (
-    <Padding>
-      <H1>All posts</H1>
+    <Padding padding="16px">
+      <Column gap="16px">
+        <H1>All posts</H1>
+
+        <Row>
+          <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
+            Settings
+          </Button>
+        </Row>
+      </Column>
     </Padding>
   );
 

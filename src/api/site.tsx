@@ -1,7 +1,7 @@
 import { GetSiteResponse } from "lemmy-js-client";
 import Router from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
-import { communityLink } from "util/link";
+import { communityLink, homeLink } from "util/link";
 import { useAuthRequest } from "./auth";
 
 const SiteContext = createContext(undefined);
@@ -55,4 +55,24 @@ export function useModeratorGuard(communityName) {
       Router.push(communityLink(communityName));
     }
   }, [amModerator]);
+}
+
+export function useAmAdmin() {
+  const me = useMe();
+
+  if (!me) {
+    return false;
+  }
+
+  return me.local_user_view.person.admin;
+}
+
+export function useAdminGuard() {
+  const amAdmin = useAmAdmin();
+
+  useEffect(() => {
+    if (!amAdmin) {
+      Router.push(homeLink());
+    }
+  }, [amAdmin]);
 }
