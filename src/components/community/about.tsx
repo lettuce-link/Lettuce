@@ -5,7 +5,7 @@ import { Column, Padding, Row } from "atoms/layout";
 import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
 import { useRouter } from "next/router";
 import { CommunityModeratorView, CommunityView } from "lemmy-js-client";
-import { CommunityBadge } from "./badge";
+import { CommunityMention } from "./badge";
 import { MultiStateButton } from "atoms/toggle";
 import { useClient, useIsLoggedIn } from "api/auth";
 import { useCallback, useState } from "react";
@@ -69,7 +69,7 @@ export function AboutCommunity({
       <H2>{community.title}</H2>
       <Column gap="16px">
         <SecondaryInfo>
-          <CommunityBadge community={community} />
+          <CommunityMention community={community} />
         </SecondaryInfo>
         <Row>
           <JoinButton communityView={communityView} />

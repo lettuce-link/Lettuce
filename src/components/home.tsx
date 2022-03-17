@@ -1,5 +1,5 @@
 import { useHomePosts } from "api/posts";
-import { useSite } from "api/site";
+import { useAmAdmin, useSite } from "api/site";
 import { Button } from "atoms/input";
 import { Column, Padding, Row } from "atoms/layout";
 import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
@@ -14,6 +14,8 @@ import { ReadonlyEditor } from "./editor";
 export function HomePage() {
   const infinitePosts = useHomePosts();
   const { site: siteResponse } = useSite();
+
+  const amAdmin = useAmAdmin();
 
   const openSettingsPage = useCallback(
     () => router.push(siteSettingsLink()),
@@ -31,9 +33,11 @@ export function HomePage() {
         <H1>All posts</H1>
 
         <Row>
-          <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
-            Settings
-          </Button>
+          {amAdmin && (
+            <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
+              Settings
+            </Button>
+          )}
         </Row>
       </Column>
     </Padding>

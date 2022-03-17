@@ -248,13 +248,13 @@ export function Link({ children, href }) {
 
 function noop() {}
 
-export function RevealButton({ children, onClick = noop }) {
+export function RevealButton({ children, onClick = noop, inline = false }) {
   return (
     <span className="RevealButton" onClick={onClick}>
       {children}
       <style jsx>{`
         .RevealButton {
-          display: flex;
+          display: ${inline ? "inline-flex" : "flex"};
           background: transparent;
 
           border-radius: var(--small-corner-round);

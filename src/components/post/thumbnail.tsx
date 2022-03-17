@@ -1,12 +1,9 @@
-import { Card, SelectableBox, SelectableCard } from "atoms/card";
+import { SelectableBox } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
-import { MoreButton } from "atoms/popup";
-import { InfoList, SecondaryInfo, Strong } from "atoms/typography";
+import { InfoList, Strong } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { PersonBadge } from "components/person/badge";
-import { VerticalVote } from "components/vote";
-import { CommunityView, PostView } from "lemmy-js-client";
-import { PostTitle } from "./post";
+import { PostView } from "lemmy-js-client";
 
 export function PostThumbnail({
   postView,
