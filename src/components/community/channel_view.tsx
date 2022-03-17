@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AboutCard } from "./about";
+import { AboutCommunity, CommunityThumbnail } from "./about";
 import { PostThumbnail } from "components/post/thumbnail";
 import { usePost } from "api/post";
 import { FullPost } from "components/post/post";
@@ -20,7 +20,9 @@ export function ChannelView({ communityView, isLoading, infinitePosts }) {
           setSelectedPost={setSelectedPost}
         />
       }
-      second={<Contents selectedPost={selectedPost} />}
+      second={
+        <Contents selectedPost={selectedPost} communityView={communityView} />
+      }
     />
   );
 }
@@ -46,7 +48,7 @@ function Channels({
   return (
     <div className="Channels">
       <ol>
-        <AboutCard
+        <CommunityThumbnail
           community={communityView?.community}
           isSelected={selectedPost === null}
           onSelect={() => setSelectedPost(null)}
@@ -92,36 +94,32 @@ function Channels({
   );
 }
 
-export function Contents({ selectedPost }) {
+export function Contents({ selectedPost, communityView }) {
   const { post, isLoading: isPostLoading } = usePost(selectedPost);
 
-  if (selectedPost) {
-    return (
-      <div className="Contents-post">
+  return (
+    <div className="Contents-post">
+      {selectedPost === null ? (
+        <AboutCommunity communityView={communityView} />
+      ) : (
         <FullPost
           postView={post?.post_view}
           comments={post?.comments}
           isLoading={isPostLoading}
         />
+      )}
 
-        <style jsx>{`
-          .Contents-post {
-            background: var(--background-strong);
+      <style jsx>{`
+        .Contents-post {
+          background: var(--background-strong);
 
-            height: 100%;
+          height: 100%;
 
-            overflow-y: scroll;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  return null;
-}
-
-function Post() {
-  return <>Post</>;
+          overflow-y: scroll;
+        }
+      `}</style>
+    </div>
+  );
 }
 
 export function Split({ first, second }) {

@@ -127,4 +127,12 @@ export default class Client {
       score: vote,
     });
   }
+
+  followCommunity(communityId, doFollow) {
+    return this.http.followCommunity({
+      auth: this.auth,
+      community_id: communityId,
+      follow: doFollow,
+    });
+  }
 }

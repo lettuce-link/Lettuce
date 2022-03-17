@@ -38,6 +38,8 @@ export function Theme() {
         --color-error-strong: #f25f5c;
         --color-success-strong: #70c1b3;
 
+        --opacity-fade: 0.5;
+
         --shadow-large: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
 
         --transition-quick: 0.2s ease-out;
