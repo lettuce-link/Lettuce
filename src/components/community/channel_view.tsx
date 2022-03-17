@@ -1,16 +1,15 @@
-import { useState } from "react";
-import { AboutCommunity, CommunityThumbnail } from "./about";
-import { PostThumbnail } from "components/post/thumbnail";
 import { usePost } from "api/post";
+import { SelectableBox } from "atoms/card";
 import { FullPost } from "components/post/post";
+import { PostThumbnail } from "components/post/thumbnail";
 import { useScrollLimit } from "components/scroll_limit";
+import { useState } from "react";
 
 export function ChannelView({
-  communityView,
+  aboutCard,
+  aboutContent,
   isLoading,
   infinitePosts,
-  moderators,
-  online,
 }) {
   useScrollLimit();
   const [selectedPost, setSelectedPost] = useState(null);
@@ -19,7 +18,7 @@ export function ChannelView({
     <Split
       first={
         <Channels
-          communityView={communityView}
+          aboutCard={aboutCard}
           isLoading={isLoading}
           infinitePosts={infinitePosts}
           selectedPost={selectedPost}
@@ -27,28 +26,19 @@ export function ChannelView({
         />
       }
       second={
-        <Contents
-          selectedPost={selectedPost}
-          communityView={communityView}
-          moderators={moderators}
-          online={online}
-        />
+        <Contents aboutContent={aboutContent} selectedPost={selectedPost} />
       }
     />
   );
 }
 
 function Channels({
-  communityView,
+  aboutCard,
   isLoading,
   infinitePosts,
   selectedPost,
   setSelectedPost,
 }) {
-  if (!communityView) {
-    return null;
-  }
-
   const {
     hasMore,
     isLoading: isMoreLoading,
@@ -60,11 +50,12 @@ function Channels({
     <div className="Channels">
       <ol>
         <li className="Channels-sticky">
-          <CommunityThumbnail
-            community={communityView?.community}
+          <SelectableBox
             isSelected={selectedPost === null}
             onSelect={() => setSelectedPost(null)}
-          />
+          >
+            {aboutCard}
+          </SelectableBox>
         </li>
 
         {posts.map((post) => (
@@ -109,17 +100,13 @@ function Channels({
   );
 }
 
-export function Contents({ selectedPost, communityView, moderators, online }) {
+export function Contents({ aboutContent, selectedPost }) {
   const { post, isLoading: isPostLoading } = usePost(selectedPost);
 
   return (
     <div className="Contents-post">
       {selectedPost === null ? (
-        <AboutCommunity
-          communityView={communityView}
-          moderators={moderators}
-          online={online}
-        />
+        aboutContent
       ) : (
         <FullPost
           postView={post?.post_view}

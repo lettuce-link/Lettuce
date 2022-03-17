@@ -15,7 +15,7 @@ import { PersonBadge } from "components/person/badge";
 import { RiShieldFill } from "react-icons/ri";
 import { useAmModeratorIn } from "api/site";
 
-export function CommunityThumbnail({ community, isSelected, onSelect }) {
+export function CommunityThumbnail({ community }) {
   const amModerator = useAmModeratorIn(community.name);
 
   const router = useRouter();
@@ -33,21 +33,19 @@ export function CommunityThumbnail({ community, isSelected, onSelect }) {
   }
 
   return (
-    <SelectableBox isSelected={isSelected} onSelect={onSelect}>
-      <Padding padding="16px">
-        <Column gap="16px">
-          <H1 margin="0">{community.title}</H1>
-          <Row wrap justify="start">
-            <Button onClick={openNewPostPage}>New Post</Button>
-            {amModerator && (
-              <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
-                Settings
-              </Button>
-            )}
-          </Row>
-        </Column>
-      </Padding>
-    </SelectableBox>
+    <Padding padding="16px">
+      <Column gap="16px">
+        <H1 margin="0">{community.title}</H1>
+        <Row wrap justify="start">
+          <Button onClick={openNewPostPage}>New Post</Button>
+          {amModerator && (
+            <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
+              Settings
+            </Button>
+          )}
+        </Row>
+      </Column>
+    </Padding>
   );
 }
 
