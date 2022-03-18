@@ -6,7 +6,12 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - lemmy
@@ -41,6 +46,7 @@ services:
 
       # for nginx-proxy configuration
       - VIRTUAL_HOST=$host
+      - LETSENCRYPT_HOST=$host
       - VIRTUAL_PATH=/api
       - HTTP_PORT=8536
     volumes:
@@ -55,6 +61,7 @@ services:
     environment:
       # for nginx-proxy configuration
       - VIRTUAL_HOST=$host
+      - LETSENCRYPT_HOST=$host
       - VIRTUAL_PATH=/
     depends_on:
       - lemmy
