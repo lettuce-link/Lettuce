@@ -94,13 +94,10 @@ function validatePassword(password) {
   return false;
 }
 
-export function Register({
-  username,
-  setUsername,
-  password,
-  setPassword,
-  setView,
-}) {
+export function Register({ usernameOrEmail, password, setPassword, setView }) {
+  const [username, setUsername] = useState(usernameOrEmail);
+  const [email, setEmail] = useState(usernameOrEmail);
+
   const client = useClient();
   const setAuth = useSetAuth();
 
@@ -111,7 +108,7 @@ export function Register({
   const { showError, showSuccess } = useShowToast();
   const [error, setError] = useState(null);
   const onSubmit = useCallback(() => {
-    client.register({ username, password }).then((response) => {
+    client.register({ email, username, password }).then((response) => {
       // @ts-ignore bc the types are wrong
       const error = response.error;
       if (error) {
@@ -133,7 +130,7 @@ export function Register({
         }
       }
     });
-  }, [username, password, client]);
+  }, [email, username, password, client]);
 
   const { needsCaptcha, Captcha } = useCaptcha();
 
@@ -142,6 +139,9 @@ export function Register({
       <H1>New Account</H1>
       <Form onSubmit={onSubmit}>
         <Column>
+          <Field prompt="Email">
+            <TextInput type="email" value={email} setValue={setEmail} />
+          </Field>
           <Field prompt="Username">
             <TextInput value={username} setValue={setUsername} />
             <ValidationMessage message={usernameValidation} />

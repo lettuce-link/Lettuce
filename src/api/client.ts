@@ -8,6 +8,17 @@ function baseHttpUrl() {
   return `${protocol}://${domain}`;
 }
 
+export interface RegisterSimple {
+  username: string;
+  email: string;
+  password: string;
+  /**
+   * Captcha is only checked if these are enabled in the server.
+   */
+  captcha_uuid?: string;
+  captcha_answer?: string;
+}
+
 export interface CreateCommunitySimple {
   name: string;
   title: string;
@@ -98,11 +109,10 @@ export default class Client {
       });
   }
 
-  register({ username, password }) {
+  register(register: RegisterSimple) {
     return this.http.register({
-      username,
-      password,
-      password_verify: password,
+      ...register,
+      password_verify: register.password,
       show_nsfw: false,
     });
   }

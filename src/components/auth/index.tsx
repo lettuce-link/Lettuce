@@ -25,8 +25,7 @@ export function AuthWidget() {
   if (view === View.Join) {
     return (
       <Register
-        username={usernameOrEmail}
-        setUsername={setUsernameOrEmail}
+        usernameOrEmail={usernameOrEmail}
         password={password}
         setPassword={setPassword}
         setView={setView}
