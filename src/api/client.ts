@@ -189,4 +189,8 @@ export default class Client {
       auth: this.auth,
     });
   }
+
+  verifyEmail(token) {
+    return this.http.verifyEmail({ token });
+  }
 }
