@@ -16,7 +16,10 @@ RUN yarn install --frozen-lockfile
 FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY src package.json ./
+COPY package.json tsconfig.json ./
+COPY src ./src
+
+RUN ls
 
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1

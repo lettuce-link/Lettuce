@@ -1,9 +1,8 @@
-import { useAuth, useIsLoggedIn } from "api/auth";
+import { useIsLoggedIn } from "api/auth";
 import { AuthWidget } from "components/auth";
+import Router from "next/router";
 import { Card } from "../atoms/card";
 import { LargePadding, WidthLimit } from "../atoms/layout";
-
-import Router from "next/router";
 
 export default function Enter() {
   const isLoggedIn = useIsLoggedIn();
