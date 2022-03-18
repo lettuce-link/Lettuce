@@ -33,7 +33,7 @@ export function HomePage() {
   const aboutCard = (
     <Padding padding="16px">
       <Column gap="16px">
-        <H1>All posts</H1>
+        <H1>Home</H1>
 
         <Row>
           {amAdmin && (
@@ -56,8 +56,14 @@ export function HomePage() {
 }
 
 function AboutSite() {
-  const siteResponse = useSite();
-  const { site, counts } = siteResponse.site_view;
+  const { site_view } = useSite();
+
+  if (!site_view) {
+    // todo: loading state
+    return null;
+  }
+
+  const { site, counts } = site_view;
 
   return (
     <Padding padding="16px">
@@ -72,7 +78,7 @@ function AboutSite() {
           </SecondaryInfo>
         </Row>
         <ReadonlyEditor markdown={site.description || ""} />
-        <SiteStatistics siteView={siteResponse.site_view} />
+        <SiteStatistics siteView={site_view} />
       </Column>
     </Padding>
   );
