@@ -3,10 +3,14 @@ version: '2.2'
 services:
   nginx-proxy:
     image: nginxproxy/nginx-proxy
+    restart: always
     ports:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - lemmy
+      - lettuce
 
   postgres:
     image: postgres:12-alpine
@@ -35,14 +39,11 @@ services:
       - pictrs
 
   lettuce:
-    image: lettuce:0.1
+    image: lettuce:prod
     ports:
       - "127.0.0.1:1235:3000"
     restart: always
     environment:
-      - NEXT_PUBLIC_LEMMY_HTTPS=false
-      - NEXT_PUBLIC_LEMMY_HOST=localhost
-
       # for nginx-proxy configuration
       - VIRTUAL_HOST=localhost
       - VIRTUAL_PATH=/
@@ -59,3 +60,8 @@ services:
       - ./volumes/pictrs:/mnt
     restart: always
 
+  # todo: propper mail server
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - "1080:80"

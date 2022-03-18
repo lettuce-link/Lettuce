@@ -17,7 +17,7 @@ export function SiteSettingsPage() {
   useAdminGuard();
 
   const siteResponse = useSite();
-  const site = siteResponse?.site_view.site;
+  const site = siteResponse?.site_view?.site;
 
   if (!site) {
     // todo loading state

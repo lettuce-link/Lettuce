@@ -19,10 +19,17 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY package.json tsconfig.json ./
 COPY src ./src
 
-RUN ls
-
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
+
+ARG host
+ARG is_secure
+
+RUN test -n "$host"
+RUN test -n "$is_secure"
+
+ENV NEXT_PUBLIC_LEMMY_SECURE=$is_secure
+ENV NEXT_PUBLIC_LEMMY_HOST=$host
 
 RUN yarn build
 
