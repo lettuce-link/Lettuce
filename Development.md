@@ -2,10 +2,8 @@
 
 ## Production
 
-Use Dockerfile_prod and docker-compose-prod.yml:
-
 ```bash
-docker build --build-arg host=localhost --build-arg is_secure=false --file Dockerfile_prod -t lettuce:prod .
+docker build --build-arg host=lettuce.link --build-arg is_secure=true --file Dockerfile_prod -t lettuce:prod .
 
-host=localhost docker-compose --file docker-compose-prod.yml up
+host=lettuce.link docker-compose --file docker-compose-prod.yml up
 ```
