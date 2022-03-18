@@ -29,7 +29,7 @@ services:
       - RUST_LOG="warn,lemmy_server=info,lemmy_api=info,lemmy_api_common=info,lemmy_api_crud=info,lemmy_apub=info,lemmy_db_schema=info,lemmy_db_views=info,lemmy_db_views_actor=info,lemmy_db_views_moderator=info,lemmy_routes=info,lemmy_utils=info,lemmy_websocket=info"
 
       # for nginx-proxy configuration
-      - VIRTUAL_HOST=localhost
+      - VIRTUAL_HOST=$host
       - VIRTUAL_PATH=/api
       - HTTP_PORT=8536
     volumes:
@@ -40,21 +40,16 @@ services:
 
   lettuce:
     image: lettuce:prod
-    ports:
-      - "127.0.0.1:1235:3000"
     restart: always
     environment:
       # for nginx-proxy configuration
-      - VIRTUAL_HOST=localhost
+      - VIRTUAL_HOST=$host
       - VIRTUAL_PATH=/
     depends_on:
       - lemmy
 
   pictrs:
     image: asonix/pictrs:0.3.0-beta.12-r1
-    ports:
-      - "127.0.0.1:8537:8080"
-      - "127.0.0.1:6670:6669"
     user: 991:991
     volumes:
       - ./volumes/pictrs:/mnt
