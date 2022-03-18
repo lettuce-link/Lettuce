@@ -1,5 +1,8 @@
 import { InvertedMarker } from "./theme";
 
+/**
+ * A paper-like card with a shadow and everything
+ */
 export function Card({ children, background = "var(--background-strong)" }) {
   return (
     <div>
@@ -10,33 +13,6 @@ export function Card({ children, background = "var(--background-strong)" }) {
           border-radius: var(--large-corner-round);
 
           box-shadow: var(--shadow-large);
-        }
-      `}</style>
-    </div>
-  );
-}
-
-export function SelectableCard({ children, isSelected, onSelect }) {
-  const background = isSelected
-    ? "var(--background-strong)"
-    : "var(--background-weak)";
-
-  return (
-    <div onClick={onSelect}>
-      {children}
-      <style jsx>{`
-        div {
-          background: ${background};
-          border-radius: var(--large-corner-round);
-
-          box-shadow: var(--shadow-large);
-
-          cursor: pointer;
-          transition: background var(--transition-quick);
-        }
-
-        div:hover {
-          background: var(--background-strong);
         }
       `}</style>
     </div>

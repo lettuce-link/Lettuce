@@ -7,10 +7,16 @@ import {
   useState,
 } from "react";
 import { useLocalStorage } from "react-use";
+import { authLink } from "util/link";
 import Client from "./client";
 
 const AuthContext = createContext(null);
 
+/**
+ * Creates a context for a shared (authenticated or not) client for the whole app, and a way to set the auth token, updating the client.
+ *
+ * This component should only be used once at the root of the app; then you can call `useClient` and `useSetAuth` anywhere to access/update the client at "no cost"
+ */
 export function ClientProvider({ children }) {
   const [storageAuth, setStorageAuth] = useLocalStorage(
     "lemmy-auth-token",
@@ -37,11 +43,18 @@ export function ClientProvider({ children }) {
   );
 }
 
+/**
+ * Returns a function for setting the app authentication token. Also updates the client to use the new token.
+ * Pass null to clear the token
+ */
 export function useSetAuth() {
   const [_client, setAuth] = useContext(AuthContext);
   return setAuth;
 }
 
+/**
+ * @returns true if the user is logged in
+ */
 export function useIsLoggedIn() {
   const client = useClient();
   return client.isLoggedIn();
@@ -64,11 +77,18 @@ export function useAuthRequest(
   }, [client, ...dependencies]);
 }
 
+/**
+ * Redirects the user to the login page
+ */
 export function redirectToAuthentication() {
   // todo: would be nice to set the return url
-  Router.push("/enter");
+  Router.push(authLink());
 }
 
+/**
+ * Conditionally redirects the user depending on wether they are logged in.
+ * @param shouldBeLoggedIn if true, will redirect logged-out users to log in. If false, will redirect logged-in users to the homepage.
+ */
 export function useAuthGuard(shouldBeLoggedIn = true) {
   const isLoggedIn = useIsLoggedIn();
 
@@ -83,12 +103,21 @@ export function useAuthGuard(shouldBeLoggedIn = true) {
   }, [shouldBeLoggedIn, isLoggedIn]);
 }
 
+/**
+ *
+ * @returns the Client singleton, a nice wrapper for easily making requests
+ *
+ * Note: must be called within the context of ClientProvider (since the app is wrapped in ClientProvider, can be used "anywhere")
+ */
 export function useClient(): Client {
   const [client, _setAuth] = useContext(AuthContext);
 
   return client;
 }
 
+/**
+ * @returns a function for logging out the user
+ */
 export function useLogout() {
   const [_client, setAuth] = useContext(AuthContext);
 

@@ -3,6 +3,15 @@ import { Column, Row } from "atoms/layout";
 import { useCallback, useEffect, useState } from "react";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
+/**
+ * A column of upvote-score-downvote
+ *
+ * Props:
+ * upvotes: upvote count
+ * downvotes: downvote count
+ * myVote: my current vote
+ * setMyVote: set my current vote
+ */
 export const VerticalVote = makeVoteWidgetComponent(({ children }) => {
   return (
     <Column gap="2px" align="center">
@@ -11,6 +20,15 @@ export const VerticalVote = makeVoteWidgetComponent(({ children }) => {
   );
 });
 
+/**
+ * A row of upvote-score-downvote
+ *
+ * Props:
+ * upvotes: upvote count
+ * downvotes: downvote count
+ * myVote: my current vote
+ * setMyVote: set my current vote
+ */
 export const HorizontalVote = makeVoteWidgetComponent(({ children }) => {
   return (
     <Row gap="4px" align="center">
@@ -19,6 +37,10 @@ export const HorizontalVote = makeVoteWidgetComponent(({ children }) => {
   );
 });
 
+/**
+ * A higher-order-component
+ * This allows us to be generic over the button layout
+ */
 function makeVoteWidgetComponent(Layout) {
   return ({ upvotes, downvotes, myVote, setMyVote }) => {
     const [optimisticMyVote, setOptimistic] = useState(myVote);
@@ -29,6 +51,8 @@ function makeVoteWidgetComponent(Layout) {
 
     // Untill the server says otherwise, assume that all vote operations succeed
     const optimisticScore = upvotes - downvotes + (optimisticMyVote - myVote);
+
+    // todo: error handling!
 
     const upvote = useCallback(() => {
       const newVote = optimisticMyVote == 1 ? 0 : 1;
@@ -53,6 +77,8 @@ function makeVoteWidgetComponent(Layout) {
 }
 
 function Score({ children }) {
+  // todo: details on hover (up, down)
+
   return (
     <span className="Score">
       {children}

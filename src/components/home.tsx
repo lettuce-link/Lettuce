@@ -11,9 +11,12 @@ import { siteSettingsLink } from "util/link";
 import { ChannelView } from "./community/channel_view";
 import { ReadonlyEditor } from "./editor";
 
+/**
+ * The home page – shows posts from all communities, as well as an "about site" section.
+ */
 export function HomePage() {
   const infinitePosts = useHomePosts();
-  const { site: siteResponse } = useSite();
+  const siteResponse = useSite();
 
   const amAdmin = useAmAdmin();
 
@@ -22,7 +25,7 @@ export function HomePage() {
     [router]
   );
 
-  if (!siteResponse) {
+  if (siteResponse.isLoading) {
     // todo loading styling
     return null;
   }
@@ -53,7 +56,7 @@ export function HomePage() {
 }
 
 function AboutSite() {
-  const { site: siteResponse } = useSite();
+  const siteResponse = useSite();
   const { site, counts } = siteResponse.site_view;
 
   return (

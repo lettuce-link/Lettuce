@@ -3,6 +3,9 @@ import { CommunitySafe } from "lemmy-js-client";
 import Link from "next/link";
 import { communityLink } from "util/link";
 
+/**
+ * A non-interactive community mention.
+ */
 export function CommunityMention({ community }: { community: CommunitySafe }) {
   return (
     <span>
@@ -23,6 +26,9 @@ export function CommunityMention({ community }: { community: CommunitySafe }) {
   );
 }
 
+/**
+ * A community badge that links to the community when clicked
+ */
 export function CommunityBadge({ community }: { community: CommunitySafe }) {
   return (
     <Link href={communityLink(community.name)}>

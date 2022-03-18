@@ -8,6 +8,8 @@ function baseHttpUrl() {
   return `${protocol}://${domain}`;
 }
 
+// Below we define simplified request input types. We have removed the "auth" field because that is provided automatically by the client. Some other fields have been removed too, either because we don't support them or because we have simplified the API.
+
 export interface RegisterSimple {
   username: string;
   email: string;
@@ -64,19 +66,35 @@ export interface EditSiteSimple {
   default_theme?: string;
 }
 
+/**
+ * A wrapper for the API client – provides a nice interface for making requests
+ *
+ * The methods in this wrapper pretty much 1-to-1 map those defined in the lemmy-js-client LemmyHttp class. (except the ones that aren't implemented yet). However, they have been simplified where possible, and we automatically pass the authentication token given in the constructor, so you don't have to.
+ */
 export default class Client {
   http: LemmyHttp;
   auth?: string;
 
+  /**
+   * Construct a new client with the provided authentication token.
+   * To update the token, you should just construct a new client and use that.
+   * @param token
+   */
   constructor(token?) {
     this.http = new LemmyHttp(baseHttpUrl());
     this.auth = token;
   }
 
+  /**
+   * @returns true if the client has an authentication token set
+   */
   isLoggedIn() {
     return !!this.auth;
   }
 
+  /**
+   * @returns an {auth: string} with the authentication token, or {} if none is set
+   */
   private getOptionalAuthObject(): { auth?: string } {
     if (this.auth) {
       return { auth: this.auth };
@@ -89,6 +107,9 @@ export default class Client {
     return this.auth;
   }
 
+  /**
+   * Performs a login request. Note: does not set the resulting authentication token. Instead, the response is returned and you must use it yourself.
+   */
   login({ username, password }) {
     return this.http
       .login({ username_or_email: username, password })

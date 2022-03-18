@@ -1,6 +1,9 @@
 import { PersonSafe } from "lemmy-js-client";
 
-export function PersonBadge({ person }: { person: PersonSafe }) {
+/**
+ * A non-interactive mention of a person.
+ */
+export function PersonMention({ person }: { person: PersonSafe }) {
   return (
     <span>
       <span className="PersonBadge-symbol">@</span>

@@ -12,6 +12,11 @@ import Router from "next/router";
 import { useCallback, useState } from "react";
 import { communityLink } from "util/link";
 
+/**
+ * Community moderation page (only accessible to mods)
+ *
+ * Currently provides only basic community settings, but may include e.g. moderator management in the future, as a separate tab or something
+ */
 export function CommunityModerationPage({ name }) {
   useModeratorGuard(name);
 

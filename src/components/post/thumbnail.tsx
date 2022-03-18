@@ -2,9 +2,13 @@ import { SelectableBox } from "atoms/card";
 import { Column, Padding, Row } from "atoms/layout";
 import { InfoList, Strong } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
-import { PersonBadge } from "components/person/badge";
+import { PersonMention } from "components/person/badge";
 import { PostView } from "lemmy-js-client";
 
+/**
+ * A small post title+basic info
+ * (intended as a channel selector)
+ */
 export function PostThumbnail({
   postView,
   isSelected,
@@ -21,7 +25,7 @@ export function PostThumbnail({
           <Column gap="8px">
             <Strong>{postView.post.name}</Strong>
             <InfoList>
-              <PersonBadge person={postView.creator} />
+              <PersonMention person={postView.creator} />
               <CommunityBadge community={postView.community} />
             </InfoList>
           </Column>

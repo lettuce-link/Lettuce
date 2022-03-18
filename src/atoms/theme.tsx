@@ -1,6 +1,29 @@
 import { createContext, useContext } from "react";
 
+/**
+ * A wrapper that provides the app's theme in the form of CSS variables
+ */
 export function Theme() {
+  /*
+  The application relies on a few "theme invariants" – conditions that must be true for the app to not look crap.
+
+  Any of the foreground colors:
+  --foreground-strong
+  --foreground-weak
+  Must be legible on any of the background colors:
+  --background-strong
+  --background-weak
+
+  The inverted foreground color
+  --foreground-inverted
+  Must be legible on dark or colored backgrounds:
+  --color-primary-strong
+  --color-error-strong: #f25f5c;
+  --color-success-strong: #70c1b3;
+  */
+
+  // These theme variables are incomplete, but I'm trying to keep everything as minimal as possible, so new ones get added only when strictly necessary, and keeping things consistent. Pls don't just add your favorite color randomly.
+
   return (
     <style jsx global type="text/css">{`
       :root {
@@ -14,7 +37,7 @@ export function Theme() {
 
         --foreground-strong: #333;
         --foreground-weak: #777;
-        // Light in dark mode, vice versa
+        // Always light on dark/colored backgrounds, even in light mode
         --foreground-inverted: #fff;
 
         --font-heading: 800 32px "Inter", sans-serif;
@@ -34,7 +57,6 @@ export function Theme() {
         --large-corner-round: 8px;
 
         --color-primary-strong: #247ba0;
-
         --color-error-strong: #f25f5c;
         --color-success-strong: #70c1b3;
 
@@ -98,6 +120,12 @@ export function Theme() {
 
 const InvertedContext = createContext(false);
 
+/**
+ * A wrapper marker that sets the "isInverted" context, to let children know if they should render as light-on-dark.
+ * The useIsInverted hook may be used to determine if a component is currently in an "isInverted" context.
+ *
+ * TODO: many elements don't support this because the inverted variant is not used much. You may have to implement it on some elements yourself (by editing said element)
+ */
 export function InvertedMarker({ children, inverted = true }) {
   return (
     <InvertedContext.Provider value={inverted}>
@@ -106,6 +134,9 @@ export function InvertedMarker({ children, inverted = true }) {
   );
 }
 
+/**
+ * @returns true if the component is in an inverted color context – meaning that foreground should be rendered so as to be legible on dark or colored backgrounds
+ */
 export const useIsInverted = (): boolean => {
   return useContext(InvertedContext);
 };

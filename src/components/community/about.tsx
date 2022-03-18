@@ -1,20 +1,22 @@
-import { communitySettignsLink, newPostLink } from "util/link";
-import { Card, SelectableBox, SelectableCard } from "atoms/card";
+import { useClient, useIsLoggedIn } from "api/auth";
+import { useAmModeratorIn } from "api/site";
 import { Button } from "atoms/input";
 import { Column, Padding, Row } from "atoms/layout";
-import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
-import { useRouter } from "next/router";
-import { CommunityModeratorView, CommunityView } from "lemmy-js-client";
-import { CommunityMention } from "./badge";
 import { MultiStateButton } from "atoms/toggle";
-import { useClient, useIsLoggedIn } from "api/auth";
-import { useCallback, useState } from "react";
-import { useShowToast } from "components/toast";
+import { H1, H2, H3, InfoList, SecondaryInfo } from "atoms/typography";
 import { ReadonlyEditor } from "components/editor";
-import { PersonBadge } from "components/person/badge";
+import { PersonMention } from "components/person/badge";
+import { useShowToast } from "components/toast";
+import { CommunityModeratorView, CommunityView } from "lemmy-js-client";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
 import { RiShieldFill } from "react-icons/ri";
-import { useAmModeratorIn } from "api/site";
+import { communitySettignsLink, newPostLink } from "util/link";
+import { CommunityMention } from "./badge";
 
+/**
+ * A small box with the community title and basic info
+ */
 export function CommunityThumbnail({ community }) {
   const amModerator = useAmModeratorIn(community.name);
 
@@ -49,6 +51,9 @@ export function CommunityThumbnail({ community }) {
   );
 }
 
+/**
+ * A page about the community – includes info, stats, moderators, about, etc.
+ */
 export function AboutCommunity({
   communityView,
   moderators,
@@ -144,7 +149,7 @@ function CommunityModerators({
     <div>
       <H3>Moderators</H3>
       {moderators.map((moderator) => (
-        <PersonBadge
+        <PersonMention
           key={moderator.moderator.id}
           person={moderator.moderator}
         />

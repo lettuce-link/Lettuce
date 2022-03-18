@@ -1,8 +1,12 @@
 import { GetCommunityResponse } from "lemmy-js-client";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useAuthRequest } from "./auth";
 
+/**
+ * Given a community name, performs a request to fetch the community (getCommunity endpoint)
+ * @param name the community name
+ * @returns { communityResponse, isLoading }
+ */
 export function useCommunity(name?: string): {
   communityResponse: GetCommunityResponse;
   isLoading: boolean;

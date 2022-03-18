@@ -18,6 +18,16 @@ export interface InfinitePosts {
   requestMore: () => void;
 }
 
+/**
+ * For a given configuration, returns an "infinite" list of posts. This
+ *
+ * @return { posts, isLoading, hasMore, requestMore } where:
+ * posts: the posts
+ * isLoading: currently fetching new posts
+ * hasMore: there are more posts
+ * requestMore: fetch the next page of posts. Noop if already fetching or has no more posts.
+ */
+// todo: infinite loading not really tested, just the 1st page. sry if buggy.
 export function usePosts({
   type_,
   community_name,

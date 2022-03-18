@@ -1,3 +1,5 @@
+// Links to various pages. These functions should be used for all links for easy refactoring.
+
 export function homeLink() {
   return "/";
 }

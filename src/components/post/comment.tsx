@@ -4,13 +4,16 @@ import { ShyButton } from "atoms/input";
 import { Column, Row } from "atoms/layout";
 import { H3 } from "atoms/typography";
 import { ReadonlyEditor } from "components/editor";
-import { PersonBadge } from "components/person/badge";
+import { PersonMention } from "components/person/badge";
 import { HorizontalVote } from "components/vote";
 import { CommentView, PostView } from "lemmy-js-client";
 import { useMemo } from "react";
 import { useToggle } from "react-use";
 import { CommentReply, PostAddComment } from "./comment_editor";
 
+/**
+ * Under a post, the section with the comment tree and affordances for commenting
+ */
 export function CommentSection({ postView, comments }) {
   return (
     <section>
@@ -65,6 +68,9 @@ function useTree(comments) {
   }, [comments]);
 }
 
+/**
+ * Renders the post comments as a tree (replies go under their parent)
+ */
 function CommentTree({
   postView,
   comments,
@@ -80,6 +86,9 @@ function CommentTree({
   );
 }
 
+/**
+ * Render a list of comments with the specified IDs
+ */
 function CommentList({ ids, commentMap, postView }) {
   return ids.map((id) => (
     <CommentThread
@@ -91,6 +100,9 @@ function CommentList({ ids, commentMap, postView }) {
   ));
 }
 
+/**
+ * A comment with associated replies
+ */
 function CommentThread({
   commentMap,
   commentNode,
@@ -131,14 +143,24 @@ function CommentThread({
   );
 }
 
+/**
+ * The "head" section of a comment
+ *
+ * TODO currently only the author's name. Include relative time, edit status, OP status, mod status, etc.
+ */
 function CommentHead({ comment }: { comment: CommentView }) {
   return (
     <div>
-      <PersonBadge person={comment.creator} />
+      <PersonMention person={comment.creator} />
     </div>
   );
 }
 
+/**
+ * Actions that can be performed on a comment.
+ *
+ * TODO: currently only vote and reply. Future: report, share, more...
+ */
 function CommentActions({
   comment,
   postView,

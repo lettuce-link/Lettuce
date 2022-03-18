@@ -4,6 +4,11 @@ import { useEffect } from "react";
 import { authLink } from "util/link";
 import { useShowToast } from "./toast";
 
+/**
+ * Verify email page.
+ * Makes request to verify the email and redirects to login after success.
+ *
+ */
 export function VerifyEmailPage({ token }) {
   const client = useClient();
   const { showError, showSuccess } = useShowToast();

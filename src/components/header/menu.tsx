@@ -4,6 +4,9 @@ import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
 import { useState } from "react";
 import { RiMenuFill } from "react-icons/ri";
 
+/**
+ * Site-wide menu button
+ */
 export function MenuButton() {
   const [isOpen, setOpen] = useState(false);
 
@@ -29,6 +32,11 @@ export function MenuButton() {
   );
 }
 
+/**
+ * The menu that opens when you click the menu icon.
+ *
+ * TODO: Currently only contains a link to create a new community. Add "my communities", "trending communities", "about", modlog, etc.
+ */
 function Menu() {
   return (
     <Column gap="8px" align="end">

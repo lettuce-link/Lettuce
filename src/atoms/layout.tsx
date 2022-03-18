@@ -69,6 +69,9 @@ export function Padding({ children, padding = "16px" }) {
   );
 }
 
+/**
+ * Limits the width of the contents, and centers the element.
+ */
 export function WidthLimit({
   children,
   centered = true,

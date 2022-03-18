@@ -5,6 +5,14 @@ import { SiteProvider } from "../api/site";
 import { ClientProvider } from "../api/auth";
 import { ScrollLimitProvider } from "components/scroll_limit";
 
+/**
+ * This is not a regular router page, this is "magic" for NextJS.
+ * Kinda strange but go with it.
+ *
+ * Next will wrap all route components in the App we provide here.
+ * Reference: https://nextjs.org/docs/advanced-features/custom-app
+ */
+
 export default function App({ Component, pageProps }) {
   return (
     <ClientProvider>

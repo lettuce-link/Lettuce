@@ -1,6 +1,9 @@
 import { Button } from "./input";
 import { InvertedMarker } from "./theme";
 
+/**
+ * A button to toggle betweeen 2 or more states
+ */
 export function MultiStateButton({ options, currentIndex, onClick }) {
   // Options will almost never change, ok to use index as key
   return (

@@ -5,6 +5,15 @@ import { PostThumbnail } from "components/post/thumbnail";
 import { useScrollLimit } from "components/scroll_limit";
 import { useState } from "react";
 
+/**
+ * A channel-like interface for a list of posts. Think discord-like: list of channels on left (except they are post titles in our case), chat messages on the right (except they are full posts+comments). Separate scroll bars. Easy navigation (hopefully?)
+ *
+ * In addition to having 1 "channel" for each post, there is a sticky "about" channel – this is where you can put info about the current context (e.g. about community, about site, etc).
+ * Props:
+ *  aboutCard: the first sticky channel
+ *  AboutContent: a component to render the About channel contents
+ *  infinitePosts: posts to render as channels
+ */
 export function ChannelView({ aboutCard, AboutContent, infinitePosts }) {
   useScrollLimit();
   const [selectedPost, setSelectedPost] = useState(null);

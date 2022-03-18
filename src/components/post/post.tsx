@@ -5,7 +5,7 @@ import { MoreButton } from "atoms/popup";
 import { SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { ReadonlyEditor } from "components/editor";
-import { PersonBadge } from "components/person/badge";
+import { PersonMention } from "components/person/badge";
 import { VerticalVote } from "components/vote";
 import { PostView } from "lemmy-js-client";
 import { CommentSection } from "./comment";
@@ -68,7 +68,7 @@ function PostHead({ postView }: { postView: PostView }) {
         <PostTitle postView={postView} />
         <Row>
           <SecondaryInfo>
-            Posted by <PersonBadge person={postView.creator} /> in{" "}
+            Posted by <PersonMention person={postView.creator} /> in{" "}
             <CommunityBadge community={postView.community} />
           </SecondaryInfo>
         </Row>

@@ -26,6 +26,11 @@ interface Toast {
   id;
 }
 
+/**
+ * Provides a component that renders toasts when they are displayed, and removes expired toasts.
+ *
+ * Wrap your application in this component to allow creating toasts from anywhere. (see useShowToast)
+ */
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -69,6 +74,13 @@ function toast(message, type, duration) {
   };
 }
 
+/**
+ * Returns {
+ *   showError, // a function for displaying an error toast
+ *   showSuccess, // a function for displaying a success toast
+ * }
+ * Call any of these functions once to display the desired toast.
+ */
 export function useShowToast() {
   const [toasts, setToasts] = useContext(ToastContext);
 
@@ -123,6 +135,10 @@ function ToastMessages({ toasts }) {
   );
 }
 
+/**
+ * Renders a toast message.
+ * A toast is a card that appears with a message, usually at the bottom of the screen, and disappears after a short delay.
+ */
 function Toast({ type, message }) {
   let color = "var(--background-strong)";
   let inverted = false;

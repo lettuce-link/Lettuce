@@ -12,6 +12,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { postLink } from "util/link";
 
+/**
+ * Page for creating a new post
+ */
 export function NewPostPage({ name }) {
   useAuthGuard();
 

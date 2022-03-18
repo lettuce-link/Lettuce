@@ -1,7 +1,7 @@
 import InnerLink from "next/link";
-import { Padding, Row } from "./layout";
 import { useIsInverted } from "./theme";
 
+// just a regular form wrapper
 export function Form({ children, onSubmit }) {
   return (
     <form
@@ -20,6 +20,9 @@ export function Form({ children, onSubmit }) {
   );
 }
 
+/**
+ * A Field container – the provided prompt will be shown as an accessible field label, and you should provide children for the field input, validation messages, advice, etc.
+ */
 export function Field({ prompt, children }) {
   return (
     <label>
@@ -39,6 +42,9 @@ export function Field({ prompt, children }) {
   );
 }
 
+/**
+ * Your regular text input field. A different input type may be provided with `type`.
+ */
 export function TextInput({ type = "text", value, setValue }) {
   return (
     <>
@@ -67,6 +73,9 @@ export function TextInput({ type = "text", value, setValue }) {
   );
 }
 
+/**
+ * Submit button.
+ */
 export function Submit({ value, disabled = false }) {
   return (
     <>
@@ -170,6 +179,10 @@ export function ShyButton({ children, onClick }) {
   );
 }
 
+/**
+ * A button that looks like a link.
+ * Should only be used where a link would make sense (i.e. navigation) but a button is required for technical reasons.
+ */
 export function LinkButton({ children, onClick }) {
   const isInverted = useIsInverted();
 
@@ -210,6 +223,9 @@ export function LinkButton({ children, onClick }) {
   );
 }
 
+/**
+ * Styled link
+ */
 export function Link({ children, href }) {
   const isInverted = useIsInverted();
 
@@ -248,12 +264,22 @@ export function Link({ children, href }) {
 
 function noop() {}
 
+/**
+ * A button that is rendered as regular text, until it is hovered.
+ * On hover, a grey outline appears to hint that this is a clickable button.
+ * This should only be used in contexts where either:
+ * - it is clear from the context and text that this element represents an action (e.g. a "reply" button under a comment)
+ * - it is not critical that the user immediately knows that the element is interactive (e.g. community badge links to community page, but this is not critical functionality and may be discovered over time)
+ */
 export function RevealButton({ children, onClick = noop, inline = false }) {
   return (
-    <span className="RevealButton" onClick={onClick}>
+    <button className="RevealButton" onClick={onClick}>
       {children}
       <style jsx>{`
         .RevealButton {
+          border: none;
+          font: inherit;
+
           display: ${inline ? "inline-flex" : "flex"};
           background: transparent;
 
@@ -267,6 +293,6 @@ export function RevealButton({ children, onClick = noop, inline = false }) {
           background: var(--background-transparent-dark);
         }
       `}</style>
-    </span>
+    </button>
   );
 }

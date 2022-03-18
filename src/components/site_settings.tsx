@@ -10,11 +10,14 @@ import { homeLink } from "util/link";
 import { useEditor } from "./editor";
 import { useShowToast } from "./toast";
 
+/**
+ * Site settings page for admins.
+ */
 export function SiteSettingsPage() {
   useAdminGuard();
 
   const siteResponse = useSite();
-  const site = siteResponse.site?.site_view.site;
+  const site = siteResponse?.site_view.site;
 
   if (!site) {
     // todo loading state

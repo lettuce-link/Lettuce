@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useClient } from "../../api/auth";
 
+// todo this is a draft - not used
+
 export function useCaptcha() {
   const client = useClient();
   const [captcha, setCaptcha] = useState(null);

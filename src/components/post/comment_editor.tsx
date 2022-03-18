@@ -7,6 +7,9 @@ import { useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
 import { CommentView, PostView } from "lemmy-js-client";
 
+/**
+ * A widget for adding a comment to a post
+ */
 export function PostAddComment({ postView }: { postView: PostView }) {
   const isLoggedIn = useIsLoggedIn();
   const client = useClient();
@@ -41,6 +44,9 @@ export function PostAddComment({ postView }: { postView: PostView }) {
   );
 }
 
+/**
+ * A widget for replying to a comment.
+ */
 export function CommentReply({
   comment,
   postView,

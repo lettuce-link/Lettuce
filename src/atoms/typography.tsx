@@ -45,21 +45,9 @@ export function H3({ children }) {
   );
 }
 
-export function SecondaryInfo({ children }) {
-  return (
-    <div className="SecondaryInfo">
-      {children}
-      <style jsx>{`
-        .SecondaryInfo {
-          font: var(--font-body);
-          color: var(--foreground-weak);
-          margin: 0;
-        }
-      `}</style>
-    </div>
-  );
-}
-
+/**
+ * A block of informative text.
+ */
 export function Info({ children }) {
   const isInverted = useIsInverted();
 
@@ -79,6 +67,32 @@ export function Info({ children }) {
   );
 }
 
+/**
+ * A block of informative text that is of lesser importance than Info
+ */
+export function SecondaryInfo({ children }) {
+  return (
+    <div className="SecondaryInfo">
+      {children}
+      <style jsx>{`
+        .SecondaryInfo {
+          font: var(--font-body);
+          color: var(--foreground-weak);
+          margin: 0;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/**
+ * A list of concise (think number + word) information points, rendered as a horizontal list separated by bullets.
+ *
+ * Example:
+ *    42 users <dot> 6 online
+ *
+ * Each provided child will be treated as a separate information point. Wrap them in <> or otherwise to group them.
+ */
 export function InfoList({ children }) {
   return (
     <span className="InfoList">

@@ -3,6 +3,10 @@ import { useClickAway } from "react-use";
 import { RiMoreFill } from "react-icons/ri";
 import { RevealButton } from "./input";
 
+/**
+ * Elements that trigger a popup on click should be wrapped in a PopupTarget.
+ * The Popup itself should also be a child of PopupTarget.
+ */
 export function PopupTarget({ children, setOpen }) {
   const ref = useRef(null);
   useClickAway(ref, () => setOpen(false));
@@ -24,10 +28,15 @@ export function PopupTarget({ children, setOpen }) {
 }
 
 export enum HorizontalAlign {
+  /** Align the right side of the popup with the right side of the target */
   Right,
+  /** Align the left side of the popup with the left side of the target */
   Left,
 }
 
+/**
+ * A hovering absolutely-positioned Popup associated with its parent, PopupTarget.
+ */
 export function Popup({ children, isOpen, horizontalAlign }) {
   return (
     <div className="Popup">

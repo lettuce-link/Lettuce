@@ -1,21 +1,24 @@
-import { useShowToast } from "components/toast";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   redirectToAuthentication,
   useAuthRequest,
   useClient,
   useIsLoggedIn,
 } from "./auth";
-import {
-  useNewSubscribtion as useNewSubscription,
-  useNewWebsocketClient,
-} from "./websocket";
+import { useNewSubscribtion as useNewSubscription } from "./websocket";
 
 enum PostUpdateType {
   Join = "PostJoin",
   CreateComment = "CreateComment",
 }
 
+/**
+ * Given a post ID, fetches the post (getPost endpoint)
+ *
+ * Also websocket-joins the post and adds any new comments as they are added
+ *
+ * TODO: further websocket-join updates
+ */
 export function usePost(id) {
   const [postResponse, setPostResponse] = useState(null);
   const [isLoading, setLoading] = useState(true);

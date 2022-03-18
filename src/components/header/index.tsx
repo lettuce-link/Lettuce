@@ -3,15 +3,18 @@ import { useMe, useSite } from "api/site";
 import { Button, Link, RevealButton } from "atoms/input";
 import { Row, Column, Padding } from "atoms/layout";
 import { PopupTarget, Popup, HorizontalAlign } from "atoms/popup";
-import { PersonBadge } from "components/person/badge";
+import { PersonMention } from "components/person/badge";
 import { PersonSafe } from "lemmy-js-client";
 import Head from "next/head";
 import { useState } from "react";
 
 import { MenuButton } from "./menu";
 
+/**
+ * The app header (sticky thing at top of page)
+ */
 export function Header() {
-  const site = useSite()?.site;
+  const site = useSite();
 
   if (!site) {
     return null;
@@ -68,6 +71,12 @@ function Name({ siteDetails }) {
   );
 }
 
+/**
+ * User toolbar.
+ * Currently only shows the username/login link
+ *
+ * TODO: notifications, moderation button (?) etc.
+ */
 function ToolBar() {
   const me = useMe();
   const person = me?.local_user_view.person;
@@ -97,7 +106,7 @@ function UserMenu({ person }: { person: PersonSafe }) {
       <PopupTarget setOpen={setOpen}>
         <RevealButton>
           <Padding padding="8px 16px">
-            <PersonBadge person={person} />
+            <PersonMention person={person} />
           </Padding>
         </RevealButton>
         <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>

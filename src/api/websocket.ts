@@ -10,11 +10,19 @@ function baseWsUrl() {
   return `${protocol}://${domain}`;
 }
 
+/**
+ * A wrapper for the websocket API.
+ *
+ */
 class WebsocketClient {
   api: LemmyWebsocket;
   websocket: Promise<WebSocket>;
   auth?: string;
 
+  /**
+   * @param onMessage the function to be called for each new message (parameter: parsed json object)
+   * @param token the authentication token to use
+   */
   constructor(onMessage, token?) {
     this.api = new LemmyWebsocket();
 
@@ -32,6 +40,9 @@ class WebsocketClient {
     this.auth = token;
   }
 
+  /**
+   * Close the websocket request
+   */
   close() {
     this.websocket.then((ws) => ws.close());
   }
@@ -40,11 +51,25 @@ class WebsocketClient {
     this.websocket.then((ws) => ws.send(message));
   }
 
+  /**
+   * Websocket join on the specified post.
+   * Sending this will let you receive updates on the post live (such as new comments, likes, etc)
+   * @param id post ID to join
+   */
   postJoin(id) {
     this.send(this.api.postJoin({ post_id: id }));
   }
 }
 
+/**
+ * Provides a new websocket client. This will create a new client at each call site, making debuggin easier (you'll know for sure that the messages you receive have been requested at this call site, because noone else could have requested anything for you).
+ * Perhaps this comes at a slight performance cost (creating a new request) but I'm willing to pay that cost for madness-free development.
+ *
+ * The client is updated (recreated) whenever the authentication token changes (on login, logout)
+ *
+ * @param onMessage
+ * @returns
+ */
 export function useNewWebsocketClient(onMessage): WebsocketClient {
   const client = useClient();
   const [websocketClient, setWebSocketClient] = useState(null);
@@ -75,6 +100,12 @@ export interface Message {
   data: any;
 }
 
+/**
+ * Manages a websocket client
+ * @param setup the function to set up the connection with. Make all your desired api calls here to subscribe to messages.
+ * @param onMessage called when a message is received.
+ * @param dependencies when one of these changes, `setup` will get called again so you can subscribe to messages based on the new dependencies.
+ */
 export function useNewSubscribtion(
   setup: (c: WebsocketClient) => void,
   onMessage: (message: Message) => void,
