@@ -40,5 +40,5 @@ host=lettuce.link
 ```bash
 docker build --build-arg host=lettuce.link --build-arg is_secure=true --file Dockerfile_prod -t lettuce:prod .
 
-docker-compose --file docker-compose-prod.yml up
+docker-compose --env-file ../.env --file docker-compose-prod.yml up
 ```

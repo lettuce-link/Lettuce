@@ -29,8 +29,6 @@ services:
     network_mode: bridge
 
   postgres:
-    env_file:
-      - ../.env
     image: postgres:12-alpine
     environment:
       - POSTGRES_USER=lemmy
@@ -41,8 +39,6 @@ services:
     restart: always
 
   lemmy:
-    env_file:
-      - ../.env
     image: dessalines/lemmy:0.16.0
     restart: always
     environment:
