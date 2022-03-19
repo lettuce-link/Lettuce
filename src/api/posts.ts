@@ -28,6 +28,7 @@ export interface InfinitePosts {
  * requestMore: fetch the next page of posts. Noop if already fetching or has no more posts.
  */
 // todo: infinite loading not really tested, just the 1st page. sry if buggy.
+// todo: there will be other places where we want to use infinite scrolling on a paginated api. perhaps we should implement this generically to reuse?
 export function usePosts({
   type_,
   community_name,

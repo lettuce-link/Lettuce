@@ -1,4 +1,10 @@
-import { GetPosts, LemmyHttp, LemmyWebsocket } from "lemmy-js-client";
+import {
+  GetPosts,
+  LemmyHttp,
+  LemmyWebsocket,
+  ListingType,
+  SortType,
+} from "lemmy-js-client";
 
 function baseHttpUrl() {
   const isSecure = JSON.parse(process.env.NEXT_PUBLIC_LEMMY_SECURE);
@@ -64,6 +70,13 @@ export interface EditSiteSimple {
   community_creation_admin_only?: boolean;
   private_instance?: boolean;
   default_theme?: string;
+}
+
+export interface ListCommunitiesSimple {
+  type_?: ListingType;
+  sort?: SortType;
+  page?: number;
+  limit?: number;
 }
 
 /**
@@ -221,6 +234,13 @@ export default class Client {
       old_password: oldPassword,
       new_password: newPassword,
       new_password_verify: newPassword,
+    });
+  }
+
+  listCommunities(search: ListCommunitiesSimple) {
+    return this.http.listCommunities({
+      ...search,
+      ...this.getOptionalAuthObject(),
     });
   }
 }

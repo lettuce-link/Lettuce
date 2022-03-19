@@ -10,6 +10,7 @@ import { RiShieldFill } from "react-icons/ri";
 import { siteSettingsLink } from "util/link";
 import { ChannelView } from "./channel_view";
 import { ReadonlyEditor } from "./editor";
+import { TrendingCommunities } from "./trending_communities";
 
 /**
  * The home page – shows posts from all communities, as well as an "about site" section.
@@ -78,6 +79,7 @@ function AboutSite() {
           </SecondaryInfo>
         </Row>
         <ReadonlyEditor markdown={site.description || ""} />
+        <TrendingCommunities />
         <SiteStatistics siteView={site_view} />
       </Column>
     </Padding>
