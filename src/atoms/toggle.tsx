@@ -4,21 +4,32 @@ import { InvertedMarker } from "./theme";
 /**
  * A button to toggle betweeen 2 or more states
  */
-export function MultiStateButton({ options, currentIndex, onClick }) {
+export function MultiStateButton({
+  options,
+  currentIndex,
+  onClick,
+  secondary = false,
+}) {
   // Options will almost never change, ok to use index as key
   return (
-    <Button onClick={onClick}>
+    <Button secondary={secondary} onClick={onClick}>
       <InvertedMarker>
-        <div className="MultiStateButton-contents">
-          {options.map((option, index) => (
-            <StateButtonItem key={index} isSelected={currentIndex === index}>
-              {option}
-            </StateButtonItem>
-          ))}
+        <div className="MultiStateButton-wrapper">
+          <div className="MultiStateButton-contents">
+            {options.map((option, index) => (
+              <StateButtonItem key={index} isSelected={currentIndex === index}>
+                {option}
+              </StateButtonItem>
+            ))}
+          </div>
         </div>
       </InvertedMarker>
 
       <style jsx>{`
+        .MultiStateButton-wrapper {
+          overflow: hidden;
+        }
+
         .MultiStateButton-contents {
           display: grid;
           grid-template-columns: 1fr;

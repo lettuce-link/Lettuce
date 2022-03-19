@@ -117,7 +117,7 @@ export function Submit({ value, disabled = false }) {
   );
 }
 
-export function Button({ children, onClick, icon = null }) {
+export function Button({ children, onClick, icon = null, secondary = false }) {
   return (
     <>
       <button className="Button" onClick={onClick}>
@@ -126,15 +126,27 @@ export function Button({ children, onClick, icon = null }) {
       </button>
       <style jsx>{`
         .Button {
-          border: none;
-          padding: 8px 16px;
-          border-radius: var(--small-corner-round);
+          // +2px effective padding for the border
+          padding: 6px 14px;
 
-          color: var(--foreground-inverted);
-          background: var(--color-primary-strong);
+          border-radius: var(--small-corner-round);
+          border: 2px solid var(--color-primary-strong);
 
           font: var(--font-body);
           cursor: pointer;
+
+          transition: color var(--transition-quick),
+            background var(--transition-quick);
+
+          ${secondary
+            ? `
+            color: var(--color-primary-strong);
+            background: var(--background-strong);
+            `
+            : `
+            color: var(--foreground-inverted);
+            background: var(--color-primary-strong);
+          `};
         }
 
         // welcome to css

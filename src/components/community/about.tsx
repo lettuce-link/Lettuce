@@ -41,7 +41,11 @@ export function CommunityThumbnail({ community }) {
         <Row wrap justify="start">
           <Button onClick={openNewPostPage}>New Post</Button>
           {amModerator && (
-            <Button onClick={openSettingsPage} icon={<RiShieldFill />}>
+            <Button
+              secondary
+              onClick={openSettingsPage}
+              icon={<RiShieldFill />}
+            >
               Settings
             </Button>
           )}
@@ -133,6 +137,7 @@ function JoinButton({ communityView }: { communityView: CommunityView }) {
 
   return (
     <MultiStateButton
+      secondary={isSubscribed}
       options={options}
       currentIndex={index}
       onClick={onClick}
