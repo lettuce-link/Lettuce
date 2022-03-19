@@ -32,7 +32,7 @@ services:
     image: postgres:12-alpine
     environment:
       - POSTGRES_USER=lemmy
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=$database_password
       - POSTGRES_DB=lemmy
     volumes:
       - ./volumes/postgres:/var/lib/postgresql/data
@@ -44,13 +44,15 @@ services:
     environment:
       - RUST_LOG="warn,lemmy_server=info,lemmy_api=info,lemmy_api_common=info,lemmy_api_crud=info,lemmy_apub=info,lemmy_db_schema=info,lemmy_db_views=info,lemmy_db_views_actor=info,lemmy_db_views_moderator=info,lemmy_routes=info,lemmy_utils=info,lemmy_websocket=info"
 
+      - LEMMY_DATABASE_URL="postgres://lemmy:${database_password}@postgres:5432/lemmy"
+
       # for nginx-proxy configuration
       - VIRTUAL_HOST=$host
       - LETSENCRYPT_HOST=$host
       - VIRTUAL_PATH=/api
       - HTTP_PORT=8536
     volumes:
-      - ./lemmy.hjson:/config/config.hjson
+      - ./lemmy-prod.hjson:/config/config.hjson
     depends_on:
       - postgres
       - pictrs

@@ -31,5 +31,6 @@ Use variables for everything else (e.g. `var(--background-strong)`).
 ```bash
 docker build --build-arg host=lettuce.link --build-arg is_secure=true --file Dockerfile_prod -t lettuce:prod .
 
-host=lettuce.link docker-compose --file docker-compose-prod.yml up
+# replace the XXX with any password
+database_password=XXX host=lettuce.link docker-compose --file docker-compose-prod.yml up
 ```
