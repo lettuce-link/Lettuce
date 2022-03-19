@@ -28,9 +28,17 @@ Use variables for everything else (e.g. `var(--background-strong)`).
 
 ## Production
 
+Create an `.env` file in the project's parent directory
+
+```
+# can be anything, but you'll need to update it in postgres if the container is already created
+database_password=XXX
+
+host=lettuce.link
+```
+
 ```bash
 docker build --build-arg host=lettuce.link --build-arg is_secure=true --file Dockerfile_prod -t lettuce:prod .
 
-# replace the XXX with any password
-database_password=XXX host=lettuce.link docker-compose --file docker-compose-prod.yml up
+docker-compose --file docker-compose-prod.yml up
 ```
