@@ -27,3 +27,7 @@ export function siteSettingsLink() {
 export function postLink(postId) {
   return `/post/${postId}`;
 }
+
+export function userSettings() {
+  return "/settings";
+}

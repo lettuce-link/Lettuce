@@ -6,6 +6,7 @@ import { Column, Row } from "atoms/layout";
 import { H1, SecondaryInfo } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import { useCallback, useState } from "react";
+import { validateUsername, validatePassword } from "util/auth";
 import { useCaptcha } from "./captcha";
 import { View } from "./view";
 
@@ -43,55 +44,6 @@ function CaptchaError({ error, setView }) {
   }
 
   return null;
-}
-
-const USERNAME_REGEX = /^[a-zA-Z0-9_]*$/;
-const USERNAME_MIN_LENGTH = 3;
-const USERNAME_MAX_LENGTH = 20;
-
-/**
- * Returns a validation message, or false if the username is valid
- * @param username
- * @returns
- */
-function validateUsername(username) {
-  if (username.length === 0) {
-    return `Can contain letters, numbers, and underscores`;
-  }
-
-  if (!USERNAME_REGEX.test(username)) {
-    return "Usernames can only contain letters, numbers, and underscores (_)";
-  }
-
-  if (username.length < USERNAME_MIN_LENGTH) {
-    return `Must have at least ${USERNAME_MIN_LENGTH} characters.`;
-  }
-
-  if (username.length > USERNAME_MAX_LENGTH) {
-    return `Sorry, usernames can have at most ${USERNAME_MAX_LENGTH} characters.`;
-  }
-
-  return false;
-}
-
-const MIN_PASSWORD_LENGTH = 10;
-const MAX_PASSWORD_LENGTH = 60;
-
-/**
- * Returns a validation message, or false if the password is valid.
- * @param password
- * @returns
- */
-function validatePassword(password) {
-  if (password.length < MIN_PASSWORD_LENGTH) {
-    return `Must have at least ${MIN_PASSWORD_LENGTH} characters.`;
-  }
-
-  if (password.length > MAX_PASSWORD_LENGTH) {
-    return `Sorry, passwords can have at most ${MAX_PASSWORD_LENGTH} characters.`;
-  }
-
-  return false;
 }
 
 export function Register({ usernameOrEmail, password, setPassword, setView }) {

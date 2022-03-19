@@ -16,8 +16,7 @@ export function CommunityMention({ community }: { community: CommunitySafe }) {
         .CommunityBadge-symbol {
           opacity: var(--opacity-fade);
         }
-      `}</style>
-      <style jsx>{`
+
         span {
           color: var(--foreground-weak);
         }

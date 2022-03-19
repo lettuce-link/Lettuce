@@ -7,6 +7,7 @@ import { PersonMention } from "components/person/badge";
 import { PersonSafe } from "lemmy-js-client";
 import Head from "next/head";
 import { useState } from "react";
+import { userSettings } from "util/link";
 
 import { MenuButton } from "./menu";
 
@@ -111,8 +112,7 @@ function UserMenu({ person }: { person: PersonSafe }) {
         </RevealButton>
         <Popup isOpen={isOpen} horizontalAlign={HorizontalAlign.Right}>
           <Column gap="8px" align="end">
-            <Link href="#">Profile</Link>
-            <Link href="#">Settings</Link>
+            <Link href={userSettings()}>Settings</Link>
             <Button onClick={logout}>Log Out</Button>
           </Column>
         </Popup>

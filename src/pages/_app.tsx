@@ -4,6 +4,7 @@ import { Header } from "../components/header";
 import { SiteProvider } from "../api/site";
 import { ClientProvider } from "../api/auth";
 import { ScrollLimitProvider } from "components/scroll_limit";
+import React from "react";
 
 /**
  * This is not a regular router page, this is "magic" for NextJS.
@@ -15,16 +16,18 @@ import { ScrollLimitProvider } from "components/scroll_limit";
 
 export default function App({ Component, pageProps }) {
   return (
-    <ClientProvider>
-      <SiteProvider>
-        <Theme />
-        <ToastProvider>
-          <AppFrame>
-            <Component {...pageProps} />
-          </AppFrame>
-        </ToastProvider>
-      </SiteProvider>
-    </ClientProvider>
+    <React.StrictMode>
+      <ClientProvider>
+        <SiteProvider>
+          <Theme />
+          <ToastProvider>
+            <AppFrame>
+              <Component {...pageProps} />
+            </AppFrame>
+          </ToastProvider>
+        </SiteProvider>
+      </ClientProvider>
+    </React.StrictMode>
   );
 }
 

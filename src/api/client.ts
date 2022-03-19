@@ -214,4 +214,13 @@ export default class Client {
   verifyEmail(token) {
     return this.http.verifyEmail({ token });
   }
+
+  changePassword({ oldPassword, newPassword }) {
+    return this.http.changePassword({
+      auth: this.auth,
+      old_password: oldPassword,
+      new_password: newPassword,
+      new_password_verify: newPassword,
+    });
+  }
 }
