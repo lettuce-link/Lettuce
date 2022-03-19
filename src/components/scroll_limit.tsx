@@ -48,7 +48,7 @@ export function useScrollLimit() {
   useEffect(() => {
     setShouldLimit(true);
 
-    () => {
+    return () => {
       setShouldLimit(false);
     };
   }, [shouldLimit]);
