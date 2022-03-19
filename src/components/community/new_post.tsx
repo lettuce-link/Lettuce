@@ -88,6 +88,8 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
       });
   }
 
+  // todo: if we put the Editor in a Field (which has a label for accessibility purposes), that label gets associated with all the contained WYSIWYG buttons. fix this.
+
   return (
     <Form onSubmit={onSubmit}>
       <Column>
@@ -95,9 +97,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
           <TextInput value={title} setValue={setTitle} />
           <ValidationMessage message={titleValidation} />
         </Field>
-        <Field prompt="Content">
-          <Editor minHeight="8em" />
-        </Field>
+        <Editor minHeight="8em" />
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />
         </Row>

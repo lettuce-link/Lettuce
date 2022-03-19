@@ -274,7 +274,7 @@ export function Link({ children, href }) {
   );
 }
 
-function noop() {}
+function noop(event?) {}
 
 /**
  * A button that is rendered as regular text, until it is hovered.
@@ -289,8 +289,11 @@ export function RevealButton({ children, onClick = noop, inline = false }) {
       {children}
       <style jsx>{`
         .RevealButton {
+          padding: 0;
+
           border: none;
           font: inherit;
+          color: inherit;
 
           display: ${inline ? "inline-flex" : "flex"};
           background: transparent;
@@ -299,6 +302,51 @@ export function RevealButton({ children, onClick = noop, inline = false }) {
           transition: background var(--transition-quick);
 
           cursor: pointer;
+        }
+
+        .RevealButton:hover {
+          background: var(--background-transparent-dark);
+        }
+      `}</style>
+    </button>
+  );
+}
+
+export function RevealToggleButton({
+  children,
+  onClick = noop,
+  onMouseDown = noop,
+  isSelected = false,
+}) {
+  return (
+    <button
+      type="button"
+      className="RevealButton"
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+    >
+      {children}
+      <style jsx>{`
+        .RevealButton {
+          padding: 0;
+
+          border: none;
+          font: inherit;
+
+          display: "flex";
+
+          border-radius: var(--small-corner-round);
+          transition: background var(--transition-quick),
+            color var(--transition-quick);
+
+          cursor: pointer;
+
+          background: ${isSelected
+            ? "var(--color-primary-strong)"
+            : "transparent"};
+          color: ${isSelected
+            ? "var(--foreground-inverted)"
+            : "var(--foreground-weak)"};
         }
 
         .RevealButton:hover {

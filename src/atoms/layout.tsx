@@ -63,6 +63,7 @@ export function Padding({ children, padding = "16px" }) {
       <style jsx>{`
         .Padding {
           padding: ${padding};
+          display: flex;
         }
       `}</style>
     </div>
