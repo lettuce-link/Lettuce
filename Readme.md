@@ -1,6 +1,6 @@
 # Lettuce
 
-A less ugly frontend for [Lemmy](https://join-lemmy.org/), an awesome open source federated discussion platform.
+A (work in progress) beautiful and intuitive frontend for [Lemmy](https://join-lemmy.org/), an awesome open source federated discussion platform.
 
 ## Why "Lettuce"?
 
@@ -40,3 +40,5 @@ docker-compose up
 ```
 
 This will locally start the database, Lemmy, the Lettuce frontend, and everything else needed for Lettuce to work. Open up http://localhost and the website should be there!
+
+If you'd like to contribute, please see [Contributing.md](./Contributing.md)
