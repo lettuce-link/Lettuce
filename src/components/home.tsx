@@ -8,7 +8,7 @@ import router from "next/router";
 import { useCallback } from "react";
 import { RiShieldFill } from "react-icons/ri";
 import { siteSettingsLink } from "util/link";
-import { ChannelView } from "./community/channel_view";
+import { ChannelView } from "./channel_view";
 import { ReadonlyEditor } from "./editor";
 
 /**

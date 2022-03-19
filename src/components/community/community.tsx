@@ -1,7 +1,7 @@
 import { useCommunity } from "api/community";
 import { useCommunityPosts } from "api/posts";
 import { AboutCommunity, CommunityThumbnail } from "./about";
-import { ChannelView } from "./channel_view";
+import { ChannelView } from "../channel_view";
 
 /**
  * The community page, showing the posts in that community and info about it.
