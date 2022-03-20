@@ -1,2 +1,4 @@
 .env
 volumes
+!.env.template
+lemmy-prod.hjson
