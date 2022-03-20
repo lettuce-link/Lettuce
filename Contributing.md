@@ -25,20 +25,3 @@ Please try to keep things minimal and consistent, reuse the same building blocks
 Use powers of 2px for all sizes and dimensions (2, 4, 8, 16..). This dumb trick makes a lot of things magically lign up.
 
 Use variables for everything else (e.g. `var(--background-strong)`).
-
-## Production
-
-Create an `.env` file in the project's parent directory
-
-```
-# can be anything, but you'll need to update it in postgres if the container is already created
-database_password=XXX
-
-host=lettuce.link
-```
-
-```bash
-docker build --build-arg host=lettuce.link --build-arg is_secure=true --file Dockerfile_prod -t lettuce:prod .
-
-docker-compose --env-file ../.env --file docker-compose-prod.yml up
-```
