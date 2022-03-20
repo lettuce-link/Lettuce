@@ -420,7 +420,11 @@ export function RevealToggleButton({
         }
 
         .RevealButton:hover {
+          ${isSelected
+            ? ``
+            : `
           background: var(--background-transparent-dark);
+          `}
         }
       `}</style>
     </button>
