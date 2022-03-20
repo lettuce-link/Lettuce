@@ -1,9 +1,9 @@
 import { useClient, useIsLoggedIn } from "api/auth";
 import { authLink } from "util/link";
-import { Field, Form, Link, Submit } from "atoms/input";
+import { EditorField, Field, Form, Link, Submit } from "atoms/input";
 import { Column, Row } from "atoms/layout";
 import { SecondaryInfo } from "atoms/typography";
-import { useEditor } from "components/editor";
+import { LettuceEditor, useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
 import { CommentView, PostView } from "lemmy-js-client";
 
@@ -14,7 +14,7 @@ export function PostAddComment({ postView }: { postView: PostView }) {
   const isLoggedIn = useIsLoggedIn();
   const client = useClient();
 
-  const { Editor, getMarkdown, isEmpty, clearContents } = useEditor();
+  const { editorProps, getMarkdown, isEmpty, clearContents } = useEditor();
   const { showSuccess } = useShowToast();
 
   function onSubmit() {
@@ -37,7 +37,7 @@ export function PostAddComment({ postView }: { postView: PostView }) {
   return (
     <CommentEditor
       onSubmit={onSubmit}
-      Editor={Editor}
+      editorProps={editorProps}
       isEmpty={isEmpty}
       prompt={"Add Comment"}
     />
@@ -59,7 +59,7 @@ export function CommentReply({
   const isLoggedIn = useIsLoggedIn();
   const client = useClient();
 
-  const { Editor, getMarkdown, isEmpty, clearContents } = useEditor();
+  const { editorProps, getMarkdown, isEmpty, clearContents } = useEditor();
   const { showSuccess } = useShowToast();
 
   function onSubmit() {
@@ -84,21 +84,21 @@ export function CommentReply({
   return (
     <CommentEditor
       onSubmit={onSubmit}
-      Editor={Editor}
+      editorProps={editorProps}
       isEmpty={isEmpty}
       prompt={"Reply"}
     />
   );
 }
 
-function CommentEditor({ onSubmit, Editor, isEmpty, prompt }) {
+function CommentEditor({ onSubmit, editorProps, isEmpty, prompt }) {
   return (
     <div className="PostAddComment">
       <Form onSubmit={onSubmit}>
         <Column gap="8px">
-          <Field prompt={prompt}>
-            <Editor />
-          </Field>
+          <EditorField prompt={prompt}>
+            <LettuceEditor {...editorProps} />
+          </EditorField>
           <Row justify="end">
             <Submit value="Post" disabled={isEmpty} />
           </Row>

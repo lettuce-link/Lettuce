@@ -1,5 +1,5 @@
 import InnerLink from "next/link";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useMemo } from "react";
 import { noop } from "util/noop";
 import { useIsInverted } from "./theme";
 

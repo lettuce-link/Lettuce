@@ -7,7 +7,7 @@ import { H1 } from "atoms/typography";
 import Router from "next/router";
 import { useCallback, useState } from "react";
 import { homeLink } from "util/link";
-import { useEditor } from "./editor";
+import { LettuceEditor, useEditor } from "./editor";
 import { useShowToast } from "./toast";
 
 /**
@@ -48,7 +48,7 @@ function SiteSettings({ site }) {
 
   const [name, setName] = useState(site.name);
 
-  const { Editor, getMarkdown } = useEditor(site.description || "");
+  const { editorProps, getMarkdown } = useEditor(site.description || "");
 
   const onSubmit = useCallback(() => {
     const markdown = getMarkdown();
@@ -70,7 +70,7 @@ function SiteSettings({ site }) {
             <TextInput value={name} setValue={setName} />
           </Field>
           <Field prompt="Description">
-            <Editor minHeight="4em" />
+            <LettuceEditor {...editorProps} minHeight="4em" />
           </Field>
           <Row justify="end">
             <Submit value="Save" />

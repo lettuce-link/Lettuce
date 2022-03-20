@@ -44,35 +44,36 @@ export function useEditor(initialMarkdown = null) {
   const [markdown, setMarkdown] = useState(initialMarkdown || "");
 
   const toggleMode = useCallback(() => {
-    if (isMarkdown) {
-      const content = stateFromMarkdown(markdown);
-      const state = EditorState.createWithContent(content);
-      setEditorState(state);
-    } else {
-      const markdown = stateToMarkdown(editorState.getCurrentContent());
-      setMarkdown(markdown);
-    }
+    setIsMarkdown((isMarkdown) => {
+      if (isMarkdown) {
+        const content = stateFromMarkdown(markdown);
+        const state = EditorState.createWithContent(content);
+        setEditorState(state);
+      } else {
+        const markdown = stateToMarkdown(editorState.getCurrentContent());
+        setMarkdown(markdown);
+      }
 
-    setIsMarkdown(!isMarkdown);
-  }, [isMarkdown, editorState, markdown]);
+      return !isMarkdown;
+    });
+  }, [editorState, markdown]);
 
   const isEmpty = !editorState.getCurrentContent().hasText();
 
+  // todo: we're losing the nice transition bc react rerenders this when the parent node is switched out.
+  // the solution is called "reparenting" i think? apparently there's a solution using portals. anwyay im not about to spend 4h making this transition work.
   const toggle = (
     <ModeToggle isMarkdown={isMarkdown} toggleMarkdown={toggleMode} />
   );
 
-  const Editor = ({ minHeight = "0" }) => (
-    <HybridEditor
-      editorState={editorState}
-      setEditorState={setEditorState}
-      minHeight={minHeight}
-      markdown={markdown}
-      setMarkdown={setMarkdown}
-      isMarkdown={isMarkdown}
-      modeToggle={toggle}
-    />
-  );
+  const editorProps = {
+    editorState,
+    setEditorState,
+    markdown,
+    setMarkdown,
+    isMarkdown,
+    modeToggle: toggle,
+  };
 
   function getMarkdown() {
     return stateToMarkdown(editorState.getCurrentContent());
@@ -82,10 +83,10 @@ export function useEditor(initialMarkdown = null) {
     setEditorState(EditorState.createEmpty());
   }
 
-  return { Editor, getMarkdown, isEmpty, clearContents };
+  return { editorProps, getMarkdown, isEmpty, clearContents };
 }
 
-function HybridEditor({
+export function LettuceEditor({
   editorState,
   setEditorState,
   markdown,

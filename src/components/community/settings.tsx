@@ -5,7 +5,7 @@ import { Card } from "atoms/card";
 import { Field, Form, Submit, TextInput } from "atoms/input";
 import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
 import { H1 } from "atoms/typography";
-import { useEditor } from "components/editor";
+import { LettuceEditor, useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
 import { CommunitySafe } from "lemmy-js-client";
 import Router from "next/router";
@@ -51,7 +51,7 @@ function CommunitySettings({ community }: { community: CommunitySafe }) {
   const { showSuccess } = useShowToast();
 
   const [title, setTitle] = useState(community.title);
-  const { Editor, getMarkdown } = useEditor(community.description || "");
+  const { editorProps, getMarkdown } = useEditor(community.description || "");
 
   const onSubmit = useCallback(() => {
     const markdown = getMarkdown();
@@ -79,7 +79,7 @@ function CommunitySettings({ community }: { community: CommunitySafe }) {
             <TextInput value={title} setValue={setTitle} />
           </Field>
           <Field prompt="Description">
-            <Editor minHeight="4em" />
+            <LettuceEditor {...editorProps} minHeight="4em" />
           </Field>
           <Row justify="end">
             <Submit value="Save" />
