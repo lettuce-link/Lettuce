@@ -2,7 +2,7 @@ import { useClient } from "api/auth";
 import { useCommunity } from "api/community";
 import { useModeratorGuard } from "api/site";
 import { Card } from "atoms/card";
-import { Field, Form, Submit, TextInput } from "atoms/input";
+import { EditorField, Field, Form, Submit, TextInput } from "atoms/input";
 import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
@@ -78,9 +78,9 @@ function CommunitySettings({ community }: { community: CommunitySafe }) {
           <Field prompt="Title">
             <TextInput value={title} setValue={setTitle} />
           </Field>
-          <Field prompt="Description">
+          <EditorField prompt="Description">
             <LettuceEditor {...editorProps} minHeight="4em" />
-          </Field>
+          </EditorField>
           <Row justify="end">
             <Submit value="Save" />
           </Row>

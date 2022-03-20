@@ -5,6 +5,7 @@ import { stateToMarkdown } from "draft-js-export-markdown";
 import { stateFromMarkdown } from "draft-js-import-markdown";
 import { useCallback, useMemo, useState } from "react";
 import { MarkdownEditor } from "./markdown";
+import { styleMap } from "./style";
 import { preventFocusLoss } from "./util";
 import { DraftEditor } from "./wysiwyg";
 
@@ -132,5 +133,7 @@ export function ReadonlyEditor({ markdown }) {
     return EditorState.createWithContent(content);
   }, [markdown]);
 
-  return <Editor editorState={editorState} readOnly />;
+  return (
+    <Editor customStyleMap={styleMap} editorState={editorState} readOnly />
+  );
 }

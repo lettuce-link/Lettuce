@@ -1,7 +1,7 @@
 import { useClient } from "api/auth";
 import { useAdminGuard, useSite } from "api/site";
 import { Card } from "atoms/card";
-import { Field, Form, Submit, TextInput } from "atoms/input";
+import { EditorField, Field, Form, Submit, TextInput } from "atoms/input";
 import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import Router from "next/router";
@@ -69,9 +69,9 @@ function SiteSettings({ site }) {
           <Field prompt="Name">
             <TextInput value={name} setValue={setName} />
           </Field>
-          <Field prompt="Description">
+          <EditorField prompt="Description">
             <LettuceEditor {...editorProps} minHeight="4em" />
-          </Field>
+          </EditorField>
           <Row justify="end">
             <Submit value="Save" />
           </Row>

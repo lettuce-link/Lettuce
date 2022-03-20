@@ -2,7 +2,7 @@ import { useAuthGuard, useClient } from "api/auth";
 import { useCommunity } from "api/community";
 import { Card } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
-import { Form, Field, TextInput, Submit } from "atoms/input";
+import { Form, Field, TextInput, Submit, EditorField } from "atoms/input";
 import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
@@ -97,7 +97,9 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
           <TextInput value={title} setValue={setTitle} />
           <ValidationMessage message={titleValidation} />
         </Field>
-        <LettuceEditor {...editorProps} minHeight="8em" />
+        <EditorField prompt="Content">
+          <LettuceEditor {...editorProps} minHeight="8em" />
+        </EditorField>
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />
         </Row>

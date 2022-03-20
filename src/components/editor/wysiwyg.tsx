@@ -2,12 +2,15 @@ import { RevealToggleButton } from "atoms/input";
 import { Column, Padding, Row } from "atoms/layout";
 import { Editor, EditorState, RichUtils } from "draft-js";
 import { useCallback } from "react";
-import { RiBold, RiCodeFill, RiItalic } from "react-icons/ri";
+import { RiBold, RiCodeFill, RiItalic, RiStrikethrough2 } from "react-icons/ri";
+import {
+  STYLE_BOLD,
+  STYLE_ITALIC,
+  STYLE_CODE,
+  styleMap,
+  STYLE_STRIKETHROUGH,
+} from "./style";
 import { preventFocusLoss } from "./util";
-
-const STYLE_BOLD = "BOLD";
-const STYLE_ITALIC = "ITALIC";
-const STYLE_CODE = "CODE";
 
 function useStyleControl(editorState, setEditorState, styleName) {
   const currentStyle = editorState.getCurrentInlineStyle();
@@ -40,6 +43,11 @@ function InlineStyleControls({
     setEditorState,
     STYLE_ITALIC
   );
+  const [hasStrikethrough, toggleStrikethrough] = useStyleControl(
+    editorState,
+    setEditorState,
+    STYLE_STRIKETHROUGH
+  );
   const [hasCode, toggleCode] = useStyleControl(
     editorState,
     setEditorState,
@@ -60,12 +68,12 @@ function InlineStyleControls({
         onClick={toggleItalic}
         Icon={RiItalic}
       />
-      {/* <StyleButton
+      <StyleButton
         name="Strike"
-        isSelected={undefined}
-        onClick={undefined}
+        isSelected={hasStrikethrough}
+        onClick={toggleStrikethrough}
         Icon={RiStrikethrough2}
-      /> */}
+      />
       <StyleButton
         name="Code"
         isSelected={hasCode}
@@ -138,6 +146,7 @@ export function DraftEditor({
 
         <div className="wrapper">
           <Editor
+            customStyleMap={styleMap}
             editorState={editorState}
             onChange={setEditorState}
             handleKeyCommand={handleKeyCommand}
