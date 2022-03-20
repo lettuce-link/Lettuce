@@ -5,7 +5,7 @@ import { ValidationMessage } from "atoms/feedback";
 import { Form, Field, TextInput, Submit } from "atoms/input";
 import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
 import { H1 } from "atoms/typography";
-import { useEditor } from "components/editor";
+import { LettuceEditor, useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
 import { CommunitySafe } from "lemmy-js-client";
 import { useRouter } from "next/router";
@@ -70,7 +70,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
 
   const isValid = !titleValidation;
 
-  const { Editor, getMarkdown } = useEditor();
+  const { editorProps, getMarkdown } = useEditor();
 
   const client = useClient();
 
@@ -97,7 +97,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
           <TextInput value={title} setValue={setTitle} />
           <ValidationMessage message={titleValidation} />
         </Field>
-        <Editor minHeight="8em" />
+        <LettuceEditor {...editorProps} minHeight="8em" />
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />
         </Row>
