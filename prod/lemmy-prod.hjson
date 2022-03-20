@@ -39,13 +39,13 @@
   # optional: email sending configuration
   email: {
     # hostname and port of the smtp server
-    smtp_server: "maildev:25"
+    smtp_server: "mailserver:25"
     # login name for smtp server
     #smtp_login: ""
     # password to login to the smtp server
     #smtp_password: ""
     # address to send emails from, eg "noreply@your-instance.com"
-    smtp_from_address: "hello@localhost"
+    smtp_from_address: "hello@lettuce.link"
     # whether or not smtp connections should use tls
     use_tls: false
     tls_type: "none"
