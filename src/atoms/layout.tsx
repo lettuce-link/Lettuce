@@ -64,6 +64,7 @@ export function Padding({ children, padding = "16px" }) {
         .Padding {
           padding: ${padding};
           display: flex;
+          flex-direction: column;
         }
       `}</style>
     </div>

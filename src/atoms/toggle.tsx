@@ -1,3 +1,4 @@
+import { noop } from "util/noop";
 import { Button } from "./input";
 import { InvertedMarker } from "./theme";
 
@@ -8,11 +9,18 @@ export function MultiStateButton({
   options,
   currentIndex,
   onClick,
+  onMouseDown = noop,
   secondary = false,
+  compact = false,
 }) {
   // Options will almost never change, ok to use index as key
   return (
-    <Button secondary={secondary} onClick={onClick}>
+    <Button
+      secondary={secondary}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      compact={compact}
+    >
       <InvertedMarker>
         <div className="MultiStateButton-wrapper">
           <div className="MultiStateButton-contents">

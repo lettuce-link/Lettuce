@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import { stateToMarkdown } from "draft-js-export-markdown";
 import { stateFromMarkdown } from "draft-js-import-markdown";
 import { Column, Padding, Row } from "atoms/layout";
-import { RevealButton, RevealToggleButton } from "atoms/input";
+import { RevealButton, RevealToggleButton, TextArea } from "atoms/input";
 import {
   RiBold,
   RiCodeFill,
@@ -11,6 +11,7 @@ import {
   RiStrikethrough,
   RiStrikethrough2,
 } from "react-icons/ri";
+import { MultiStateButton } from "atoms/toggle";
 
 /**
  * # About the editor & cms stuff
@@ -31,6 +32,7 @@ import {
  * - clearContents: empty editor contents
  */
 export function useEditor(initialMarkdown = null) {
+  const [isMarkdown, setIsMarkdown] = useState(false);
   const [editorState, setEditorState] = useState(() => {
     if (initialMarkdown) {
       const content = stateFromMarkdown(initialMarkdown);
@@ -39,14 +41,36 @@ export function useEditor(initialMarkdown = null) {
       return EditorState.createEmpty();
     }
   });
+  const [markdown, setMarkdown] = useState(initialMarkdown || "");
+
+  const toggleMode = useCallback(() => {
+    if (isMarkdown) {
+      const content = stateFromMarkdown(markdown);
+      const state = EditorState.createWithContent(content);
+      setEditorState(state);
+    } else {
+      const markdown = stateToMarkdown(editorState.getCurrentContent());
+      setMarkdown(markdown);
+    }
+
+    setIsMarkdown(!isMarkdown);
+  }, [isMarkdown, editorState, markdown]);
 
   const isEmpty = !editorState.getCurrentContent().hasText();
 
+  const toggle = (
+    <ModeToggle isMarkdown={isMarkdown} toggleMarkdown={toggleMode} />
+  );
+
   const Editor = ({ minHeight = "0" }) => (
-    <DraftEditor
+    <HybridEditor
       editorState={editorState}
       setEditorState={setEditorState}
       minHeight={minHeight}
+      markdown={markdown}
+      setMarkdown={setMarkdown}
+      isMarkdown={isMarkdown}
+      modeToggle={toggle}
     />
   );
 
@@ -61,6 +85,31 @@ export function useEditor(initialMarkdown = null) {
   return { Editor, getMarkdown, isEmpty, clearContents };
 }
 
+function HybridEditor({
+  editorState,
+  setEditorState,
+  markdown,
+  setMarkdown,
+  minHeight = "0",
+  isMarkdown,
+  modeToggle,
+}) {
+  return isMarkdown ? (
+    <MarkdownEditor
+      contents={markdown}
+      setContents={setMarkdown}
+      modeToggle={modeToggle}
+    />
+  ) : (
+    <DraftEditor
+      editorState={editorState}
+      setEditorState={setEditorState}
+      minHeight={minHeight}
+      modeToggle={modeToggle}
+    />
+  );
+}
+
 /**
  * Renders the specified markdown as read-only content
  */
@@ -73,12 +122,32 @@ export function ReadonlyEditor({ markdown }) {
   return <Editor editorState={editorState} readOnly />;
 }
 
+const EDIT_MODES = ["Editor", "Markdown"];
+function ModeToggle({ isMarkdown, toggleMarkdown }) {
+  return (
+    <Row align="center" gap="8px">
+      Mode:
+      <MultiStateButton
+        options={EDIT_MODES}
+        currentIndex={isMarkdown ? 1 : 0}
+        onClick={toggleMarkdown}
+        onMouseDown={preventFocusLoss}
+        secondary
+        compact
+      />
+    </Row>
+  );
+}
+
 /**
  * Displays an WYSIWYG editor.
- *
- * TODO: currently, only basic formatting can be applied with keyboard commands. We probably want a dedicated "actions" toolbar for formatting text.
  */
-function DraftEditor({ editorState, setEditorState, minHeight = "0" }) {
+function DraftEditor({
+  editorState,
+  setEditorState,
+  minHeight = "0",
+  modeToggle,
+}) {
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
 
@@ -91,11 +160,14 @@ function DraftEditor({ editorState, setEditorState, minHeight = "0" }) {
   }
   return (
     <div>
-      <Column gap="2px">
-        <InlineStyleControls
-          editorState={editorState}
-          setEditorState={setEditorState}
-        />
+      <Column gap="4px">
+        <Row align="end" justify="space-between" wrap>
+          <InlineStyleControls
+            editorState={editorState}
+            setEditorState={setEditorState}
+          />
+          {modeToggle}
+        </Row>
 
         <div className="wrapper">
           <Editor
@@ -117,6 +189,36 @@ function DraftEditor({ editorState, setEditorState, minHeight = "0" }) {
       <style jsx global>{`
         .public-DraftEditor-content {
           min-height: ${minHeight};
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function MarkdownEditor({
+  contents,
+  setContents,
+  minHeight = "0",
+  modeToggle,
+}) {
+  return (
+    <div>
+      <Column gap="4px">
+        <Row align="end" justify="end" wrap>
+          {modeToggle}
+        </Row>
+
+        <div className="wrapper">
+          <TextArea value={contents} setValue={setContents} />
+        </div>
+      </Column>
+
+      <style jsx>{`
+        .wrapper {
+          background: var(--background-weak);
+          border-radius: var(--small-corner-round);
+
+          padding: 8px;
         }
       `}</style>
     </div>

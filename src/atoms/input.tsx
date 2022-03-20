@@ -1,4 +1,6 @@
 import InnerLink from "next/link";
+import React, { useLayoutEffect } from "react";
+import { noop } from "util/noop";
 import { useIsInverted } from "./theme";
 
 // just a regular form wrapper
@@ -43,6 +45,30 @@ export function Field({ prompt, children }) {
 }
 
 /**
+ * Fields with a WYSIWYG editor require special care.
+ * If we just use the regular Field on them, the label will get associated with the editor buttons and make a mess (wrong).
+ */
+export function EditorField({ prompt, children }) {
+  return (
+    <div className="EditorField">
+      <label>
+        <div className="Field-prompt">{prompt}</div>
+      </label>
+      {children}
+      <style jsx>{`
+        .Field-prompt {
+          color: var(--foreground-weak);
+          font: var(--font-body);
+          font-size: var(--size-small);
+
+          margin: 0 0 4px;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/**
  * Your regular text input field. A different input type may be provided with `type`.
  */
 export function TextInput({ type = "text", value, setValue }) {
@@ -57,6 +83,45 @@ export function TextInput({ type = "text", value, setValue }) {
       <style jsx>{`
         .TextInput {
           border: none;
+          background: var(--background-weak);
+          padding: 8px;
+          border-radius: var(--small-corner-round);
+
+          font: var(--font-body);
+
+          width: 100%;
+          box-sizing: border-box;
+
+          margin: 0 0 4px;
+        }
+      `}</style>
+    </>
+  );
+}
+
+export function TextArea({ value, setValue }) {
+  const textareaRef = React.useRef(null);
+
+  // thank you RandomDude
+  // https://stackoverflow.com/a/65990608
+  useLayoutEffect(() => {
+    // Reset height - important to shrink on delete
+    textareaRef.current.style.height = "inherit";
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  }, [value]);
+
+  return (
+    <>
+      <textarea
+        ref={textareaRef}
+        className="TextArea"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <style jsx>{`
+        .TextArea {
+          border: none;
+          resize: none;
           background: var(--background-weak);
           padding: 8px;
           border-radius: var(--small-corner-round);
@@ -117,17 +182,24 @@ export function Submit({ value, disabled = false }) {
   );
 }
 
-export function Button({ children, onClick, icon = null, secondary = false }) {
+export function Button({
+  children,
+  onClick,
+  onMouseDown = noop,
+  icon = null,
+  secondary = false,
+  compact = false,
+}) {
   return (
     <>
-      <button className="Button" onClick={onClick}>
+      <button className="Button" onClick={onClick} onMouseDown={onMouseDown}>
         {icon}
         {children}
       </button>
       <style jsx>{`
         .Button {
           // +2px effective padding for the border
-          padding: 6px 14px;
+          padding: ${compact ? "2px 6px" : "6px 14px"};
 
           border-radius: var(--small-corner-round);
           border: 2px solid var(--color-primary-strong);
@@ -273,8 +345,6 @@ export function Link({ children, href }) {
     </InnerLink>
   );
 }
-
-function noop(event?) {}
 
 /**
  * A button that is rendered as regular text, until it is hovered.
