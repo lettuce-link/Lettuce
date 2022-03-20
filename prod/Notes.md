@@ -15,5 +15,5 @@ docker-compose --env-file ../.env --file prod/docker-compose.yml up -d
 docker-compose --env-file ../.env --file prod/docker-compose.yml down
 
 # logs:
-docker-compose --file prod/docker-compose.yml logs
+docker-compose --file prod/docker-compose.yml logs -f
 ```

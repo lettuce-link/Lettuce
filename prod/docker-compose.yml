@@ -52,7 +52,7 @@ services:
       - VIRTUAL_PATH=/api
       - HTTP_PORT=8536
     volumes:
-      - ./prod/lemmy.hjson:/config/config.hjson
+      - ./lemmy-prod.hjson:/config/config.hjson
     depends_on:
       - postgres
       - pictrs
