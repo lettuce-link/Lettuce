@@ -45,7 +45,11 @@ export function Row({
   );
 }
 
-export function LargePadding({ children }) {
+/**
+ * Gives some breathing space on desktop.
+ * On mobile, provides a small padding.
+ */
+export function ComfortPadding({ children }) {
   return (
     <div className="LargePadding">
       {children}
@@ -56,7 +60,7 @@ export function LargePadding({ children }) {
       `}</DesktopStyle>
       <MobileStyle>{`
         .LargePadding {
-          padding: 32px;
+          padding: 16px;
         }
       `}</MobileStyle>
     </div>
@@ -105,10 +109,10 @@ export function WidthLimit({
  * On mobile, it will take up the entire screen.
  * On desktop, it will be presented as a centered card.
  */
-export function FocusContent({ children }) {
+export function FocusContent({ children, limit = "var(--small-content)" }) {
   return (
     <div className="FocusCard-wrapper">
-      <WidthLimit>
+      <WidthLimit limit={limit}>
         <div className="FocusCard-card">{children}</div>
       </WidthLimit>
 

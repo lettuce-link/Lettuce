@@ -3,7 +3,13 @@ import { useCommunity } from "api/community";
 import { useModeratorGuard } from "api/site";
 import { Card } from "atoms/card";
 import { EditorField, Field, Form, Submit, TextInput } from "atoms/input";
-import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
+import {
+  WidthLimit,
+  ComfortPadding,
+  Column,
+  Row,
+  FocusContent,
+} from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
@@ -27,22 +33,13 @@ export function CommunityModerationPage({ name }) {
   }
 
   return (
-    <main>
-      <WidthLimit limit="var(--large-content)">
-        <Card>
-          <LargePadding>
-            <CommunitySettings
-              community={communityResponse.community_view.community}
-            />
-          </LargePadding>
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent limit="var(--large-content)">
+      <ComfortPadding>
+        <CommunitySettings
+          community={communityResponse.community_view.community}
+        />
+      </ComfortPadding>
+    </FocusContent>
   );
 }
 

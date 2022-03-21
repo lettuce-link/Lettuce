@@ -30,7 +30,7 @@ export function Theme() {
       <style jsx global type="text/css">{`
         :root {
           --small-content: 500px;
-          --large-content: 1000px;
+          --large-content: 900px;
 
           --background-strong: #fff;
           --background-weak: #eee;

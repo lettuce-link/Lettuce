@@ -2,7 +2,13 @@ import { useClient } from "api/auth";
 import { useAdminGuard, useSite } from "api/site";
 import { Card } from "atoms/card";
 import { EditorField, Field, Form, Submit, TextInput } from "atoms/input";
-import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
+import {
+  Column,
+  ComfortPadding,
+  FocusContent,
+  Row,
+  WidthLimit,
+} from "atoms/layout";
 import { H1 } from "atoms/typography";
 import Router from "next/router";
 import { useCallback, useState } from "react";
@@ -25,20 +31,11 @@ export function SiteSettingsPage() {
   }
 
   return (
-    <main>
-      <WidthLimit limit="var(--large-content)">
-        <Card>
-          <LargePadding>
-            <SiteSettings site={site} />
-          </LargePadding>
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent limit="var(--large-content)">
+      <ComfortPadding>
+        <SiteSettings site={site} />
+      </ComfortPadding>
+    </FocusContent>
   );
 }
 

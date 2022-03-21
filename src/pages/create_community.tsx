@@ -1,32 +1,23 @@
 import { useAuthGuard, useClient } from "api/auth";
-import { communityLink } from "util/link";
-import { Card, ErrorMessage } from "atoms/card";
+import { ErrorMessage } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, Link, Submit, TextInput } from "atoms/input";
-import { Column, LargePadding, Row, WidthLimit } from "atoms/layout";
-import { SecondaryInfo, H1 } from "atoms/typography";
+import { Column, FocusContent, ComfortPadding, Row } from "atoms/layout";
+import { H1, SecondaryInfo } from "atoms/typography";
 import { useShowToast } from "components/toast";
 import Router from "next/router";
 import { useCallback, useState } from "react";
+import { communityLink } from "util/link";
 
 export default function CreateCommunity() {
   useAuthGuard();
 
   return (
-    <main>
-      <WidthLimit>
-        <Card>
-          <LargePadding>
-            <CreateCommunityWidget />
-          </LargePadding>
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent>
+      <ComfortPadding>
+        <CreateCommunityWidget />
+      </ComfortPadding>
+    </FocusContent>
   );
 }
 

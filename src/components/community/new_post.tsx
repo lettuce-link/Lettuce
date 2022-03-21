@@ -5,7 +5,7 @@ import { ValidationMessage } from "atoms/feedback";
 import { Form, Field, TextInput, Submit, EditorField } from "atoms/input";
 import {
   WidthLimit,
-  LargePadding,
+  ComfortPadding,
   Column,
   Row,
   FocusContent,
@@ -36,10 +36,10 @@ export function NewPostPage({ name }) {
 
   return (
     <FocusContent>
-      <LargePadding>
+      <ComfortPadding>
         <H1>New Post in {community.title}</H1>
         <NewPostForm community={community} />
-      </LargePadding>
+      </ComfortPadding>
     </FocusContent>
   );
 }

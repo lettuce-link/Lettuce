@@ -1,8 +1,7 @@
 import { useAuthGuard, useClient } from "api/auth";
-import { Card } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Field, Form, Submit, TextInput } from "atoms/input";
-import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
+import { Column, ComfortPadding, FocusContent, Row } from "atoms/layout";
 import { H1, H2 } from "atoms/typography";
 import { useCallback, useState } from "react";
 import { validatePassword } from "util/auth";
@@ -12,21 +11,12 @@ export function SettingsPage() {
   useAuthGuard();
 
   return (
-    <main>
-      <WidthLimit>
-        <Card>
-          <LargePadding>
-            <H1>User Settings</H1>
-            <ChangePasswordForm />
-          </LargePadding>
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent>
+      <ComfortPadding>
+        <H1>User Settings</H1>
+        <ChangePasswordForm />
+      </ComfortPadding>
+    </FocusContent>
   );
 }
 

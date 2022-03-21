@@ -1,6 +1,5 @@
 import { usePost, useSetPostVote } from "api/post";
-import { Card } from "atoms/card";
-import { Column, Padding, Row, WidthLimit } from "atoms/layout";
+import { Column, FocusContent, Padding, Row } from "atoms/layout";
 import { MoreButton } from "atoms/popup";
 import { SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
@@ -14,22 +13,13 @@ export function PostPage({ id }) {
   const { post_view, comments, isLoading } = usePost(id);
 
   return (
-    <main>
-      <WidthLimit limit="var(--large-content)">
-        <Card>
-          <FullPost
-            postView={post_view}
-            comments={comments}
-            isLoading={isLoading}
-          />
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent limit="var(--large-content)">
+      <FullPost
+        postView={post_view}
+        comments={comments}
+        isLoading={isLoading}
+      />
+    </FocusContent>
   );
 }
 
