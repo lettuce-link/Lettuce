@@ -40,18 +40,18 @@ export function Theme() {
         // Always light on dark/colored backgrounds, even in light mode
         --foreground-inverted: #fff;
 
-        --font-heading: 800 32px "Inter", sans-serif;
-        --font-heading-light: 300 32px "Inter", sans-serif;
+        --size-xlarge: 24px;
+        --size-large: 16px;
+        --size-medium: 14px;
+        --size-small: 10px;
 
-        --font-body: 400 16px/1.6 "Open Sans", sans-serif;
-        --font-body-bold: 700 16px/1.6 "Open Sans", sans-serif;
+        --size-icon: 18px;
 
-        --size-xlarge: 32px;
-        --size-large: 24px;
-        --size-medium: 16px;
-        --size-small: 12px;
+        --font-heading: 800 var(--size-xlarge) "Inter", sans-serif;
+        --font-heading-light: 300 var(--size-xlarge) "Inter", sans-serif;
 
-        --size-icon: 24px;
+        --font-body: 400 var(--size-medium) / 1.6 "Open Sans", sans-serif;
+        --font-body-bold: 700 var(--size-medium) / 1.6 "Open Sans", sans-serif;
 
         --small-corner-round: 4px;
         --large-corner-round: 8px;
@@ -66,6 +66,17 @@ export function Theme() {
         --shadow-small: 0 2px 8px 0px rgba(0, 0, 0, 0.15);
 
         --transition-quick: 0.2s ease-out;
+      }
+
+      @media screen and (min-width: 900px) {
+        :root {
+          --size-xlarge: 32px;
+          --size-large: 24px;
+          --size-medium: 16px;
+          --size-small: 12px;
+
+          --size-icon: 24px;
+        }
       }
 
       body {
