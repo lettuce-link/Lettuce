@@ -7,11 +7,11 @@ export const styleMap = {
   [STYLE_CODE]: {
     background: "var(--background-transparent-dark)",
     // color: "var(--foreground-inverted)",
-    "border-radius": "var(--small-corner-round)",
+    borderRadius: "var(--small-corner-round)",
     padding: "0 4px",
-    "font-family": "monospace",
+    fontFamily: "monospace",
   },
   [STYLE_STRIKETHROUGH]: {
-    textDecoration: "line-through",
+    textDecoration: "2px line-through",
   },
 };

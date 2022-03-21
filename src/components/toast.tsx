@@ -113,13 +113,15 @@ export function useShowToast() {
 function ToastMessages({ toasts }) {
   return (
     <div className="ToastMessages">
-      <WidthLimit>
-        <Column gap="16px">
-          {toasts.map(({ type, message, id }) => (
-            <Toast key={id} type={type} message={message} />
-          ))}
-        </Column>
-      </WidthLimit>
+      <div className="ToastMessages-container">
+        <WidthLimit>
+          <Column gap="16px">
+            {toasts.map(({ type, message, id }) => (
+              <Toast key={id} type={type} message={message} />
+            ))}
+          </Column>
+        </WidthLimit>
+      </div>
 
       <style jsx>{`
         .ToastMessages {
@@ -127,8 +129,10 @@ function ToastMessages({ toasts }) {
           bottom: 0;
           left: 0;
           right: 0;
+        }
 
-          padding: 32px 16px;
+        .ToastMessages-container {
+          margin: 32px 16px;
         }
       `}</style>
     </div>

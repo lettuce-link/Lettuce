@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { MIN_DESKTOP_WIDTH } from "util/screen";
 
 /**
  * A wrapper that provides the app's theme in the form of CSS variables
@@ -25,50 +26,98 @@ export function Theme() {
   // These theme variables are incomplete, but I'm trying to keep everything as minimal as possible, so new ones get added only when strictly necessary, and keeping things consistent. Pls don't just add your favorite color randomly.
 
   return (
-    <style jsx global type="text/css">{`
-      :root {
-        --small-content: 500px;
-        --large-content: 1000px;
+    <>
+      <style jsx global type="text/css">{`
+        :root {
+          --small-content: 500px;
+          --large-content: 1000px;
 
-        --background-strong: #fff;
-        --background-weak: #eee;
-        --background-shade: #888;
-        --background-transparent-dark: rgba(0, 0, 0, 0.063);
+          --background-strong: #fff;
+          --background-weak: #eee;
+          --background-shade: #888;
+          --background-transparent-dark: rgba(0, 0, 0, 0.063);
 
-        --foreground-strong: #333;
-        --foreground-weak: #777;
-        // Always light on dark/colored backgrounds, even in light mode
-        --foreground-inverted: #fff;
+          --foreground-strong: #333;
+          --foreground-weak: #777;
+          // Always light on dark/colored backgrounds, even in light mode
+          --foreground-inverted: #fff;
 
-        --size-xlarge: 24px;
-        --size-large: 16px;
-        --size-medium: 14px;
-        --size-small: 10px;
+          --size-xlarge: 24px;
+          --size-large: 16px;
+          --size-medium: 14px;
+          --size-small: 10px;
 
-        --size-icon: 18px;
+          --size-icon: 24px;
 
-        --font-heading: 800 var(--size-xlarge) "Inter", sans-serif;
-        --font-heading-light: 300 var(--size-xlarge) "Inter", sans-serif;
+          --font-heading: 800 var(--size-xlarge) "Inter", sans-serif;
+          --font-heading-light: 300 var(--size-xlarge) "Inter", sans-serif;
 
-        --font-body: 400 var(--size-medium) / 1.6 "Open Sans", sans-serif;
-        --font-body-bold: 700 var(--size-medium) / 1.6 "Open Sans", sans-serif;
+          --font-body: 400 var(--size-medium) / 1.6 "Open Sans", sans-serif;
+          --font-body-bold: 700 var(--size-medium) / 1.6 "Open Sans", sans-serif;
 
-        --small-corner-round: 4px;
-        --large-corner-round: 8px;
+          --small-corner-round: 4px;
+          --large-corner-round: 8px;
 
-        --color-primary-strong: #247ba0;
-        --color-error-strong: #f25f5c;
-        --color-success-strong: #70c1b3;
+          --color-primary-strong: #247ba0;
+          --color-error-strong: #f25f5c;
+          --color-success-strong: #70c1b3;
 
-        --opacity-fade: 0.5;
+          --opacity-fade: 0.5;
 
-        --shadow-large: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
-        --shadow-small: 0 2px 8px 0px rgba(0, 0, 0, 0.15);
+          --shadow-large: 0 5px 23px 0px rgba(0, 0, 0, 0.1);
+          --shadow-small: 0 2px 8px 0px rgba(0, 0, 0, 0.15);
 
-        --transition-quick: 0.2s ease-out;
-      }
+          --transition-quick: 0.2s ease-out;
+        }
 
-      @media screen and (min-width: 900px) {
+        body {
+          margin: 0;
+          background: var(--background-weak);
+          font: var(--font-body);
+          color: var(--foreground-strong);
+          min-height: 100vh;
+        }
+
+        h1 {
+          font: var(--font-heading);
+        }
+
+        h2 {
+          font: var(--font-heading-light);
+        }
+
+        svg {
+          // we are rendering Remix icons with react-icons
+          // for some reason, their dimensions are set to 1em
+          // so, if we want them to be 24px (their intended size), we need to set the font size:
+          font-size: var(--size-icon);
+        }
+
+        @font-face {
+          font-family: "Inter";
+          font-weight: 300;
+          src: url(/fonts/Inter-Light.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Inter";
+          font-weight: 800;
+          src: url(/fonts/Inter-ExtraBold.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Open Sans";
+          font-weight: 400;
+          src: url(/fonts/OpenSans-Regular.woff2) format("woff2");
+        }
+
+        @font-face {
+          font-family: "Open Sans";
+          font-weight: 700;
+          src: url(/fonts/OpenSans-Bold.woff2) format("woff2");
+        }
+      `}</style>
+      <DesktopStyle>{`
         :root {
           --size-xlarge: 32px;
           --size-large: 24px;
@@ -77,53 +126,26 @@ export function Theme() {
 
           --size-icon: 24px;
         }
-      }
+      `}</DesktopStyle>
+    </>
+  );
+}
 
-      body {
-        margin: 0;
-        background: var(--background-weak);
-        font: var(--font-body);
-        color: var(--foreground-strong);
-        min-height: 100vh;
+export function MobileStyle({ children }) {
+  return (
+    <style jsx>{`
+      @media screen and (max-width: ${MIN_DESKTOP_WIDTH - 1}px) {
+        ${children}
       }
+    `}</style>
+  );
+}
 
-      h1 {
-        font: var(--font-heading);
-      }
-
-      h2 {
-        font: var(--font-heading-light);
-      }
-
-      svg {
-        // we are rendering Remix icons with react-icons
-        // for some reason, their dimensions are set to 1em
-        // so, if we want them to be 24px (their intended size), we need to set the font size:
-        font-size: var(--size-icon);
-      }
-
-      @font-face {
-        font-family: "Inter";
-        font-weight: 300;
-        src: url(/fonts/Inter-Light.woff2) format("woff2");
-      }
-
-      @font-face {
-        font-family: "Inter";
-        font-weight: 800;
-        src: url(/fonts/Inter-ExtraBold.woff2) format("woff2");
-      }
-
-      @font-face {
-        font-family: "Open Sans";
-        font-weight: 400;
-        src: url(/fonts/OpenSans-Regular.woff2) format("woff2");
-      }
-
-      @font-face {
-        font-family: "Open Sans";
-        font-weight: 700;
-        src: url(/fonts/OpenSans-Bold.woff2) format("woff2");
+export function DesktopStyle({ children }) {
+  return (
+    <style jsx>{`
+      @media screen and (min-width: ${MIN_DESKTOP_WIDTH}px) {
+        ${children}
       }
     `}</style>
   );

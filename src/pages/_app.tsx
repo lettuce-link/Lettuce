@@ -5,6 +5,7 @@ import { SiteProvider } from "../api/site";
 import { ClientProvider } from "../api/auth";
 import { ScrollLimitProvider } from "components/scroll_limit";
 import React from "react";
+import { FooterNav } from "components/footer_nav";
 
 /**
  * This is not a regular router page, this is "magic" for NextJS.
@@ -36,6 +37,7 @@ function AppFrame({ children }) {
     <div className="AppFrame">
       <Header />
       <ScrollLimitProvider>{children}</ScrollLimitProvider>
+      {/* <FooterNav /> */}
 
       <style jsx>{`
         .AppFrame {

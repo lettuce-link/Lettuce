@@ -1,9 +1,12 @@
 import { usePost } from "api/post";
 import { SelectableBox } from "atoms/card";
+import { DesktopStyle, MobileStyle } from "atoms/theme";
 import { FullPost } from "components/post/post";
 import { PostThumbnail } from "components/post/thumbnail";
 import { useScrollLimit } from "components/scroll_limit";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useIsDesktop } from "util/screen";
+import { useUrlParameter } from "util/url";
 
 /**
  * A channel-like interface for a list of posts. Think discord-like: list of channels on left (except they are post titles in our case), chat messages on the right (except they are full posts+comments). Separate scroll bars. Easy navigation (hopefully?)
@@ -16,7 +19,16 @@ import { useState } from "react";
  */
 export function ChannelView({ aboutCard, AboutContent, infinitePosts }) {
   useScrollLimit();
-  const [selectedPost, setSelectedPost] = useState(null);
+
+  // const isDesktop = useIsDesktop();
+  const [queryParameter, setQueryParameter] = useUrlParameter("active_channel");
+
+  const isContentOpen = !!queryParameter;
+  const currentChannel = getChannelFromParameter(queryParameter);
+
+  const openPost = useCallback((post) => {
+    setQueryParameter(post);
+  }, []);
 
   return (
     <Split
@@ -24,15 +36,25 @@ export function ChannelView({ aboutCard, AboutContent, infinitePosts }) {
         <Channels
           aboutCard={aboutCard}
           infinitePosts={infinitePosts}
-          selectedPost={selectedPost}
-          setSelectedPost={setSelectedPost}
+          selectedPost={currentChannel}
+          setSelectedPost={openPost}
         />
       }
       second={
-        <Contents AboutContent={AboutContent} selectedPost={selectedPost} />
+        <Contents AboutContent={AboutContent} selectedPost={currentChannel} />
       }
+      isSecondOpen={isContentOpen}
     />
   );
+}
+
+const ABOUT_CHANNEL = "about";
+function getChannelFromParameter(parameter) {
+  if (parameter === ABOUT_CHANNEL || !parameter) {
+    return ABOUT_CHANNEL;
+  }
+
+  return Number.parseInt(parameter);
 }
 
 function Channels({ aboutCard, infinitePosts, selectedPost, setSelectedPost }) {
@@ -48,8 +70,8 @@ function Channels({ aboutCard, infinitePosts, selectedPost, setSelectedPost }) {
       <ol>
         <li className="Channels-sticky">
           <SelectableBox
-            isSelected={selectedPost === null}
-            onSelect={() => setSelectedPost(null)}
+            isSelected={selectedPost === ABOUT_CHANNEL}
+            onSelect={() => setSelectedPost(ABOUT_CHANNEL)}
           >
             {aboutCard}
           </SelectableBox>
@@ -106,7 +128,7 @@ export function Contents({ AboutContent, selectedPost }) {
 
   return (
     <div className="Contents-post">
-      {selectedPost === null ? (
+      {selectedPost === ABOUT_CHANNEL ? (
         <AboutContent />
       ) : (
         <FullPost
@@ -129,13 +151,13 @@ export function Contents({ AboutContent, selectedPost }) {
   );
 }
 
-export function Split({ first, second }) {
+export function Split({ first, second, isSecondOpen = false }) {
   return (
     <div className="Split">
       <div className="First">{first}</div>
       <div className="Second">{second}</div>
 
-      <style jsx>{`
+      <DesktopStyle>{`
         .Split {
           display: flex;
           flex-direction: row;
@@ -151,7 +173,24 @@ export function Split({ first, second }) {
           flex-basis: 0;
           flex-grow: 2;
         }
-      `}</style>
+      `}</DesktopStyle>
+
+      <MobileStyle>{`
+        .Split {
+          display: flex;
+          width: fit-content;
+          height: 100%;
+        }
+
+        .First {
+          width: 100vw;
+          ${isSecondOpen ? "margin-left: -100vw" : ""}
+        }
+
+        .Second {
+          width: 100vw;
+        }
+      `}</MobileStyle>
     </div>
   );
 }
