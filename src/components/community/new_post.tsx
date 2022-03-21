@@ -3,7 +3,13 @@ import { useCommunity } from "api/community";
 import { Card } from "atoms/card";
 import { ValidationMessage } from "atoms/feedback";
 import { Form, Field, TextInput, Submit, EditorField } from "atoms/input";
-import { WidthLimit, LargePadding, Column, Row } from "atoms/layout";
+import {
+  WidthLimit,
+  LargePadding,
+  Column,
+  Row,
+  FocusContent,
+} from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
 import { useShowToast } from "components/toast";
@@ -29,21 +35,12 @@ export function NewPostPage({ name }) {
   const community = communityResponse.community_view.community;
 
   return (
-    <main>
-      <WidthLimit>
-        <Card>
-          <LargePadding>
-            <H1>New Post in {community.title}</H1>
-            <NewPostForm community={community} />
-          </LargePadding>
-        </Card>
-      </WidthLimit>
-      <style jsx>{`
-        main {
-          padding: 32px 16px;
-        }
-      `}</style>
-    </main>
+    <FocusContent>
+      <LargePadding>
+        <H1>New Post in {community.title}</H1>
+        <NewPostForm community={community} />
+      </LargePadding>
+    </FocusContent>
   );
 }
 

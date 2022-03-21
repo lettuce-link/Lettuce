@@ -72,7 +72,6 @@ export function Theme() {
 
         body {
           margin: 0;
-          background: var(--background-weak);
           font: var(--font-body);
           color: var(--foreground-strong);
           min-height: 100vh;
@@ -125,6 +124,10 @@ export function Theme() {
           --size-small: 12px;
 
           --size-icon: 24px;
+        }
+
+        body {
+          background: var(--background-weak);
         }
       `}</DesktopStyle>
     </>

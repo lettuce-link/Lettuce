@@ -1,3 +1,5 @@
+import { DesktopStyle, MobileStyle } from "./theme";
+
 export function Column({ children, gap = "32px", align = "stretch" }) {
   return (
     <div className="Column">
@@ -47,11 +49,16 @@ export function LargePadding({ children }) {
   return (
     <div className="LargePadding">
       {children}
-      <style jsx>{`
+      <DesktopStyle>{`
         .LargePadding {
           padding: 64px;
         }
-      `}</style>
+      `}</DesktopStyle>
+      <MobileStyle>{`
+        .LargePadding {
+          padding: 32px;
+        }
+      `}</MobileStyle>
     </div>
   );
 }
@@ -89,6 +96,40 @@ export function WidthLimit({
           ${centered && "margin: 0 auto"}
         }
       `}</style>
+    </div>
+  );
+}
+
+/**
+ * A container for the main content when it is relatively small.
+ * On mobile, it will take up the entire screen.
+ * On desktop, it will be presented as a centered card.
+ */
+export function FocusContent({ children }) {
+  return (
+    <div className="FocusCard-wrapper">
+      <WidthLimit>
+        <div className="FocusCard-card">{children}</div>
+      </WidthLimit>
+
+      <MobileStyle>{`
+        .FocusCard-wrapper {
+        }
+      `}</MobileStyle>
+
+      <DesktopStyle>{`
+      .FocusCard-wrapper {
+        padding: 32px 16px;
+        background: var(--background-weak);
+      }
+
+      .FocusCard-card {
+        background: var(--background-strong);
+        border-radius: var(--large-corner-round);
+
+        box-shadow: var(--shadow-large);
+      }
+    `}</DesktopStyle>
     </div>
   );
 }
