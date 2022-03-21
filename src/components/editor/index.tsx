@@ -56,19 +56,13 @@ export function useEditor(initialMarkdown = null) {
 
   const isEmpty = !editorState.getCurrentContent().hasText();
 
-  // todo: we're losing the nice transition bc react rerenders this when the parent node is switched out.
-  // the solution is called "reparenting" i think? apparently there's a solution using portals. anwyay im not about to spend 4h making this transition work.
-  const toggle = (
-    <ModeToggle isMarkdown={isMarkdown} toggleMarkdown={toggleMode} />
-  );
-
   const editorProps = {
     editorState,
     setEditorState,
     markdown,
     setMarkdown,
     isMarkdown,
-    modeToggle: toggle,
+    toggleMode,
   };
 
   function getMarkdown() {
@@ -100,6 +94,32 @@ function ModeToggle({ isMarkdown, toggleMarkdown }) {
 }
 
 export function LettuceEditor({
+  editorState,
+  setEditorState,
+  markdown,
+  setMarkdown,
+  minHeight = "0",
+  isMarkdown,
+  toggleMode,
+}) {
+  // todo: we're losing the nice transition on the ModeToggle bc react rerenders this when the parent node is switched out.
+  // the solution is called "reparenting" i think? apparently there's a solution using portals. anwyay im not about to spend 4h making this transition work.
+  return (
+    <HybridEditor
+      editorState={editorState}
+      setEditorState={setEditorState}
+      markdown={markdown}
+      setMarkdown={setMarkdown}
+      minHeight={minHeight}
+      isMarkdown={isMarkdown}
+      modeToggle={
+        <ModeToggle isMarkdown={isMarkdown} toggleMarkdown={toggleMode} />
+      }
+    />
+  );
+}
+
+function HybridEditor({
   editorState,
   setEditorState,
   markdown,
