@@ -120,11 +120,12 @@ function Channels({ aboutCard, infinitePosts, selectedPost, setSelectedPost }) {
 }
 
 export function Contents({ AboutContent, selectedPost }) {
+  const postToFetch = selectedPost === ABOUT_CHANNEL ? null : selectedPost;
   const {
     post_view,
     comments,
     isLoading: isPostLoading,
-  } = usePost(selectedPost);
+  } = usePost(postToFetch);
 
   return (
     <div className="Contents-post">
