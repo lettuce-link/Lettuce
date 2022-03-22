@@ -355,7 +355,7 @@ export function Link({ children, href }) {
  */
 export function RevealButton({ children, onClick = noop, inline = false }) {
   return (
-    <button className="RevealButton" onClick={onClick}>
+    <button type="button" className="RevealButton" onClick={onClick}>
       {children}
       <style jsx>{`
         .RevealButton {

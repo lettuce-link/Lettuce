@@ -32,6 +32,13 @@ export function ClientProvider({ children }) {
   function setAuth(value) {
     setStorageAuth(value);
     setClient(makeClient(value));
+
+    // pictrs request require jwt header
+    if (value) {
+      document.cookie = `jwt=${value}; path=/`;
+    } else {
+      document.cookie = "jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    }
   }
 
   const setAuthCallback = useCallback(setAuth, []);

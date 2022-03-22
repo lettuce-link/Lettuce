@@ -30,7 +30,7 @@ services:
 
       # for nginx-proxy configuration
       - VIRTUAL_HOST=localhost
-      - VIRTUAL_PATH=/api
+      - VIRTUAL_PATH=~^/(api|pictrs)/
       - HTTP_PORT=8536
     volumes:
       - ./lemmy.hjson:/config/config.hjson
@@ -57,9 +57,9 @@ services:
 
   pictrs:
     image: asonix/pictrs:0.3.0-beta.12-r1
-    ports:
-      - "127.0.0.1:8537:8080"
-      - "127.0.0.1:6670:6669"
+    # ports:
+      # - "127.0.0.1:8537:8080"
+      # - "127.0.0.1:6670:6669"
     user: 991:991
     volumes:
       - ./volumes/pictrs:/mnt

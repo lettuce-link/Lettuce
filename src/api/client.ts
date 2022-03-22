@@ -6,6 +6,8 @@ import {
   SortType,
 } from "lemmy-js-client";
 
+const PICTRS_IMAGE_URI = "/pictrs/image";
+
 function baseHttpUrl() {
   const isSecure = JSON.parse(process.env.NEXT_PUBLIC_LEMMY_SECURE);
   const protocol = isSecure ? "https" : "http";
@@ -242,5 +244,27 @@ export default class Client {
       ...search,
       ...this.getOptionalAuthObject(),
     });
+  }
+
+  // mostly stolen from lemmy-ui (image-upload-form.tsx)
+  uploadImages(files: any[]) {
+    const formData = new FormData();
+    files.forEach((file) => formData.append("images[]", file));
+
+    return fetch(PICTRS_IMAGE_URI, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.msg == "ok") {
+          return res.files.map(({ delete_token, file }) => ({
+            delete_token,
+            url: `${PICTRS_IMAGE_URI}/${file}`,
+          }));
+        } else {
+          throw res;
+        }
+      });
   }
 }

@@ -41,4 +41,6 @@ docker-compose up
 
 This will locally start the database, Lemmy, the Lettuce frontend, and everything else needed for Lettuce to work. Open up http://localhost and the website should be there!
 
+You might have to run `sudo chown -R 991:991 volumes/pictrs` to fix permissions for the pictrs volume.
+
 If you'd like to contribute, please see [Contributing.md](./Contributing.md)

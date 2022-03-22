@@ -12,6 +12,7 @@ import {
 } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
+import { SingleImageUpload } from "components/image_upload";
 import { useShowToast } from "components/toast";
 import { CommunitySafe } from "lemmy-js-client";
 import { useRouter } from "next/router";
@@ -85,8 +86,6 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
       });
   }
 
-  // todo: if we put the Editor in a Field (which has a label for accessibility purposes), that label gets associated with all the contained WYSIWYG buttons. fix this.
-
   return (
     <Form onSubmit={onSubmit}>
       <Column>
@@ -96,6 +95,9 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
         </Field>
         <EditorField prompt="Content">
           <LettuceEditor {...editorProps} minHeight="8em" />
+        </EditorField>
+        <EditorField prompt="Attachments">
+          <SingleImageUpload onChange={(event) => console.log(event)} />
         </EditorField>
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />

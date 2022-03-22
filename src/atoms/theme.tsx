@@ -37,6 +37,9 @@ export function Theme() {
           --background-shade: #888;
           --background-transparent-dark: rgba(0, 0, 0, 0.063);
 
+          // filter to make images discernible on background, regardless of their color
+          --filter-tint: brightness(0.93);
+
           --foreground-strong: #333;
           --foreground-weak: #777;
           // Always light on dark/colored backgrounds, even in light mode
