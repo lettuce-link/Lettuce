@@ -260,11 +260,16 @@ export default class Client {
         if (res.msg == "ok") {
           return res.files.map(({ delete_token, file }) => ({
             delete_token,
-            url: `${PICTRS_IMAGE_URI}/${file}`,
+            url: getAbsoluteUrlFromImage(file),
           }));
         } else {
           throw res;
         }
       });
   }
+}
+
+function getAbsoluteUrlFromImage(file) {
+  const url = new URL(`${PICTRS_IMAGE_URI}/${file}`, window.location.href);
+  return url.toString();
 }

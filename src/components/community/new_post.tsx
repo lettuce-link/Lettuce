@@ -12,7 +12,10 @@ import {
 } from "atoms/layout";
 import { H1 } from "atoms/typography";
 import { LettuceEditor, useEditor } from "components/editor";
-import { SingleImageUpload } from "components/image_upload";
+import {
+  SingleImageUpload,
+  useSingleImageUpload,
+} from "components/image_upload";
 import { useShowToast } from "components/toast";
 import { CommunitySafe } from "lemmy-js-client";
 import { useRouter } from "next/router";
@@ -62,13 +65,14 @@ function validateTitle(title) {
 
 function NewPostForm({ community }: { community: CommunitySafe }) {
   const [title, setTitle] = useState("");
+  const { editorProps, getMarkdown } = useEditor();
+  const { imageUrl, isImageLoading, imageUploadProps } = useSingleImageUpload();
+
   const router = useRouter();
   const titleValidation = validateTitle(title);
   const { showSuccess } = useShowToast();
 
-  const isValid = !titleValidation;
-
-  const { editorProps, getMarkdown } = useEditor();
+  const isValid = !(titleValidation || isImageLoading);
 
   const client = useClient();
 
@@ -79,6 +83,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
         name: title,
         body: markdown,
         community_id: community.id,
+        url: imageUrl,
       })
       .then((response) => {
         showSuccess("Post created");
@@ -97,7 +102,7 @@ function NewPostForm({ community }: { community: CommunitySafe }) {
           <LettuceEditor {...editorProps} minHeight="8em" />
         </EditorField>
         <EditorField prompt="Attachments">
-          <SingleImageUpload onChange={(event) => console.log(event)} />
+          <SingleImageUpload {...imageUploadProps} />
         </EditorField>
         <Row justify="end">
           <Submit value="Post" disabled={!isValid} />
