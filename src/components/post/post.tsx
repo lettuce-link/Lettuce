@@ -4,9 +4,11 @@ import { MoreButton } from "atoms/popup";
 import { SecondaryInfo } from "atoms/typography";
 import { CommunityBadge } from "components/community/badge";
 import { ReadonlyEditor } from "components/editor";
+import { SafeImage } from "components/image";
 import { PersonMention } from "components/person/badge";
 import { VerticalVote } from "components/vote";
-import { PostView } from "lemmy-js-client";
+import { Post, PostView } from "lemmy-js-client";
+import { usePostImages } from "util/image";
 import { CommentSection } from "./comment";
 
 export function PostPage({ id }) {
@@ -30,13 +32,37 @@ export function FullPost({ postView, comments, isLoading }) {
   }
 
   return (
-    <Padding>
-      <Column gap="8px">
-        <PostHead postView={postView} />
-        <ReadonlyEditor markdown={postView.post.body} />
-        <CommentSection postView={postView} comments={comments} />
-      </Column>
-    </Padding>
+    <Column gap="0">
+      <PostImage post={postView.post} />
+      <Padding>
+        <Column gap="8px">
+          <PostHead postView={postView} />
+          <ReadonlyEditor markdown={postView.post.body} />
+          <CommentSection postView={postView} comments={comments} />
+        </Column>
+      </Padding>
+    </Column>
+  );
+}
+
+function PostImage({ post }: { post: Post }) {
+  const images = usePostImages(post);
+
+  if (images.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="PostImage">
+      <SafeImage src={images[0]} />
+
+      <style jsx>{`
+        .PostImage {
+          // cant believe how often flex fixes all my problems
+          display: flex;
+        }
+      `}</style>
+    </div>
   );
 }
 

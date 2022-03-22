@@ -149,7 +149,7 @@ function HybridEditor({
  */
 export function ReadonlyEditor({ markdown }) {
   const editorState = useMemo(() => {
-    const content = stateFromMarkdown(markdown);
+    const content = stateFromMarkdown(markdown || "");
     return EditorState.createWithContent(content);
   }, [markdown]);
 
