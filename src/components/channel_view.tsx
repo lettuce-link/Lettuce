@@ -185,7 +185,10 @@ export function Split({ first, second, isSecondOpen = false }) {
 
         .First {
           width: 100vw;
-          ${isSecondOpen ? "margin-left: -100vw" : ""}
+          transition: margin-left var(--transition-quick);
+
+          // todo: bc of styled-jsx oddities, this transition only works one-way :(
+          margin-left: ${isSecondOpen ? "-100vw" : "0"};
         }
 
         .Second {
